@@ -1,0 +1,9 @@
+{
+    "name": "Weld Ink Line Measurement",
+    "version": "1.0.0",
+    "author": "Vũ VinH Ánh",
+    "company": "Công ty TNHH Công nghiệp Brother Việt Nam",
+    "description": "Phần mềm nhận diện kích thước độ đường hàn mực",
+    "build_date": "21-01-2026",
+    "license": "Internal Use"
+}

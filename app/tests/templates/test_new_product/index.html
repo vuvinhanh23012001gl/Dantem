@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./style.css">
+    <title>Quản lý loại sản phẩm</title>
+</head>
+<body>
+<div class="wrapper">
+
+    <!-- ===== LEFT PANEL ===== -->
+    <div class="left-panel">
+        <h2>➕ Tạo loại sản phẩm</h2>
+
+        <form method="post" action="/type-product/create" enctype="multipart/form-data">
+            <label>ID</label>
+            <input type="number" name="id" min="1" required>
+
+            <label>Tên sản phẩm</label>
+            <input type="text" name="name" required>
+
+            <label>Mô tả</label>
+            <textarea name="description"></textarea>
+
+            <label>Thư mục ảnh</label>
+            <input type="text" name="image_dir" placeholder="auto / manual">
+
+            <!-- Upload image -->
+            <div class="file-input">
+                <label>Ảnh sản phẩm</label>
+                <input type="file" name="images" multiple accept="image/*">
+            </div>
+            <button type="submit" class="btn btn-create">✅ Tạo sản phẩm</button>
+            <button type="button" class="btn btn-exit" onclick="exitPage()">❌ Thoát</button>
+        </form>
+    </div>
+
+    <!-- ===== RIGHT PANEL ===== -->
+    <div class="right-panel">
+        <h2>📦 Sản phẩm hiện có</h2>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Tên</th>
+                    <th>Mô tả</th>
+                    <th>Image Dir</th>
+                    <th>Hành động</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for p in type_products %}
+                <tr>
+                    <td>{{ p.id }}</td>
+                    <td>{{ p.name }}</td>
+                    <td>{{ p.description }}</td>
+                    <td>{{ p.image_dir }}</td>
+                    <td>
+                        <button onclick="">👁</button>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+<script>
+function exitPage() {
+    window.location.href = "/";
+}
+
+function viewProduct(id) {
+    window.location.href = `/type-product/${id}`;
+}
+</script>
+
+</body>
+</html>

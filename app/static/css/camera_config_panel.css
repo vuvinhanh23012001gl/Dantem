@@ -1,0 +1,212 @@
+#paner-camera-config {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 14px;
+    padding-bottom: 88px;
+    overflow-y: auto;
+    min-width: 0;
+    max-width: 100%;
+    background: #f4f7fb;
+    color: #1b3154;
+    transform: translateX(100%);
+    border-radius: 10px;
+    height: 100%;
+}
+
+#paner-camera-config.active {
+    z-index: 10;
+    transform: translateX(0);
+}
+
+.camera-config-header {
+    padding: 14px;
+    border: 1px solid rgba(204, 234, 229, 0.3);
+    border-radius: 8px;
+    background: #ffffff;
+    border-color: #b8cee8;
+    box-shadow: 0 3px 12px rgba(28, 91, 148, 0.12);
+}
+
+.camera-config-kicker {
+    display: block;
+    margin-bottom: 5px;
+    color: #0875d1;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+}
+
+.camera-config-header h2 {
+    margin: 0;
+    color: #173b68;
+    font-size: 22px;
+    font-weight: 600;
+}
+.camera-config-header p {
+    min-height: 32px;
+    margin: 8px 0 0;
+    padding-top: 8px;
+    border-top: 1px solid #d9e4f0;
+    color: #61738d;
+    font-size: 11px;
+}
+
+.camera-config-fields {
+    display: grid;
+    gap: 8px;
+}
+.camera-config-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
+    align-items: center;
+    gap: 10px;
+    min-width: 0;
+    min-height: 42px;
+    padding: 6px 8px;
+    border: 1px solid #d8e4f1;
+    border-radius: 6px;
+    background: #ffffff;
+}
+.camera-config-row label,
+.camera-config-label {
+    color: #365474;
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.camera-config-fields input,
+.camera-config-fields select {
+    width: 100%;
+    min-height: 34px;
+    padding: 6px 8px;
+    border: 1px solid #b8cfe8;
+    border-radius: 5px;
+    outline: none;
+    background: #fbfdff;
+    color: #1d3556;
+    font-size: 12px;
+}
+
+.camera-config-fields input:focus,
+.camera-config-fields select:focus {
+    border-color: #0875d1;
+    box-shadow: 0 0 0 2px rgba(8, 117, 209, 0.16);
+}
+
+.camera-info-card {
+    display: grid;
+    gap: 9px;
+    padding: 12px;
+    border: 1px solid #b9d2ec;
+    border-left: 4px solid #0088cc;
+    border-radius: 6px;
+    background: #ffffff;
+    box-shadow: 0 2px 6px rgba(28, 91, 148, 0.06);
+}
+
+.camera-info-header strong {
+    display: block;
+    color: #173b68;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.camera-info-fields {
+    display: grid;
+    gap: 8px;
+}
+
+.camera-info-fields .camera-config-row {
+    min-height: 38px;
+    background: #fbfdff;
+}
+
+.camera-readonly-input {
+    width: 100%;
+    min-height: 34px;
+    padding: 6px 10px;
+    border: 1px solid #d2dfea !important;
+    border-radius: 5px;
+    outline: none !important;
+    background: #f1f5f9 !important;
+    color: #1c3d5a !important;
+    font-size: 11.5px;
+    font-family: 'Consolas', 'Courier New', monospace;
+    font-weight: 600;
+    cursor: default;
+    box-shadow: none !important;
+    user-select: all;
+}
+
+.camera-readonly-input:focus {
+    border-color: #0088cc !important;
+    box-shadow: 0 0 0 2px rgba(0, 136, 204, 0.15) !important;
+}
+
+.camera-readonly-input.camera-status-online {
+    background: #eafaf1 !important;
+    border-color: #82e0aa !important;
+    color: #1e8449 !important;
+    font-weight: 700;
+}
+
+.camera-readonly-input.camera-status-offline {
+    background: #fdf2e9 !important;
+    border-color: #f5b7b1 !important;
+    color: #c0392b !important;
+    font-weight: 700;
+}
+
+.camera-config-actions {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    z-index: 20;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 6px;
+    width: 100%;
+    margin: 0;
+    padding: 12px 14px 14px;
+    border-top: 1px solid #d3dfec;
+    border-radius: 0 0 10px 10px;
+    background: #ffffff;
+    box-shadow: 0 -4px 14px rgba(25, 71, 112, 0.12);
+}
+
+.camera-config-actions button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+    min-width: 0;
+    min-height: 42px;
+    padding: 6px 3px;
+    border: 1px solid #063e75;
+    border-radius: 8px;
+    background: #064b8f;
+    box-shadow: 0 3px 8px rgba(3, 55, 105, 0.28);
+    color: #fff;
+    cursor: pointer;
+    font-size: 10px;
+    font-weight: 700;
+    white-space: nowrap;
+    transition: background 0.18s ease, transform 0.18s ease;
+}
+
+.camera-config-actions button img {
+    flex: 0 0 15px;
+    width: 15px;
+    height: 15px;
+    object-fit: contain;
+}
+
+.camera-config-actions button:hover { background: #043b72; transform: translateY(-2px); }
+.camera-config-actions button:active { transform: translateY(0); }
+
+@media (max-width: 600px) {
+    .camera-config-fields { grid-template-columns: 1fr; }
+    .camera-config-actions { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+}

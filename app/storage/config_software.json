@@ -1,0 +1,22 @@
+{
+    "log_dir": "C:\\Disk D\\Project\\Python_Detect_Width_Line\\code\\app",
+    "output_dir": "C:\\Disk D\\Project\\Python_Detect_Width_Line\\code\\app\\app\\output",
+    "time_save_log": 30,
+    "time_save_img": 30,
+    "time_save_txt": 30,
+    "time_save_csv": 30,
+    "disk_select": "C:\\",
+    "open_img": true,
+    "open_txt": true,
+    "open_csv": true,
+    "open_log_print": true,
+    "open_log_cosole": true,
+    "image_save_mode": "ALL",
+    "max_judger_workers": 2,
+    "open_retrain": false,
+    "retrain_inspectors": {
+        "AnomalyPointInspector": false,
+        "ForeignObjectInspector": false,
+        "StampItemInspector": false
+    }
+}

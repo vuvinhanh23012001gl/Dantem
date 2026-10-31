@@ -1,0 +1,191 @@
+{
+    "image": "03_inverted_180deg.png",
+    "success": true,
+    "total_lines": 5,
+    "orientation": {
+        "angle": 180,
+        "status": "INVERTED",
+        "confidence": 0.9995,
+        "is_mirrored": false,
+        "skew_angle": 0.0,
+        "is_tilted": false,
+        "has_mixed_orientations": false,
+        "doc_model_angle": 180,
+        "doc_model_confidence": 0.9226
+    },
+    "texts": [
+        {
+            "line_id": 0,
+            "text": "MADE IN VIETNAM",
+            "confidence": 0.9996,
+            "angle": 180,
+            "status": "INVERTED",
+            "orientation_confidence": 0.9996,
+            "is_mirrored": false,
+            "skew_angle": 0.45,
+            "bbox": [
+                473,
+                43,
+                726,
+                74
+            ],
+            "polygon": [
+                [
+                    473,
+                    43
+                ],
+                [
+                    726,
+                    45
+                ],
+                [
+                    726,
+                    74
+                ],
+                [
+                    473,
+                    72
+                ]
+            ]
+        },
+        {
+            "line_id": 1,
+            "text": "MFG: 2026-10-30 EXP: 2028-10-30",
+            "confidence": 0.9965,
+            "angle": 180,
+            "status": "INVERTED",
+            "orientation_confidence": 0.9999,
+            "is_mirrored": false,
+            "skew_angle": 0.0,
+            "bbox": [
+                341,
+                183,
+                727,
+                210
+            ],
+            "polygon": [
+                [
+                    341,
+                    183
+                ],
+                [
+                    727,
+                    183
+                ],
+                [
+                    727,
+                    210
+                ],
+                [
+                    341,
+                    210
+                ]
+            ]
+        },
+        {
+            "line_id": 2,
+            "text": "LOT: VN20261030-A1",
+            "confidence": 0.9986,
+            "angle": 180,
+            "status": "INVERTED",
+            "orientation_confidence": 0.9987,
+            "is_mirrored": false,
+            "skew_angle": 0.0,
+            "bbox": [
+                447,
+                239,
+                727,
+                269
+            ],
+            "polygon": [
+                [
+                    447,
+                    239
+                ],
+                [
+                    727,
+                    239
+                ],
+                [
+                    727,
+                    269
+                ],
+                [
+                    447,
+                    269
+                ]
+            ]
+        },
+        {
+            "line_id": 3,
+            "text": "MODEL: IC-9800 PRO",
+            "confidence": 0.9991,
+            "angle": 180,
+            "status": "INVERTED",
+            "orientation_confidence": 0.9993,
+            "is_mirrored": false,
+            "skew_angle": 0.0,
+            "bbox": [
+                442,
+                301,
+                726,
+                328
+            ],
+            "polygon": [
+                [
+                    442,
+                    301
+                ],
+                [
+                    726,
+                    301
+                ],
+                [
+                    726,
+                    328
+                ],
+                [
+                    442,
+                    328
+                ]
+            ]
+        },
+        {
+            "line_id": 4,
+            "text": "INSPECTOR CARTON QA-2026",
+            "confidence": 1.0,
+            "angle": 180,
+            "status": "INVERTED",
+            "orientation_confidence": 1.0,
+            "is_mirrored": false,
+            "skew_angle": 0.0,
+            "bbox": [
+                277,
+                374,
+                726,
+                405
+            ],
+            "polygon": [
+                [
+                    277,
+                    374
+                ],
+                [
+                    726,
+                    374
+                ],
+                [
+                    726,
+                    405
+                ],
+                [
+                    277,
+                    405
+                ]
+            ]
+        }
+    ],
+    "result": "NG",
+    "reason": "Phát hiện chữ sai chiều chuẩn: Bị ngược (180°) (Góc=180°).",
+    "processing_time_ms": 2526.77
+}

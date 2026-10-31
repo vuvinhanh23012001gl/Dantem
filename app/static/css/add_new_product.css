@@ -1,0 +1,220 @@
+/* =========================
+   OVERLAY
+========================= */
+#overlay-new-product {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(6, 10, 18, 0.65);
+    backdrop-filter: blur(6px);
+    align-items: center;
+    justify-content: center;
+    z-index: 9000;
+    font-family: "Segoe UI", Roboto, Arial, sans-serif;
+}
+
+/* =========================
+   CONTAINER LAYOUT
+========================= */
+#overlay-new-product .left-panel,
+#overlay-new-product .right-panel {
+    height: 70%;
+    width: auto;
+}
+
+/* =========================
+   LEFT PANEL
+========================= */
+#overlay-new-product .left-panel {
+    width: 360px;
+    padding: 20px;
+    background: #121826;
+    border-radius: 14px 0 0 14px;
+    border-right: 1px solid #1f2937;
+    color: #e5e7eb;
+    height: 70%;
+    overflow-y: auto;   /* ⭐ FIX CHÍNH */
+}
+
+#overlay-new-product .left-panel h2 {
+    margin: 0 0 16px;
+    font-size: 15px;
+    font-weight: 600;
+}
+
+/* =========================
+   FORM ELEMENTS
+========================= */
+#overlay-new-product .left-panel label {
+    display: block;
+    margin-top: 12px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #9ca3af;
+}
+
+#overlay-new-product .left-panel input,
+#overlay-new-product .left-panel textarea {
+    width: 100%;
+    margin-top: 6px;
+    padding: 8px 10px;
+    font-size: 13px;
+    color: #e5e7eb;
+    background: #0b1020;
+    border: 1px solid #253046;
+    border-radius: 8px;
+}
+
+#overlay-new-product .left-panel input:focus,
+#overlay-new-product .left-panel textarea:focus {
+    outline: none;
+    border-color: #3b82f6;
+}
+
+#overlay-new-product .left-panel textarea {
+    min-height: 60px;
+    resize: vertical;
+}
+
+#overlay-new-product .left-panel .file-input input {
+    padding: 0;
+    border: none;
+    background: transparent;
+}
+
+/* =========================
+   BUTTONS
+========================= */
+#overlay-new-product .btn {
+    width: 100%;
+    margin-top: 14px;
+    padding: 10px;
+    border-radius: 8px;
+    border: none;
+    font-size: 18px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+#overlay-new-product .btn-create {
+    background: linear-gradient(135deg, #22c55e, #16a34a);
+    color: #052e16;
+}
+
+#overlay-new-product .btn-exit {
+    background: #1f2937;
+    color: #e5e7eb;
+}
+
+#overlay-new-product .btn:hover {
+    filter: brightness(1.08);
+}
+
+/* =========================
+   RIGHT PANEL
+========================= */
+#overlay-new-product .right-panel {
+    width: 60%;
+    padding: 20px;
+    background: #0f1424;
+    border-radius: 0 14px 14px 0;
+    color: #e5e7eb;
+    overflow-y: auto;
+}
+
+#overlay-new-product .right-panel h2 {
+    margin: 0 0 14px;
+    font-size: 15px;
+    font-weight: 600;
+}
+
+/* =========================
+   TABLE
+========================= */
+#overlay-new-product .right-panel table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #0b1020;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+#overlay-new-product .right-panel thead {
+    background: #0b1220;
+}
+
+#overlay-new-product .right-panel th,
+#overlay-new-product .right-panel td {
+    padding: 9px 10px;
+    font-size: 13px;
+    border-bottom: 1px solid #1f2937;
+}
+
+#overlay-new-product .right-panel th {
+    color: #c7d2fe;
+    text-align: left;
+}
+
+#overlay-new-product .right-panel tbody tr:hover {
+    background: rgba(59, 130, 246, 0.08);
+}
+
+
+
+
+/* =========================
+   SCROLLBAR
+========================= */
+#overlay-new-product .right-panel::-webkit-scrollbar {
+    width: 6px;
+}
+
+#overlay-new-product .right-panel::-webkit-scrollbar-thumb {
+    background: #334155;
+    border-radius: 10px;
+}
+#overlay-new-product .preview-box {
+    margin-top: 10px;
+    width: 100%;
+    height: auto;               /* 🔒 KHÓA CHIỀU CAO */
+    display: none;
+    background: #200b0b;
+    border: 1px dashed #253046;
+    border-radius: 10px;
+    overflow: hidden;            /* ⛔ CHẶN TRÀN */
+}
+/* IMAGE */
+#overlay-new-product #previewImg {
+    display: none;
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;         /* ⭐ GIỮ TỈ LỆ – KHÔNG ĐẨY */
+}
+
+
+
+.btn_erase {
+    background-color: #ef4444;   /* đỏ tươi */
+    color: #fff;                 /* chữ trắng */
+    border: none;                
+    padding: 6px 12px;           /* padding nhỏ hơn */
+    border-radius: 6px;          /* bo tròn vừa phải */
+    font-size: 14px;             /* chữ nhỏ hơn */
+    font-weight: 500;            /* chữ nhẹ hơn */
+    cursor: pointer;             
+    transition: all 0.2s ease;  /* hiệu ứng nhanh hơn */
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* bóng nhẹ, tinh tế */
+}
+
+/* Hiệu ứng khi hover */
+.btn_erase:hover {
+    background-color: #f87171;   
+    transform: translateY(-1px); /* nhấc nhẹ */
+    box-shadow: 0 3px 6px rgba(0,0,0,0.15); 
+}
+
+/* Hiệu ứng khi nhấn */
+.btn_erase:active {
+    transform: translateY(0);  
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1); 
+}

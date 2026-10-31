@@ -1,0 +1,17 @@
+{
+    "products": {
+        "1": {
+            "id": 1,
+            "name": "vinhanh",
+            "description": "23012001",
+            "limit_x_max": 223,
+            "limit_y_max": 52,
+            "limit_z_max": 49,
+            "home_x": 0.0,
+            "home_y": 0.0,
+            "home_z": 0.0,
+            "created_at": "2026-10-01 15:14:42.046269",
+            "updated_at": "2026-10-01 15:14:42.046269"
+        }
+    }
+}

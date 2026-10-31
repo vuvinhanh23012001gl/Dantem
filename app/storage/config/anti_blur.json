@@ -1,0 +1,17 @@
+{
+    "fov_mm": 40.0,
+    "sensor_px": 2000,
+    "b_max_px": 0.5,
+    "a0_um": 50.0,
+    "fn_hz": 50.0,
+    "zeta": 0.08,
+    "t_exp_ms": 2.0,
+    "is_hardware_trigger": false,
+    "t_safety_ms": 5.0,
+    "t_settle_ms": 64.0,
+    "t_hold_safety_ms": 17.0,
+    "blur_threshold": 100.0,
+    "auto_retrigger_on_blur": true,
+    "max_retrigger_count": 1,
+    "extra_settle_ms": 20.0
+}

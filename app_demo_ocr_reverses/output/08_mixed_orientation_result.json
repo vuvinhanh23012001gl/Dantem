@@ -1,0 +1,123 @@
+{
+    "image": "08_mixed_orientation.png",
+    "success": true,
+    "total_lines": 3,
+    "orientation": {
+        "angle": 0,
+        "status": "MIXED_ORIENTATION",
+        "confidence": 0.9993,
+        "is_mirrored": false,
+        "skew_angle": 0.0,
+        "is_tilted": false,
+        "has_mixed_orientations": true,
+        "doc_model_angle": 180,
+        "doc_model_confidence": 0.6837
+    },
+    "texts": [
+        {
+            "line_id": 0,
+            "text": "INSPECTOR CARTON QA-2026",
+            "confidence": 1.0,
+            "angle": 0,
+            "status": "NORMAL",
+            "orientation_confidence": 1.0,
+            "is_mirrored": false,
+            "skew_angle": 0.0,
+            "bbox": [
+                37,
+                50,
+                455,
+                79
+            ],
+            "polygon": [
+                [
+                    37,
+                    50
+                ],
+                [
+                    455,
+                    50
+                ],
+                [
+                    455,
+                    79
+                ],
+                [
+                    37,
+                    79
+                ]
+            ]
+        },
+        {
+            "line_id": 1,
+            "text": "LOT: VN20261030-A1",
+            "confidence": 0.9942,
+            "angle": 180,
+            "status": "INVERTED",
+            "orientation_confidence": 0.9981,
+            "is_mirrored": false,
+            "skew_angle": 0.0,
+            "bbox": [
+                266,
+                182,
+                550,
+                208
+            ],
+            "polygon": [
+                [
+                    266,
+                    182
+                ],
+                [
+                    550,
+                    182
+                ],
+                [
+                    550,
+                    208
+                ],
+                [
+                    266,
+                    208
+                ]
+            ]
+        },
+        {
+            "line_id": 2,
+            "text": "MADE IN VIETNAM",
+            "confidence": 0.9998,
+            "angle": 0,
+            "status": "NORMAL",
+            "orientation_confidence": 0.9998,
+            "is_mirrored": false,
+            "skew_angle": 0.22,
+            "bbox": [
+                37,
+                291,
+                293,
+                319
+            ],
+            "polygon": [
+                [
+                    37,
+                    291
+                ],
+                [
+                    293,
+                    292
+                ],
+                [
+                    293,
+                    319
+                ],
+                [
+                    37,
+                    318
+                ]
+            ]
+        }
+    ],
+    "result": "NG",
+    "reason": "Phát hiện tem có nhiều dòng chữ ngược/khác hướng nhau: Dòng #1: NORMAL (0°), Dòng #2: INVERTED (180°), Dòng #3: NORMAL (0°).",
+    "processing_time_ms": 2378.17
+}

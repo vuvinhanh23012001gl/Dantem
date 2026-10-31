@@ -1,0 +1,202 @@
+/* =========================
+   OVERLAY
+========================= */
+#overlay-choose-product {
+    position: fixed;
+    inset: 0; /* top:0; right:0; bottom:0; left:0 */
+    background: rgba(6, 10, 18, 0.65); /* nền mờ */
+    backdrop-filter: blur(6px); /* blur nền */
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 9000;
+    font-family: "Segoe UI", Roboto, Arial, sans-serif;
+}
+
+/* =========================
+   BLOCK CHỌN SẢN PHẨM
+========================= */
+.block_choose-product {
+    min-width: 1000px; /* panel cố định */
+    min-height: 600px;
+    max-width: 70%;
+    max-height: 80%;
+    max-height: 80vh; /* tối đa chiều cao 80% viewport */
+    background: #121826; /* màu nền giống left-panel overlay cũ */
+    border-radius: 14px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.4); /* nổi lên */
+}
+
+/* =========================
+   HEADER
+========================= */
+.block_choose-product #header {
+    position: relative;
+    padding: 20px;
+    font-size: 25px;
+    font-weight: 600;
+    color: #e5e7eb;
+    background: #0b1020; /* header tách nền panel */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 14px 14px 0 0;
+    box-shadow: inset 0 -1px 0 rgba(255,255,255,0.05);
+  
+}
+
+.block_choose-product #header {
+    position: relative; /* ✅ cần để #close position:absolute căn header */
+    padding: 20px 20px; 
+    font-size: 25px;
+    font-weight: 600;
+    color: #e5e7eb;
+    background: #0b1020;
+    display: flex;
+    align-items: center;
+    border-radius: 14px 14px 0 0;
+    box-shadow: inset 0 -1px 0 rgba(255,255,255,0.05);
+}
+
+/* Nút X đóng overlay */
+.block_choose-product #header #close-choose-product {
+    cursor: pointer;
+    font-weight: 900; /* đậm nhưng không quá 1000 */
+    font-size: 36px; /* lớn vừa phải */
+    color: #f87171;
+    position: absolute;
+    right: 20px;
+    top: 50%; 
+    transform: translateY(-50%); /* chính giữa theo chiều dọc */
+    transition: all 0.2s ease; /* hiệu ứng mượt */
+}
+
+/* Hover: nổi bật hơn */
+.block_choose-product #header #close-choose-product:hover {
+    color: #ff4d4d;
+    transform: translateY(-50%) scale(1.2); /* phóng to nhẹ */
+    text-shadow: 0 0 8px rgba(255,77,77,0.7);
+}
+
+/* Nhấn: hiệu ứng nhấn xuống */
+.block_choose-product #header #close-choose-product:active {
+    transform: translateY(-50%) scale(1.0); /* trở về bình thường */
+    filter: brightness(0.9);
+}
+
+/* =========================
+   CONTAINER CHỌN SẢN PHẨM
+========================= */
+#container-chose-product {
+    padding: 100px;
+    background: #0f1424;
+    flex: 1;
+    overflow-y: auto;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+}
+
+/* =========================
+   SCROLLBAR
+========================= */
+#container-chose-product::-webkit-scrollbar {
+    width: 6px;
+}
+#container-chose-product::-webkit-scrollbar-thumb {
+    background: #334155;
+    border-radius: 10px;
+}
+
+/* =========================
+   ITEM SẢN PHẨM
+========================= */
+#container-chose-product .product-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 12px;
+    background: #121826;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+#container-chose-product .product-item:hover {
+    background: rgba(59, 130, 246, 0.08);
+}
+
+/* =========================
+   BUTTON CHỌN
+========================= */
+#container-chose-product .btn_erase {
+    background-color: #ef4444; /* đỏ tươi */
+    color: #fff;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+#container-chose-product .btn_erase:hover {
+    background-color: #f87171;
+    transform: translateY(-1px);
+}
+
+#container-chose-product .btn_erase:active {
+    transform: translateY(0);
+}
+
+.div-product {
+      position: relative;
+      background: #ffffff;
+      border: 2px solid #ddd;
+      border-radius: 12px;
+      padding: 15px 20px;
+      width: 350px;
+      height: 320px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      transition: transform 0.3s, box-shadow 0.3s;
+      cursor: pointer;
+}
+
+
+.div-product.active {
+    outline: 15px solid rgb(105, 82, 234); /* outline không làm layout thay đổi */
+}
+.div-product {
+    position: relative;
+    background: #ffffff;
+    border: 2px solid #ddd;
+    border-radius: 12px;
+    padding: 15px 20px;
+    width: 350px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+    cursor: pointer;
+}
+.div-product:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+}
+
+.div-product h3 {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 8px;
+    color: #333;
+}
+
+.div-product h4 {
+    font-size: 15px;
+    font-weight: normal;
+    color: #666;
+    margin: 0;
+    word-break: break-word;
+}

@@ -1,0 +1,35 @@
+# Core OCR & Deep Learning Framework
+paddlepaddle==3.2.0
+paddleocr==3.7.0
+paddlex==3.7.2
+
+# Image Processing & Geometry
+opencv-python==5.0.0.93
+opencv-contrib-python==4.10.0.84
+pillow==12.3.0
+numpy==2.3.5
+shapely==2.1.2
+pyclipper==1.4.0
+imagesize==2.0.0
+pypdfium2==5.12.1
+python-bidi==0.6.11
+
+# Data Validation & Configuration
+pydantic==2.13.4
+pydantic_core==2.46.4
+PyYAML==6.0.2
+ruamel.yaml==0.19.1
+ujson==5.13.0
+
+# GUI Desktop Application
+PySide6==6.11.2
+PySide6_Addons==6.11.2
+PySide6_Essentials==6.11.2
+shiboken6==6.11.2
+
+# Utilities & Visualization
+matplotlib==3.11.1
+prettytable==3.18.0
+colorlog==6.12.0
+tqdm==4.70.0
+requests==2.34.2

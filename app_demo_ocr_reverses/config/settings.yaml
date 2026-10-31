@@ -1,0 +1,35 @@
+app:
+  name: "Industrial Label OCR & Orientation Inspector"
+  version: "1.0.0"
+  offline_mode: true
+  disable_model_source_check: true
+
+models:
+  doc_orientation_model_name: "PP-LCNet_x1_0_doc_ori"
+  textline_orientation_model_name: "PP-LCNet_x1_0_textline_ori"
+  text_detection_model_name: "PP-OCRv6_medium_det"
+  text_recognition_model_name: "PP-OCRv6_medium_rec"
+  device: "cpu"
+
+detection:
+  limit_side_len: 960
+  limit_type: "max"
+  thresh: 0.3
+  box_thresh: 0.55
+  unclip_ratio: 1.8
+
+recognition:
+  score_thresh: 0.35
+  batch_size: 8
+
+orientation:
+  vertical_aspect_ratio_thresh: 1.5
+  skew_warning_deg: 5.0
+  mirror_score_margin: 0.08
+  mirror_min_rec_score: 0.72
+  enable_mirror_detection: true
+  enable_multi_hypothesis_check: true
+
+paths:
+  test_images_dir: "data/test_images"
+  output_dir: "output"

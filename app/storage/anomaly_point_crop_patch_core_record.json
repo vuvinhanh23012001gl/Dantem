@@ -1,0 +1,147 @@
+[
+  {
+    "run_id": "model_anomaly_point_crop_20261031_060037_008116",
+    "created_at": "2026-10-31T06:00:49.166266+00:00",
+    "purpose": "train patchcore anomaly point",
+    "status": "completed",
+    "model_root": "app/input/model/patch_core/1/0/36/roi_1/model_anomaly_point_crop_20261031_060037_008116",
+    "model_file": "app/input/model/patch_core/1/0/36/roi_1/model_anomaly_point_crop_20261031_060037_008116/the_first/patchcore.index",
+    "inference_result": "app/input/model/patch_core/1/0/36/roi_1/model_anomaly_point_crop_20261031_060037_008116/the_first/inference_result.png",
+    "runtime_images_root": "app/input/model/patch_core/1/0/36/roi_1/model_anomaly_point_crop_20261031_060037_008116/runtime",
+    "roi_list": [
+      "anomaly_point"
+    ],
+    "crop_roi": {
+      "xStart": 1474,
+      "yStart": 460,
+      "xEnd": 1814,
+      "yEnd": 856
+    },
+    "train_config": {
+      "img_size": 256,
+      "batch_size": 32,
+      "coreset_ratio": 1.0,
+      "n_list": 32,
+      "n_probe": 8,
+      "num_workers": 0,
+      "seed": 42,
+      "device": "cpu"
+    }
+  },
+  {
+    "run_id": "model_anomaly_point_crop_20261031_060014_892579",
+    "created_at": "2026-10-31T06:00:26.687408+00:00",
+    "purpose": "train patchcore anomaly point",
+    "status": "completed",
+    "model_root": "app/input/model/patch_core/1/0/36/roi_0/model_anomaly_point_crop_20261031_060014_892579",
+    "model_file": "app/input/model/patch_core/1/0/36/roi_0/model_anomaly_point_crop_20261031_060014_892579/the_first/patchcore.index",
+    "inference_result": "app/input/model/patch_core/1/0/36/roi_0/model_anomaly_point_crop_20261031_060014_892579/the_first/inference_result.png",
+    "runtime_images_root": "app/input/model/patch_core/1/0/36/roi_0/model_anomaly_point_crop_20261031_060014_892579/runtime",
+    "roi_list": [
+      "anomaly_point"
+    ],
+    "crop_roi": {
+      "xStart": 678,
+      "yStart": 292,
+      "xEnd": 1346,
+      "yEnd": 750
+    },
+    "train_config": {
+      "img_size": 256,
+      "batch_size": 32,
+      "coreset_ratio": 1.0,
+      "n_list": 32,
+      "n_probe": 8,
+      "num_workers": 0,
+      "seed": 42,
+      "device": "cpu"
+    }
+  },
+  {
+    "run_id": "model_anomaly_point_crop_20261031_043058_735962",
+    "created_at": "2026-10-31T04:31:07.150041+00:00",
+    "purpose": "train patchcore anomaly point",
+    "status": "completed",
+    "model_root": "app/input/model/patch_core/1/0/37/roi_1/model_anomaly_point_crop_20261031_043058_735962",
+    "model_file": "app/input/model/patch_core/1/0/37/roi_1/model_anomaly_point_crop_20261031_043058_735962/the_first/patchcore.index",
+    "inference_result": "app/input/model/patch_core/1/0/37/roi_1/model_anomaly_point_crop_20261031_043058_735962/the_first/inference_result.png",
+    "runtime_images_root": "app/input/model/patch_core/1/0/37/roi_1/model_anomaly_point_crop_20261031_043058_735962/runtime",
+    "roi_list": [
+      "anomaly_point"
+    ],
+    "crop_roi": {
+      "xStart": 1302,
+      "yStart": 508,
+      "xEnd": 1822,
+      "yEnd": 832
+    },
+    "train_config": {
+      "img_size": 256,
+      "batch_size": 32,
+      "coreset_ratio": 1.0,
+      "n_list": 32,
+      "n_probe": 8,
+      "num_workers": 0,
+      "seed": 42,
+      "device": "cpu"
+    }
+  },
+  {
+    "run_id": "model_anomaly_point_crop_20261031_035944_812850",
+    "created_at": "2026-10-31T03:59:54.867676+00:00",
+    "purpose": "train patchcore anomaly point",
+    "status": "completed",
+    "model_root": "app/input/model/patch_core/1/0/25/roi_0/model_anomaly_point_crop_20261031_035944_812850",
+    "model_file": "app/input/model/patch_core/1/0/25/roi_0/model_anomaly_point_crop_20261031_035944_812850/the_first/patchcore.index",
+    "inference_result": "app/input/model/patch_core/1/0/25/roi_0/model_anomaly_point_crop_20261031_035944_812850/the_first/inference_result.png",
+    "runtime_images_root": "app/input/model/patch_core/1/0/25/roi_0/model_anomaly_point_crop_20261031_035944_812850/runtime",
+    "roi_list": [
+      "anomaly_point"
+    ],
+    "crop_roi": {
+      "xStart": 928,
+      "yStart": 592,
+      "xEnd": 1492,
+      "yEnd": 948
+    },
+    "train_config": {
+      "img_size": 256,
+      "batch_size": 32,
+      "coreset_ratio": 1.0,
+      "n_list": 32,
+      "n_probe": 8,
+      "num_workers": 0,
+      "seed": 42,
+      "device": "cpu"
+    }
+  },
+  {
+    "run_id": "model_anomaly_point_crop_20261031_013703_522776",
+    "created_at": "2026-10-31T01:37:14.177034+00:00",
+    "purpose": "train patchcore anomaly point",
+    "status": "completed",
+    "model_root": "app/input/model/patch_core/1/0/1/roi_0/model_anomaly_point_crop_20261031_013703_522776",
+    "model_file": "app/input/model/patch_core/1/0/1/roi_0/model_anomaly_point_crop_20261031_013703_522776/the_first/patchcore.index",
+    "inference_result": "app/input/model/patch_core/1/0/1/roi_0/model_anomaly_point_crop_20261031_013703_522776/the_first/inference_result.png",
+    "runtime_images_root": "app/input/model/patch_core/1/0/1/roi_0/model_anomaly_point_crop_20261031_013703_522776/runtime",
+    "roi_list": [
+      "anomaly_point"
+    ],
+    "crop_roi": {
+      "xStart": 618,
+      "yStart": 296,
+      "xEnd": 1200,
+      "yEnd": 726
+    },
+    "train_config": {
+      "img_size": 256,
+      "batch_size": 32,
+      "coreset_ratio": 1.0,
+      "n_list": 32,
+      "n_probe": 8,
+      "num_workers": 0,
+      "seed": 42,
+      "device": "cpu"
+    }
+  }
+]

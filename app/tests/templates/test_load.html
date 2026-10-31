@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Modern Loading</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:"Segoe UI",sans-serif;
+}
+
+body{
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:linear-gradient(135deg,#0f172a,#1e3a8a,#2563eb);
+}
+
+button{
+    padding:16px 35px;
+    font-size:18px;
+    border:none;
+    border-radius:12px;
+    cursor:pointer;
+    background:white;
+    color:#2563eb;
+    font-weight:bold;
+    transition:.3s;
+}
+
+button:hover{
+    transform:scale(1.05);
+}
+
+/* ========================= */
+
+.loading{
+
+    position:fixed;
+    inset:0;
+
+    display:none;
+
+    justify-content:center;
+    align-items:center;
+
+    background:rgba(0,0,0,.45);
+
+    backdrop-filter:blur(8px);
+
+    z-index:9999;
+}
+
+/* ========================= */
+
+.card{
+
+    width:360px;
+
+    background:rgba(255,255,255,.15);
+
+    border:1px solid rgba(255,255,255,.2);
+
+    border-radius:25px;
+
+    padding:35px;
+
+    text-align:center;
+
+    backdrop-filter:blur(15px);
+
+    box-shadow:
+    0 10px 40px rgba(0,0,0,.35);
+
+}
+
+/* ========================= */
+
+.loader{
+
+    position:relative;
+
+    width:110px;
+    height:110px;
+
+    margin:auto;
+
+}
+
+.loader span{
+
+    position:absolute;
+
+    inset:0;
+
+    border-radius:50%;
+
+    border:6px solid transparent;
+
+    border-top:6px solid #00d4ff;
+
+    animation:spin 1.2s linear infinite;
+
+}
+
+.loader span:nth-child(2){
+
+    inset:12px;
+
+    border-top-color:#4ade80;
+
+    animation-duration:1.8s;
+
+}
+
+.loader span:nth-child(3){
+
+    inset:24px;
+
+    border-top-color:#ffffff;
+
+    animation-duration:.8s;
+
+}
+
+/* ========================= */
+
+.glow{
+
+    width:18px;
+    height:18px;
+
+    background:#00d4ff;
+
+    border-radius:50%;
+
+    position:absolute;
+
+    left:50%;
+    top:50%;
+
+    transform:translate(-50%,-50%);
+
+    box-shadow:
+
+    0 0 20px #00d4ff,
+
+    0 0 40px #00d4ff,
+
+    0 0 60px #00d4ff;
+
+}
+
+/* ========================= */
+
+h2{
+
+    margin-top:30px;
+
+    color:white;
+
+}
+
+p{
+
+    color:#ddd;
+
+    margin-top:10px;
+
+    min-height:22px;
+
+}
+
+/* ========================= */
+
+.progress{
+
+    width:100%;
+
+    height:10px;
+
+    background:rgba(255,255,255,.15);
+
+    border-radius:50px;
+
+    margin-top:25px;
+
+    overflow:hidden;
+
+}
+
+.progress div{
+
+    width:0%;
+
+    height:100%;
+
+    border-radius:50px;
+
+    background:linear-gradient(90deg,#00d4ff,#4ade80);
+
+    transition:width .4s;
+
+}
+
+/* ========================= */
+
+.percent{
+
+    color:white;
+
+    margin-top:10px;
+
+    font-size:15px;
+
+}
+
+/* ========================= */
+
+.dots{
+
+    margin-top:20px;
+
+}
+
+.dots span{
+
+    display:inline-block;
+
+    width:10px;
+
+    height:10px;
+
+    margin:5px;
+
+    border-radius:50%;
+
+    background:white;
+
+    animation:bounce 1s infinite;
+
+}
+
+.dots span:nth-child(2){
+
+    animation-delay:.2s;
+
+}
+
+.dots span:nth-child(3){
+
+    animation-delay:.4s;
+
+}
+
+/* ========================= */
+
+@keyframes spin{
+
+    from{
+
+        transform:rotate(0deg);
+
+    }
+
+    to{
+
+        transform:rotate(360deg);
+
+    }
+
+}
+
+@keyframes bounce{
+
+    0%,80%,100%{
+
+        transform:translateY(0);
+
+        opacity:.4;
+
+    }
+
+    40%{
+
+        transform:translateY(-12px);
+
+        opacity:1;
+
+    }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<button onclick="runLoading()">
+Bắt đầu xử lý
+</button>
+
+<div class="loading" id="loading">
+    <div class="card">
+        <div class="loader">
+            <span></span>
+            <span></span>
+            <span></span>
+            <div class="glow"></div>
+        </div>
+        <h2>Đang xử lý</h2>
+        <p id="status">
+            Khởi tạo...
+        </p>
+        <div class="progress">
+            <div id="bar"></div>
+        </div>
+        <div class="percent" id="percent">
+            0%
+        </div>
+        <div class="dots">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </div>
+</div>
+
+<script>
+
+const loading=document.getElementById("loading");
+const status=document.getElementById("status");
+const bar=document.getElementById("bar");
+const percent=document.getElementById("percent");
+
+function sleep(ms){
+
+    return new Promise(resolve=>setTimeout(resolve,ms));
+
+}
+
+async function step(text,p,time){
+
+    status.innerHTML=text;
+
+    bar.style.width=p+"%";
+
+    percent.innerHTML=p+"%";
+
+    await sleep(time);
+
+}
+
+async function runLoading(){
+
+    loading.style.display="flex";
+
+    await step("Khởi tạo hệ thống...",10,800);
+
+    await step("Kết nối Camera...",25,1200);
+
+    await step("Điều khiển STM32...",40,1200);
+
+    await step("Chụp ảnh...",60,1500);
+
+    await step("AI đang xử lý...",80,2200);
+
+    await step("Đang lưu dữ liệu...",95,1000);
+
+    await step("✔ Hoàn thành",100,800);
+
+    loading.style.display="none";
+
+    alert("Xử lý xong!");
+
+}
+
+</script>
+
+</body>
+</html>

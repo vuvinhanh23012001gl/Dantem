@@ -1,0 +1,361 @@
+{
+    "image": "09_real_label_0deg.jpg",
+    "success": true,
+    "total_lines": 10,
+    "orientation": {
+        "angle": 0,
+        "status": "NORMAL",
+        "confidence": 1.0,
+        "is_mirrored": false,
+        "skew_angle": -1.29,
+        "is_tilted": false,
+        "has_mixed_orientations": false,
+        "doc_model_angle": 0,
+        "doc_model_confidence": 0.924
+    },
+    "texts": [
+        {
+            "line_id": 0,
+            "text": "Lenovo",
+            "confidence": 1.0,
+            "angle": 0,
+            "status": "NORMAL",
+            "orientation_confidence": 1.0,
+            "is_mirrored": false,
+            "skew_angle": -2.0,
+            "bbox": [
+                54,
+                47,
+                256,
+                109
+            ],
+            "polygon": [
+                [
+                    54,
+                    54
+                ],
+                [
+                    254,
+                    47
+                ],
+                [
+                    256,
+                    102
+                ],
+                [
+                    56,
+                    109
+                ]
+            ]
+        },
+        {
+            "line_id": 1,
+            "text": "激光多功能一体机(多功能打印一体机)",
+            "confidence": 0.9647,
+            "angle": 0,
+            "status": "NORMAL",
+            "orientation_confidence": 1.0,
+            "is_mirrored": false,
+            "skew_angle": -0.94,
+            "bbox": [
+                56,
+                99,
+                608,
+                154
+            ],
+            "polygon": [
+                [
+                    56,
+                    107
+                ],
+                [
+                    607,
+                    98
+                ],
+                [
+                    608,
+                    145
+                ],
+                [
+                    57,
+                    154
+                ]
+            ]
+        },
+        {
+            "line_id": 2,
+            "text": "1类激光产品",
+            "confidence": 1.0,
+            "angle": 0,
+            "status": "NORMAL",
+            "orientation_confidence": 1.0,
+            "is_mirrored": false,
+            "skew_angle": 2.17,
+            "bbox": [
+                824,
+                113,
+                1011,
+                172
+            ],
+            "polygon": [
+                [
+                    826,
+                    113
+                ],
+                [
+                    1011,
+                    120
+                ],
+                [
+                    1009,
+                    173
+                ],
+                [
+                    824,
+                    166
+                ]
+            ]
+        },
+        {
+            "line_id": 3,
+            "text": "产品型号：M7605D",
+            "confidence": 0.9998,
+            "angle": 0,
+            "status": "NORMAL",
+            "orientation_confidence": 1.0,
+            "is_mirrored": false,
+            "skew_angle": -1.55,
+            "bbox": [
+                57,
+                142,
+                316,
+                186
+            ],
+            "polygon": [
+                [
+                    57,
+                    149
+                ],
+                [
+                    315,
+                    142
+                ],
+                [
+                    316,
+                    179
+                ],
+                [
+                    58,
+                    186
+                ]
+            ]
+        },
+        {
+            "line_id": 4,
+            "text": "额定电源：220V-240V～50/60Hz4.6A",
+            "confidence": 0.9823,
+            "angle": 0,
+            "status": "NORMAL",
+            "orientation_confidence": 1.0,
+            "is_mirrored": false,
+            "skew_angle": -1.2,
+            "bbox": [
+                56,
+                169,
+                535,
+                215
+            ],
+            "polygon": [
+                [
+                    56,
+                    179
+                ],
+                [
+                    535,
+                    169
+                ],
+                [
+                    536,
+                    206
+                ],
+                [
+                    57,
+                    216
+                ]
+            ]
+        },
+        {
+            "line_id": 5,
+            "text": "CLASS 1 LASER PRODUCT",
+            "confidence": 0.9894,
+            "angle": 0,
+            "status": "NORMAL",
+            "orientation_confidence": 0.9996,
+            "is_mirrored": false,
+            "skew_angle": 0.52,
+            "bbox": [
+                807,
+                187,
+                1027,
+                222
+            ],
+            "polygon": [
+                [
+                    807,
+                    187
+                ],
+                [
+                    1027,
+                    189
+                ],
+                [
+                    1027,
+                    222
+                ],
+                [
+                    807,
+                    220
+                ]
+            ]
+        },
+        {
+            "line_id": 6,
+            "text": "生产编号：",
+            "confidence": 0.9999,
+            "angle": 0,
+            "status": "NORMAL",
+            "orientation_confidence": 1.0,
+            "is_mirrored": false,
+            "skew_angle": -1.39,
+            "bbox": [
+                55,
+                206,
+                180,
+                246
+            ],
+            "polygon": [
+                [
+                    55,
+                    208
+                ],
+                [
+                    179,
+                    205
+                ],
+                [
+                    180,
+                    243
+                ],
+                [
+                    56,
+                    246
+                ]
+            ]
+        },
+        {
+            "line_id": 7,
+            "text": "WP04635295 WP06063007",
+            "confidence": 0.9999,
+            "angle": 0,
+            "status": "NORMAL",
+            "orientation_confidence": 1.0,
+            "is_mirrored": false,
+            "skew_angle": -0.47,
+            "bbox": [
+                193,
+                218,
+                680,
+                280
+            ],
+            "polygon": [
+                [
+                    193,
+                    222
+                ],
+                [
+                    680,
+                    218
+                ],
+                [
+                    680,
+                    276
+                ],
+                [
+                    193,
+                    280
+                ]
+            ]
+        },
+        {
+            "line_id": 8,
+            "text": "至像科技有限公司·越南制造",
+            "confidence": 0.9998,
+            "angle": 0,
+            "status": "NORMAL",
+            "orientation_confidence": 1.0,
+            "is_mirrored": false,
+            "skew_angle": -3.09,
+            "bbox": [
+                747,
+                335,
+                1021,
+                386
+            ],
+            "polygon": [
+                [
+                    747,
+                    350
+                ],
+                [
+                    1019,
+                    335
+                ],
+                [
+                    1021,
+                    372
+                ],
+                [
+                    749,
+                    387
+                ]
+            ]
+        },
+        {
+            "line_id": 9,
+            "text": "D02HMH001 >PS<",
+            "confidence": 0.9974,
+            "angle": 0,
+            "status": "NORMAL",
+            "orientation_confidence": 1.0,
+            "is_mirrored": false,
+            "skew_angle": -1.41,
+            "bbox": [
+                518,
+                358,
+                722,
+                393
+            ],
+            "polygon": [
+                [
+                    518,
+                    363
+                ],
+                [
+                    721,
+                    358
+                ],
+                [
+                    722,
+                    388
+                ],
+                [
+                    519,
+                    393
+                ]
+            ]
+        }
+    ],
+    "result": "OK",
+    "reason": "Tất cả các dòng chữ đều đúng chiều chuẩn (0°).",
+    "processing_time_ms": 3966.35
+}

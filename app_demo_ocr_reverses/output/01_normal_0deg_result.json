@@ -1,0 +1,191 @@
+{
+    "image": "01_normal_0deg.png",
+    "success": true,
+    "total_lines": 5,
+    "orientation": {
+        "angle": 0,
+        "status": "NORMAL",
+        "confidence": 1.0,
+        "is_mirrored": false,
+        "skew_angle": 0.0,
+        "is_tilted": false,
+        "has_mixed_orientations": false,
+        "doc_model_angle": 0,
+        "doc_model_confidence": 0.9215
+    },
+    "texts": [
+        {
+            "line_id": 0,
+            "text": "INSPECTOR CARTON QA-2026",
+            "confidence": 1.0,
+            "angle": 0,
+            "status": "NORMAL",
+            "orientation_confidence": 1.0,
+            "is_mirrored": false,
+            "skew_angle": 0.0,
+            "bbox": [
+                31,
+                33,
+                482,
+                68
+            ],
+            "polygon": [
+                [
+                    31,
+                    33
+                ],
+                [
+                    482,
+                    33
+                ],
+                [
+                    482,
+                    68
+                ],
+                [
+                    31,
+                    68
+                ]
+            ]
+        },
+        {
+            "line_id": 1,
+            "text": "MODEL: IC-9800 PRO",
+            "confidence": 0.9994,
+            "angle": 0,
+            "status": "NORMAL",
+            "orientation_confidence": 1.0,
+            "is_mirrored": false,
+            "skew_angle": 0.4,
+            "bbox": [
+                30,
+                106,
+                319,
+                142
+            ],
+            "polygon": [
+                [
+                    30,
+                    106
+                ],
+                [
+                    319,
+                    108
+                ],
+                [
+                    319,
+                    142
+                ],
+                [
+                    30,
+                    140
+                ]
+            ]
+        },
+        {
+            "line_id": 2,
+            "text": "LOT: VN20261030-A1",
+            "confidence": 0.9987,
+            "angle": 0,
+            "status": "NORMAL",
+            "orientation_confidence": 1.0,
+            "is_mirrored": false,
+            "skew_angle": 0.0,
+            "bbox": [
+                32,
+                170,
+                312,
+                201
+            ],
+            "polygon": [
+                [
+                    32,
+                    170
+                ],
+                [
+                    312,
+                    170
+                ],
+                [
+                    312,
+                    201
+                ],
+                [
+                    32,
+                    201
+                ]
+            ]
+        },
+        {
+            "line_id": 3,
+            "text": "MFG: 2026-10-30 EXP: 2028-10-30",
+            "confidence": 0.9947,
+            "angle": 0,
+            "status": "NORMAL",
+            "orientation_confidence": 1.0,
+            "is_mirrored": false,
+            "skew_angle": 0.0,
+            "bbox": [
+                32,
+                230,
+                418,
+                257
+            ],
+            "polygon": [
+                [
+                    32,
+                    230
+                ],
+                [
+                    418,
+                    230
+                ],
+                [
+                    418,
+                    257
+                ],
+                [
+                    32,
+                    257
+                ]
+            ]
+        },
+        {
+            "line_id": 4,
+            "text": "MADE IN VIETNAM",
+            "confidence": 0.9999,
+            "angle": 0,
+            "status": "NORMAL",
+            "orientation_confidence": 0.9999,
+            "is_mirrored": false,
+            "skew_angle": 0.0,
+            "bbox": [
+                33,
+                365,
+                285,
+                394
+            ],
+            "polygon": [
+                [
+                    33,
+                    365
+                ],
+                [
+                    285,
+                    365
+                ],
+                [
+                    285,
+                    394
+                ],
+                [
+                    33,
+                    394
+                ]
+            ]
+        }
+    ],
+    "result": "OK",
+    "reason": "Tất cả các dòng chữ đều đúng chiều chuẩn (0°).",
+    "processing_time_ms": 2977.7
+}

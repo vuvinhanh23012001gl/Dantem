@@ -1,0 +1,189 @@
+[
+    {
+        "file": "01_normal_0deg.png",
+        "category": "Chữ đúng chiều (0°)",
+        "expected_angle": 0,
+        "expected_status": "NORMAL",
+        "expected_result": "OK",
+        "expected_keywords": [
+            "INSPECTOR",
+            "IC-9800",
+            "VN20261030",
+            "2026-10-30",
+            "VIETNAM"
+        ]
+    },
+    {
+        "file": "02_rotated_90deg.png",
+        "category": "Chữ xoay 90° CW",
+        "expected_angle": 90,
+        "expected_status": "ROTATED_90",
+        "expected_result": "NG",
+        "expected_keywords": [
+            "INSPECTOR",
+            "IC-9800",
+            "VN20261030",
+            "2026-10-30",
+            "VIETNAM"
+        ]
+    },
+    {
+        "file": "03_inverted_180deg.png",
+        "category": "Chữ xoay ngược 180°",
+        "expected_angle": 180,
+        "expected_status": "INVERTED",
+        "expected_result": "NG",
+        "expected_keywords": [
+            "INSPECTOR",
+            "IC-9800",
+            "VN20261030",
+            "2026-10-30",
+            "VIETNAM"
+        ]
+    },
+    {
+        "file": "04_rotated_270deg.png",
+        "category": "Chữ xoay 270° CW",
+        "expected_angle": 270,
+        "expected_status": "ROTATED_270",
+        "expected_result": "NG",
+        "expected_keywords": [
+            "INSPECTOR",
+            "IC-9800",
+            "VN20261030",
+            "2026-10-30",
+            "VIETNAM"
+        ]
+    },
+    {
+        "file": "05_mirror_horizontal.png",
+        "category": "Chữ lật gương trái-phải (Mirror)",
+        "expected_angle": 0,
+        "expected_status": "MIRROR",
+        "expected_result": "NG",
+        "expected_keywords": [
+            "INSPECTOR",
+            "IC-9800",
+            "VN20261030",
+            "2026-10-30",
+            "VIETNAM"
+        ]
+    },
+    {
+        "file": "06_tilted_8deg.png",
+        "category": "Chữ bị nghiêng nhẹ (+8° Skew, vẫn đúng chiều 0°)",
+        "expected_angle": 0,
+        "expected_status": "NORMAL",
+        "expected_result": "OK",
+        "expected_keywords": [
+            "INSPECTOR",
+            "IC-9800",
+            "VN20261030",
+            "2026-10-30",
+            "VIETNAM"
+        ]
+    },
+    {
+        "file": "07_blur_noisy_lowlight.png",
+        "category": "Chữ mờ, nhiễu và thiếu sáng (0°)",
+        "expected_angle": 0,
+        "expected_status": "NORMAL",
+        "expected_result": "OK",
+        "expected_keywords": [
+            "INSPECTOR",
+            "IC-9800",
+            "VN20261030",
+            "2026-10-30",
+            "VIETNAM"
+        ]
+    },
+    {
+        "file": "08_mixed_orientation.png",
+        "category": "Tem nhiều dòng chữ ngược hướng nhau (0° + 180°)",
+        "expected_angle": 0,
+        "expected_status": "MIXED_ORIENTATION",
+        "expected_result": "NG",
+        "expected_keywords": [
+            "INSPECTOR",
+            "VN20261030",
+            "VIETNAM"
+        ]
+    },
+    {
+        "file": "09_real_label_0deg.jpg",
+        "category": "Tem thực tế công nghiệp (0°)",
+        "expected_angle": 0,
+        "expected_status": "NORMAL",
+        "expected_result": "OK",
+        "expected_keywords": [
+            "Lenovo",
+            "M7605D",
+            "WP04635295",
+            "LASER"
+        ]
+    },
+    {
+        "file": "10_real_label_90deg.jpg",
+        "category": "Tem thực tế công nghiệp xoay 90°",
+        "expected_angle": 90,
+        "expected_status": "ROTATED_90",
+        "expected_result": "NG",
+        "expected_keywords": [
+            "Lenovo",
+            "M7605D",
+            "WP04635295",
+            "LASER"
+        ]
+    },
+    {
+        "file": "11_real_label_180deg.jpg",
+        "category": "Tem thực tế công nghiệp xoay 180°",
+        "expected_angle": 180,
+        "expected_status": "INVERTED",
+        "expected_result": "NG",
+        "expected_keywords": [
+            "Lenovo",
+            "M7605D",
+            "WP04635295",
+            "LASER"
+        ]
+    },
+    {
+        "file": "12_real_label_270deg.jpg",
+        "category": "Tem thực tế công nghiệp xoay 270°",
+        "expected_angle": 270,
+        "expected_status": "ROTATED_270",
+        "expected_result": "NG",
+        "expected_keywords": [
+            "Lenovo",
+            "M7605D",
+            "WP04635295",
+            "LASER"
+        ]
+    },
+    {
+        "file": "13_real_label_mirror.jpg",
+        "category": "Tem thực tế công nghiệp lật gương (Mirror)",
+        "expected_angle": 0,
+        "expected_status": "MIRROR",
+        "expected_result": "NG",
+        "expected_keywords": [
+            "Lenovo",
+            "M7605D",
+            "WP04635295",
+            "LASER"
+        ]
+    },
+    {
+        "file": "14_edgecase_symmetric_180deg.png",
+        "category": "Edge-case ký tự đối xứng tâm 180° (80808 / HOXOH)",
+        "expected_angle": 180,
+        "expected_status": "INVERTED",
+        "expected_result": "NG",
+        "expected_keywords": [
+            "80808",
+            "HOXOH"
+        ],
+        "is_symmetric_edgecase": true
+    }
+]

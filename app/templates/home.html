@@ -1,0 +1,1709 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=0.7">
+    <link rel="icon" type="image/png" href="../static/img/image.png">
+    <link rel="stylesheet" href="../static/css/home.css?v=20261030_7">
+    <link rel="stylesheet" href="../static/css/add_new_product.css">
+    <link rel="stylesheet" href="../static/css/choose_product.css">
+    <link rel="stylesheet" href="../static/css/config_software.css">
+    <link rel="stylesheet" href="../static/css/draw_regulations.css">
+    <link rel="stylesheet" href="../static/css/accept_erase_product.css">
+    <link rel="stylesheet" href="../static/css/adjust_master.css">
+    <link rel="stylesheet" href="../static/css/camera_config_panel.css">
+    <link rel="stylesheet" href="../static/css/barcode_config.css">
+    <script src="../static/cnd/cnd_lybrary.js"></script>
+    <title>Kiểm tra độ rộng hộp mực</title>
+</head>
+
+<body>
+    <!-- ==========================================
+         HEADER MENU
+         ========================================== -->
+    <div class="header">
+        <ul class="header-ul">
+            <li class="header-ul-li" id="choose-product">
+                Chọn loại sản phẩm
+            </li>
+            <li class="header-ul-li" id="add-product">
+                Thêm xóa sản phẩm
+            </li>
+            <li class="header-ul-li">
+                Cài đặt dữ liệu
+                <img id="preview">
+                <ul class="header-ul-li-master">
+                    <li id="header-ul-li-capture-product">Lấy ảnh mẫu</li>
+                    <li id="header-ul-li-adjustment-master">Điều chỉnh master</li>
+                </ul>
+            </li>
+
+            <li class="header-ul-li">
+                Cấu hình
+                <ul>
+                    <li id="btn-open-camera-config">Cấu hình camera</li>
+                    <li id="btn-open-barcode-config">Cấu hình Barcode</li>
+                    <li id="btn-open-software-config">Cấu hình phần mềm</li>
+                </ul>
+            </li>
+
+            <li class="header-ul-li">
+                Thông tin
+                <ul>
+                    <li id="btn_instruct_worker">Hướng dẫn sử dụng phần mềm cho người thao tác</li>
+                    <li id="btn_instruct_staff_ee">Hướng dẫn sử dụng RD&EE</li>
+                    <li id="btn_instruct_fix_erro">Hướng dẫn đối ứng lỗi</li>
+                </ul>
+            </li>
+
+            <!-- <li id="api-run" class="header-ul-li"></li> -->
+
+            <li class="header-ul-li close" id="out-app" style="text-align: center; padding-left: 70px;">
+                Thoát
+            </li>
+        </ul>
+        <div id="current-product-text" title="Sản phẩm hiện tại">
+            Sản phẩm: {{ selected_product_name }}
+        </div>
+    </div>
+
+    <!-- ==========================================
+         WORKSPACE SPLIT FRAME
+         ========================================== -->
+    <div class="split-frame">
+
+        <!-- LEFT WORKSPACE: Image Master, Streaming and Status -->
+        <div class="show-screen">
+            <div class="show-img-master">
+                <div class="scroll-container">
+                </div>
+            </div>
+
+            <div class="show-img">
+                <img id="video-product">
+                <img id="image-preview">
+                <div id="wrap-canvas">
+                    <canvas id="canvasImage"></canvas>
+                    <canvas id="canvasShape"></canvas>
+                    <canvas id="canvasPreview"></canvas>
+                </div>
+            </div>
+            <div class="show-satus">
+                <div class="show-status-left">
+                    <p id="coordinate">Pixel: (0, 0)</p>
+                    <div id="progress-container">
+                        <div id="progress-row"></div>
+                    </div>
+                </div>
+
+                <div class="cluster show-status-right">
+                    <div id="product-count" class="header-show-item-conect">
+                        OK: 0 | NG: 0 | Tổng: 0
+                    </div>
+
+                    <button id="btn_reset_count_total" class="header-show-item-conect" type="button">
+                        Đặt lại
+                    </button>
+
+                    <div id="time-display" class="header-show-item-conect">
+                        Thời gian chạy: 0.0 s
+                    </div>
+
+                    <div class="header-show-item-conect item1">
+                        <span id="element-circle-status-tcp" class="header-show-circle off"></span>
+                        <span id="header-show-status-tcp">Ethernet TCP: Chờ kết nối...</span>
+                    </div>
+
+                    <div class="header-show-item-conect item2">
+                        <span id="element-circle-status-camera" class="header-show-circle off"></span>
+                        <span id="status-connect-cam">Camera chờ kết nối...</span>
+                    </div>
+
+                    <button id="toggleBtn" class="toggle-btn header-show-item-conect" type="button">
+                        Ảnh phán định
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- RIGHT OPTIONS: Operational Control Panels -->
+        <div class="show-option">
+
+            <!-- Panel: Camera Configuration -->
+            <div id="paner-camera-config" class="paner camera-config-panel">
+                <div class="camera-config-header">
+                    <span class="camera-config-kicker">Camera Information</span>
+                    <h2>Thông tin camera</h2>
+                    <p id="camera-config-log" role="status">Camera đã kết nối - Chế độ chỉ đọc (Read-only)</p>
+                </div>
+                <div class="camera-config-fields">
+                    <div class="camera-config-row">
+                        <label for="camera-acquisition-frame-rate">Acquisition Frame Rate</label>
+                        <input id="camera-acquisition-frame-rate" name="acquisition_frame_rate" class="camera-readonly-input" type="text" readonly placeholder="--">
+                    </div>
+                    <div class="camera-config-row">
+                        <label for="camera-exposure-time">Exposure Time</label>
+                        <input id="camera-exposure-time" name="exposure_time" class="camera-readonly-input" type="text" readonly placeholder="--">
+                    </div>
+                    <div class="camera-config-row">
+                        <label for="camera-gain">Gain</label>
+                        <input id="camera-gain" name="gain" class="camera-readonly-input" type="text" readonly placeholder="--">
+                    </div>
+                    <div class="camera-config-row">
+                        <label for="camera-gamma">Gamma</label>
+                        <input id="camera-gamma" name="gamma" class="camera-readonly-input" type="text" readonly placeholder="--">
+                    </div>
+                    <div class="camera-config-row">
+                        <label for="camera-black-level">Black Level</label>
+                        <input id="camera-black-level" name="black_level" class="camera-readonly-input" type="text" readonly placeholder="--">
+                    </div>
+                    <div class="camera-config-row">
+                        <label for="camera-exposure-auto">Exposure Auto</label>
+                        <input id="camera-exposure-auto" name="exposure_auto" class="camera-readonly-input" type="text" readonly placeholder="--">
+                    </div>
+                    <div class="camera-config-row">
+                        <label for="camera-trigger-mode">Trigger Mode</label>
+                        <input id="camera-trigger-mode" name="trigger_mode" class="camera-readonly-input" type="text" readonly placeholder="--">
+                    </div>
+                    <div class="camera-config-row">
+                        <label for="camera-trigger-selector">Trigger Selector</label>
+                        <input id="camera-trigger-selector" name="trigger_selector" class="camera-readonly-input" type="text" readonly placeholder="--">
+                    </div>
+                </div>
+                <div class="camera-info-card">
+                    <div class="camera-info-header">
+                        <span class="camera-config-kicker">Device Information</span>
+                        <strong>Thông tin phần cứng camera</strong>
+                    </div>
+                    <div class="camera-info-fields">
+                        <div class="camera-config-row">
+                            <label for="camera-info-status">Trạng thái kết nối</label>
+                            <input id="camera-info-status" class="camera-readonly-input" type="text" readonly
+                                value="Đang kiểm tra...">
+                        </div>
+                        <div class="camera-config-row">
+                            <label for="camera-info-model">Model thiết bị</label>
+                            <input id="camera-info-model" class="camera-readonly-input" type="text" readonly
+                                value="OMRON Sentech STC-MCS510U3V">
+                        </div>
+                        <div class="camera-config-row">
+                            <label for="camera-info-serial">Số Serial (S/N)</label>
+                            <input id="camera-info-serial" class="camera-readonly-input" type="text" readonly
+                                value="--">
+                        </div>
+                        <div class="camera-config-row">
+                            <label for="camera-info-resolution">Độ phân giải cảm biến</label>
+                            <input id="camera-info-resolution" class="camera-readonly-input" type="text" readonly
+                                value="2448 x 2048 px">
+                        </div>
+                        <div class="camera-config-row">
+                            <label for="camera-info-interface">Chuẩn giao tiếp</label>
+                            <input id="camera-info-interface" class="camera-readonly-input" type="text" readonly
+                                value="USB3 Vision (U3V)">
+                        </div>
+                        <div class="camera-config-row">
+                            <label for="camera-info-payload">Kích thước Payload</label>
+                            <input id="camera-info-payload" class="camera-readonly-input" type="text" readonly
+                                value="--">
+                        </div>
+                    </div>
+                </div>
+                <div class="camera-config-actions">
+                    <button id="camera-config-stream" type="button"><img src="../static/img/live-stream-video.png"
+                            alt="">Stream Video</button>
+                    <button id="camera-config-cancel" type="button"><img src="../static/img/close.png"
+                            alt="">Thoát</button>
+                </div>
+            </div>
+
+            <!-- Panel: Main Status Log -->
+            <div id="paner-main" class="paner active">
+                <div class="paner-main-status-product">
+                    <!--chon run ok eg tuy vao trang thai phan dinh -->
+                    --
+                </div>
+
+                <div class="paner-main-table-show-point">
+                    <div id="table-show-point-detect"></div>
+                </div>
+
+                <div class="paner-main-show-log" id="log_judment"></div>
+            </div>
+
+            <!-- Panel: Drawing Inspection Regulations -->
+            <div id="paner-draw-regulations" class="paner">
+                <div id="part-table-log">
+                    <div class="log" id="log-regulations"></div>
+                    <table class="table">
+                        <tbody id="table"></tbody>
+                    </table>
+                </div>
+
+                <div class="part-controler">
+                    <button id="btn-all-erase">
+                        <img src="../static/img/clean-up.png" alt="icon xóa tất cả">
+                        Xóa tất cả dữ liệu line
+                    </button>
+
+                    <button id="btn-erase">
+                        <img src="../static/img/erase_draw_img.png" alt="icon xóa tất cả hình đã vẽ trong hình">
+                        Xóa dữ liệu quy định
+                    </button>
+
+                    <button id="btn-accept-and-send-server">
+                        <img src="../static/img/apply.png" alt="Áp dụng và thoát">
+                        Áp dụng
+                    </button>
+
+                    <button id="btn-close-draw-regualations">
+                        <img src="../static/img/close.png" alt="Áp dụng và thoát">
+                        Thoát
+                    </button>
+                </div>
+            </div>
+
+
+            <div id="panner-adjust-master" class="paner">
+                <div id="log-anomaly-point" class="log-tool-content master-log" role="status" aria-live="polite"></div>
+                <div id="panner-region-stamp" class="tool-content">
+                    <div class="cof-and-inf-tool-content">
+                        <div id="table-cof-stamp" class="table-cof-tool-content"></div>
+                    </div>
+                    <div class="controler-tool">
+                        <button id="btn-judment-stamp" class="tool-btn btn-controler-mesure-weld-width">
+                            <img src="../static/img/target.png" alt="Chạy model kiểm tra tem">
+                            Chạy model
+                        </button>
+                        <button id="btn-exit-stamp" class="tool-btn btn-controler-mesure-weld-width">
+                            <img src="../static/img/close.png" alt="Đóng tool kiểm tra tem">
+                            Đóng master
+                        </button>
+                    </div>
+                </div>
+                <div id="panner-region-stamp-alignment" class="tool-content">
+                    <div class="cof-and-inf-tool-content">
+                        <div id="table-cof-stamp-alignment" class="table-cof-tool-content"></div>
+                        <div class="stamp-alignment-guide-card">
+                            <div class="stamp-alignment-guide-header">
+                                <span class="guide-header-icon">ℹ️</span>
+                                <span class="guide-header-title">Ý nghĩa các thông số kỹ thuật</span>
+                            </div>
+                            <div class="stamp-alignment-guide-content">
+                                <div class="guide-item">
+                                    <span class="guide-badge">Δu (px)</span>
+                                    <span class="guide-text">Độ lệch tâm ngang dọc theo trục dài của khung bao tem.</span>
+                                </div>
+                                <div class="guide-item">
+                                    <span class="guide-badge">Δv (px)</span>
+                                    <span class="guide-text">Độ lệch tâm dọc dọc theo trục ngắn của khung bao tem.</span>
+                                </div>
+                                <div class="guide-item">
+                                    <span class="guide-badge">Δθ (°)</span>
+                                    <span class="guide-text">Độ lệch góc xoay giữa tem và khung (chuẩn hóa trong [-90°, +90°]).</span>
+                                </div>
+                                <div class="guide-item">
+                                    <span class="guide-badge">Tem nằm trong</span>
+                                    <span class="guide-text">
+                                        <span class="text-tag-ok">Nằm trong</span>: Tem trọn vẹn trong khung bao &amp; cách mép &ge; Lề an toàn.<br>
+                                        <span class="text-tag-ng">Chạm viền</span>: Tem tiếp xúc hoặc tràn ra ngoài khung bao.
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="controler-tool">
+                        <button id="btn-judment-stamp-alignment" class="tool-btn btn-controler-mesure-weld-width">
+                            <img src="../static/img/target.png" alt="Chạy model kiểm tra lệch tem">
+                            Chạy model
+                        </button>
+                        <button id="btn-exit-stamp-alignment" class="tool-btn btn-controler-mesure-weld-width">
+                            <img src="../static/img/close.png" alt="Đóng tool kiểm tra lệch tem">
+                            Đóng master
+                        </button>
+                    </div>
+                </div>
+                <div id="panner-region-stamp-reversed" class="tool-content">
+                    <div class="cof-and-inf-tool-content">
+                        <div id="table-cof-stamp-reversed" class="table-cof-tool-content"></div>
+                        <div class="stamp-alignment-guide-card">
+                            <div class="stamp-alignment-guide-header">
+                                <span class="guide-header-icon">ℹ️</span>
+                                <span class="guide-header-title">Ý nghĩa các thông số kỹ thuật</span>
+                            </div>
+                            <div class="stamp-alignment-guide-content">
+                                <div class="guide-item">
+                                    <span class="guide-badge">Hướng chữ</span>
+                                    <span class="guide-text">
+                                        <span class="text-tag-ok">0° Thuận</span>: Chữ đúng chiều đọc chuẩn.<br>
+                                        <span class="text-tag-ng">180° Ngược</span>: Chữ bị in lộn ngược 180°.<br>
+                                        <span class="text-tag-ng">90° / 270°</span>: Chữ bị xoay ngang.
+                                    </span>
+                                </div>
+                                <div class="guide-item">
+                                    <span class="guide-badge">Δθ max (°)</span>
+                                    <span class="guide-text">Dung sai góc nghiêng cho phép của tem OBB (chuẩn hóa [-90°, +90°]).</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="controler-tool">
+                        <button id="btn-judment-stamp-reversed" class="tool-btn btn-controler-mesure-weld-width">
+                            <img src="../static/img/target.png" alt="Chạy model kiểm tra tem in ngược">
+                            Chạy model
+                        </button>
+                        <button id="btn-exit-stamp-reversed" class="tool-btn btn-controler-mesure-weld-width">
+                            <img src="../static/img/close.png" alt="Đóng tool kiểm tra tem in ngược">
+                            Đóng master
+                        </button>
+                    </div>
+                </div>
+                <div id="panner-region-ocr" class="tool-content">
+                    <div class="cof-and-inf-tool-content">
+                        <div id="table-cof-ocr" class="table-cof-tool-content"></div>
+                    </div>
+                    <div class="controler-tool">
+                        <button id="btn-judment-ocr" class="tool-btn btn-controler-mesure-weld-width">
+                            <img src="../static/img/target.png" alt="Chạy model nhận diện chữ OCR">
+                            Chạy model nhận diện chữ
+                        </button>
+                        <button id="btn-exit-ocr" class="tool-btn btn-controler-mesure-weld-width">
+                            <img src="../static/img/close.png" alt="Đóng tool OCR">
+                            Đóng master
+                        </button>
+                    </div>
+                </div>
+                <div id="panner-region-anomaly-point" class="tool-content">
+                    <div class="cof-and-inf-tool-content">
+                        <div id="table-cof-anomaly-point" class="table-cof-tool-content"> </div>
+                        <div id="runtime-train-images-panel-anomaly-point" class="runtime-train-images-panel" hidden>
+                        </div>
+                        <div id="patchcore-result-panel-anomaly-point" class="patchcore-result-panel"></div>
+                    </div>
+                    <div class="controler-tool">
+                        <button id="btn-create-model-anomaly-point" class="tool-btn btn-controler-mesure-weld-width">
+                            <img src="../static/img/creating_model.png" alt="Tạo model">
+                            Tạo model
+                        </button>
+                        <button id="btn-runtime-images-anomaly-point" class="tool-btn btn-controler-mesure-weld-width">
+                            <img src="../static/img/gallery.png" alt="Ảnh train">
+                            Ảnh train
+                        </button>
+                        <button id="btn-judment-anomaly-point" class="tool-btn btn-controler-mesure-weld-width">
+                            <img src="../static/img/target.png" alt="Chạy model">
+                            Chạy model
+                        </button>
+                        <button id="btn-delete-model-anomaly-point" class="tool-btn btn-controler-mesure-weld-width">
+                            <img src="../static/img/eraser (6).png" alt="Xóa mô hình">
+                            Xóa mô hình
+                        </button>
+                        <button id="btn-exit-anomaly-point" class="tool-btn btn-controler-mesure-weld-width">
+                            <img src="../static/img/close.png" alt="Đóng tool điểm bất thường">
+                            Đóng master
+                        </button>
+                    </div>
+                </div>
+
+                <div id="panner-region-foreign-object" class="tool-content">
+                    <div class="cof-and-inf-tool-content">
+                        <div id="table-cof-foreign-object" class="table-cof-tool-content"></div>
+                        <div id="runtime-train-images-panel-foreign-object" class="runtime-train-images-panel" hidden>
+                        </div>
+                        <div id="patchcore-result-panel-foreign-object" class="patchcore-result-panel" hidden></div>
+                    </div>
+                    <div class="controler-tool">
+                        <button id="btn-create-model-foreign-object"
+                            class="tool-btn btn-controler-mesure-weld-width"><img src="../static/img/creating_model.png"
+                                alt="Tạo model">Tạo model</button>
+                        <button id="btn-runtime-images-foreign-object"
+                            class="tool-btn btn-controler-mesure-weld-width"><img src="../static/img/gallery.png"
+                                alt="Ảnh train">Ảnh train</button>
+                        <button id="btn-judment-foreign-object" class="tool-btn btn-controler-mesure-weld-width"><img
+                                src="../static/img/target.png" alt="Chạy model">Chạy model 1</button>
+                        <button id="btn-detect-object-foreign-object"
+                            class="tool-btn btn-controler-mesure-weld-width"><img src="../static/img/recognition.png"
+                                alt="Chạy model phát hiện đối tượng">Chạy model 2</button>
+                        <button id="btn-delete-model-foreign-object"
+                            class="tool-btn btn-controler-mesure-weld-width"><img src="../static/img/eraser (6).png"
+                                alt="Xóa mô hình">Xóa mô hình</button>
+                        <button id="btn-exit-foreign-object" class="tool-btn btn-controler-mesure-weld-width"><img
+                                src="../static/img/close.png" alt="Đóng tool dị vật">Đóng master</button>
+                    </div>
+                </div>
+
+
+
+                <div id="panner-region-color" class="tool-content">
+                    <div class="cof-and-inf-tool-content">
+                        <div id="table-cof-color" class="table-cof-tool-content"></div>
+                        <div class="stamp-alignment-guide-card color-guide-card">
+                            <div class="stamp-alignment-guide-header">
+                                <span class="guide-header-icon">ℹ️</span>
+                                <span class="guide-header-title">Ý nghĩa các thông số kỹ thuật</span>
+                            </div>
+                            <div class="stamp-alignment-guide-content">
+                                <div class="guide-item">
+                                    <span class="guide-badge">ΔE00</span>
+                                    <span class="guide-text">
+                                        Độ lệch màu theo tiêu chuẩn quốc tế <strong>CIE2000 (CIEDE2000)</strong>.<br>
+                                        &bull; <strong>&le; 1.0</strong>: Mắt thường không nhận thấy khác biệt.<br>
+                                        &bull; <strong>1.0 - 2.0</strong>: Chuyên gia màu sắc mới nhận ra khác biệt.<br>
+                                        &bull; <strong>2.0 - 5.0</strong>: Khác biệt nhẹ (ngưỡng chấp nhận in ấn / bao bì).<br>
+                                        &bull; <strong>&gt; 5.0</strong>: Lệch màu rõ rệt, màu phế phẩm (NG).
+                                    </span>
+                                </div>
+                                <div class="guide-item">
+                                    <span class="guide-badge">% Giống</span>
+                                    <span class="guide-text">Độ tương đồng màu sắc trực quan (0% - 100%). Đạt chuẩn công nghiệp khi &ge; 80%.</span>
+                                </div>
+                                <div class="guide-item">
+                                    <span class="guide-badge">Chuẩn / Đo</span>
+                                    <span class="guide-text">Màu mẫu tham chiếu (Master) so với màu trung bình thực tế đo được từ ảnh camera.</span>
+                                </div>
+                                <div class="guide-item">
+                                    <span class="guide-badge">Kết quả</span>
+                                    <span class="guide-text">
+                                        <span class="text-tag-ok">OK</span>: Sai lệch màu &Delta;E00 &le; Dung sai cho phép (mặc định 5.0).<br>
+                                        <span class="text-tag-ng">NG</span>: Sai lệch màu vượt ngưỡng cho phép (lệch tông, phai màu).
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="controler-tool">
+                        <button id="btn-judment-color" class="tool-btn btn-controler-mesure-weld-width">
+                            <img src="../static/img/target.png" alt="Đo thử màu">
+                            Đo thử màu
+                        </button>
+                        <button id="btn-exit-color" class="tool-btn btn-controler-mesure-weld-width">
+                            <img src="../static/img/close.png" alt="Đóng tool kiểm tra màu">
+                            Đóng master
+                        </button>
+                    </div>
+                </div>
+
+                <div id="panner-region-barcode" class="tool-content">
+                    <div class="cof-and-inf-tool-content">
+                        <div id="table-cof-barcode" class="table-cof-tool-content"></div>
+                    </div>
+                    <div class="controler-tool">
+                        <button id="btn-judment-barcode" class="tool-btn btn-controler-mesure-weld-width">
+                            <img src="../static/img/target.png" alt="Chạy đọc barcode">
+                            Chạy model
+                        </button>
+                        <button id="btn-exit-barcode" class="tool-btn btn-controler-mesure-weld-width">
+                            <img src="../static/img/close.png" alt="Đóng master">
+                            Đóng master
+                        </button>
+                    </div>
+                </div>
+
+                <div id="panner-region-qr" class="tool-content">
+                    <div class="cof-and-inf-tool-content">
+                        <div id="table-cof-qr" class="table-cof-tool-content"></div>
+                    </div>
+                    <div class="controler-tool">
+                        <button id="btn-judment-qr" class="tool-btn btn-controler-mesure-weld-width">
+                            <img src="../static/img/target.png" alt="Chạy đọc QR">
+                            Chạy model
+                        </button>
+                        <button id="btn-exit-qr" class="tool-btn btn-controler-mesure-weld-width">
+                            <img src="../static/img/close.png" alt="Đóng master">
+                            Đóng master
+                        </button>
+                    </div>
+                </div>
+
+                <div class="fix-element">
+                    <div id="choose-tool">
+                        <button id="btn-check-stamp" class="tool-btn" data-tool="stamp_tool">
+                            <img src="../static/img/loupe.png">
+                            <span>Kiểm tra có tem</span>
+                        </button>
+
+                        <button id="btn-check-stamp-alignment" class="tool-btn" data-tool="stamp_alignment_tool">
+                            <img src="../static/img/loupe.png" alt="">
+                            <span>Kiểm tra có, lệch tem</span>
+                        </button>
+
+                        <button id="btn-check-stamp-reversed" class="tool-btn" data-tool="stamp_reversed_tool">
+                            <img src="../static/img/loupe.png" alt="Kiểm tra tem in ngược">
+                            <span>Kiểm tra tem<br>in ngược</span>
+                        </button>
+
+                        <button id="btn-check-color" class="tool-btn" data-tool="color_tool">
+                            <img src="../static/img/paint-palette.png" alt="Kiểm tra màu">
+                            <span>Kiểm tra màu</span>
+                        </button>
+                        <button id="btn-check-ocr" class="tool-btn" data-tool="ocr_tool">
+                            <img src="../static/img/loupe.png" alt="">
+                            <span>Kiểm tra chữ OCR</span>
+                        </button>
+
+                        <button id="btn-check-barcode" class="tool-btn" data-tool="barcode_tool">
+                            <img src="../static/img/scan.png" alt="Kiểm mã barcode">
+                            <span>Kiểm mã<br>barcode</span>
+                        </button>
+                        <button id="btn-check-qr" class="tool-btn" data-tool="qr_tool">
+                            <img src="../static/img/recognition.png" alt="Kiểm tra mã QR">
+                            <span>Kiểm tra<br>mã QR</span>
+                        </button>
+
+                        <button id="btn-check-anomaly-point" class="tool-btn" data-tool="anomaly-point-tool">
+                            <img src="../static/img/leak.png">
+                            <span>Kiểm tra điểm<br>bất thường</span>
+                        </button>
+                        <button id="btn-check-foreign-object" class="tool-btn" data-tool="foreign-object-tool">
+                            <img src="../static/img/investigation.png">
+                            <span>Kiểm tra<br>dị vật</span>
+                        </button>
+                        <!-- <button class="tool-btn">
+                            <img src="../static/img/cooking-oil.png">
+                            <span>Kiểm tra <br>dầu mỡ bề mặt</span>
+                        </button>
+                        <button class="tool-btn">
+                            <img src="../static/img/corona.png">
+                            <span>Kiểm tra <br>dị vật</span>
+                        </button> -->
+
+                    </div>
+                    <div id="containner-control-master">
+                        <button id="btn-save-law-regulation">
+                            <img src="../static/img/save_icon.png" alt="Lưu">
+                            Lưu
+                        </button>
+                        <button id="btn-erase-all-draw">
+                            <img src="../static/img/eraser (6).png" alt="Reset dữ liệu">
+                            Tẩy
+                        </button>
+                        <button id="close-adjust-master">
+                            <img src="../static/img/closed.png" alt="Thoát">
+                            Thoát
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <!-- Panel: Capture & Product Framework Setup -->
+            <div id="paner-capture-product" class="paner add-capture-product">
+                <!-- Bảng thông tin loại sản phẩm -->
+                <div class="panel-table">
+                    <div class="product-table-wrapper">
+                        <table class="product-table">
+                            <thead>
+                                <tr>
+                                    <th>Trục X (mm)</th>
+                                    <th>Trục Y (mm)</th>
+                                    <th>Trục Z (mm)</th>
+                                    <th>Góc Rx (°)</th>
+                                    <th>Góc Ry (°)</th>
+                                    <th>Góc Rz (°)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="log log-area" id="log-box"></div>
+                </div>
+
+                <!-- Nút điều khiển 1 điểm -->
+                <div class="controls-single-point">
+                    <div class="anonymous" id="anonymous">
+                        <!--Chèn nội dung ở đây -->
+                    </div>
+                </div>
+
+                <!-- Nút điều khiển tất cả điểm -->
+                <div class="controls-all-points">
+                    <button class="btn-form-cap" id="btn-erase-face">
+                        <img src="../static/img/erase_draw_img.png" alt="Xóa mặt">
+                        Xóa mặt
+                    </button>
+
+                    <button class="btn-form-cap" id="btn-add-face">
+                        <img src="../static/img/product.png" alt="Thêm mặt">
+                        Thêm mặt
+                    </button>
+
+                    <button class="btn-form-cap" id="btn-add-point">
+                        <img src="../static/img/plus.png" alt="Thêm điểm kiểm tra">
+                        Thêm điểm
+                    </button>
+
+                    <button class="btn-form-cap" id="btn-stream-video">
+                        <img src="../static/img/live-stream-video.png" alt="Video Stream">
+                        Stream Video
+                    </button>
+
+                    <button class="btn-form-cap" id="btn-run-face">
+                        <img src="../static/img/running.png" alt="Chạy mặt">
+                        Chạy mặt
+                    </button>
+
+                    <button class="btn-form-cap" id="btn-run-product">
+                        <img src="../static/img/run.png" alt="Chạy sản phẩm">
+                        Chạy sản phẩm
+                    </button>
+
+                    <button class="btn-form-cap" id="btn-robot-home">
+                        <img src="../static/img/target.png" alt="Về Home">
+                        Về Home
+                    </button>
+
+                    <button class="btn-form-cap" id="btn-robot-stop" style="background-color: #dc2626; color: white;">
+                        <img src="../static/img/stop.png" alt="Dừng Robot">
+                        Dừng (STOP)
+                    </button>
+
+                    <button class="btn-form-cap" id="btn-robot-reset">
+                        <img src="../static/img/clean-up.png" alt="Reset lỗi">
+                        Reset lỗi
+                    </button>
+
+                    <button class="btn-form-cap" id="exit-add-capture-product">
+                        <img src="../static/img/close.png" alt="Thoát cài đặt chụp ảnh">
+                        Thoát
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- ==========================================
+         OVERLAYS & POPUPS LAYERS
+         ========================================== -->
+
+    <!-- show thông tin cam và -->
+
+    <!-- OVERLAY: Add New Product -->
+    <div class="overlay-new-product" id="overlay-new-product">
+
+        <!-- ===== LEFT PANEL ===== -->
+        <div class="left-panel">
+            <h2>➕ Tạo loại sản phẩm</h2>
+
+            <form method="post" id="form-add-new-product" action="/product/add" enctype="multipart/form-data">
+                <label>ID</label>
+                <input type="number" name="id" placeholder="Nhập ID sản phẩm" min="1" required>
+
+                <label>Tên sản phẩm</label>
+                <input type="text" name="name" placeholder="Nhập tên cho sản phẩm" required>
+
+                <label>Mô tả</label>
+                <textarea name="description" placeholder="Nhập mô tả sản phẩm" required></textarea>
+
+                <!-- Upload image -->
+                <div class="file-input">
+                    <label>Ảnh sản phẩm (Vui lòng chọn file ảnh)</label>
+                    <input type="file" id="imageInput" name="images" accept="image/*" required>
+                </div>
+
+                <div class="preview-box">
+                    <img id="previewImg">
+                </div>
+
+                <button type="submit" class="btn btn-create">
+                    Tạo sản phẩm
+                </button>
+            </form>
+
+            <button type="button" class="btn btn-exit" id="close-add-product" style="display: none;">
+                ❌ Thoát
+            </button>
+        </div>
+
+        <!-- ===== RIGHT PANEL ===== -->
+        <div class="right-panel" style="position: relative;">
+            <span id="close-right-panel"
+                style="position: absolute; top: 15px; right: 20px; cursor: pointer; font-weight: 900; font-size: 32px; color: #f87171; transition: all 0.2s ease; line-height: 1; z-index: 10;"
+                onmouseover="this.style.color='#ff4d4d'; this.style.transform='scale(1.2)';"
+                onmouseout="this.style.color='#f87171'; this.style.transform='scale(1)';">X</span>
+            <h2>📦 Sản phẩm hiện có</h2>
+
+            <table id="table-product-list">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Tên</th>
+                        <th>Mô tả</th>
+                        <th>Ảnh mẫu</th>
+                        <th>Hành động</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+
+    <!-- OVERLAY: Barcode Config -->
+    <div class="overlay-new-product" id="overlay-barcode-config" style="display: none;">
+        <!-- ===== LEFT PANEL ===== -->
+        <div class="left-panel">
+            <h2>➕ Tạo tài khoản Barcode</h2>
+
+            <form method="post" id="form-add-barcode">
+                <label>Tên người thao tác</label>
+                <input type="text" id="barcode-operator" placeholder="Nhập tên người thao tác (vd: Nguyen Van A)"
+                    required>
+
+                <label>Nhà máy</label>
+                <input type="text" id="barcode-factory" placeholder="Nhập tên nhà máy (vd: Nhà máy 1)" required>
+
+                <label>Chuyền</label>
+                <input type="text" id="barcode-line" placeholder="Nhập tên chuyền (vd: Line A)" required>
+
+                <label>Loại tài khoản</label>
+                <select id="barcode-role" required>
+                    <option value="Manager">Manager</option>
+                    <option value="User">User</option>
+                </select>
+
+                <label>Mã barcode</label>
+                <input type="text" id="barcode-code" placeholder="Quét hoặc nhập mã barcode" required>
+
+                <button type="submit" class="btn btn-create" id="btn-create-barcode">
+                    Tạo tài khoản
+                </button>
+                <div id="barcode-status-msg"></div>
+            </form>
+        </div>
+
+        <!-- ===== RIGHT PANEL ===== -->
+        <div class="right-panel" style="position: relative;">
+            <span id="close-barcode-config"
+                style="position: absolute; top: 15px; right: 20px; cursor: pointer; font-weight: 900; font-size: 32px; color: #f87171; transition: all 0.2s ease; line-height: 1; z-index: 10;"
+                onmouseover="this.style.color='#ff4d4d'; this.style.transform='scale(1.2)';"
+                onmouseout="this.style.color='#f87171'; this.style.transform='scale(1)';">X</span>
+            <h2>📋 Danh sách tài khoản Barcode</h2>
+
+            <table id="table-barcode-list">
+                <thead>
+                    <tr>
+                        <th>Tên</th>
+                        <th>Nhà máy</th>
+                        <th>Chuyền</th>
+                        <th>Quyền</th>
+                        <th>Mã barcode</th>
+                        <th>Hành động</th>
+                    </tr>
+                </thead>
+                <tbody id="barcode-list-body">
+                    <tr>
+                        <td colspan="6" style="text-align: center; color: #9ca3af; padding: 15px;">Đang tải danh sách
+                            tài khoản...</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- ===== OVERLAY XÁC NHẬN XÓA ===== -->
+    <div class="overlay-delete-product" id="overlay-delete-product" style="display: none;">
+        <div class="delete-box">
+            <h2 id="warning-title"></h2>
+            <p id="warning-message"></p>
+
+            <div class="delete-action">
+                <button class="btn btn-delete-confirm" id="btn-confirm-delete">
+                    🗑️ Xóa
+                </button>
+
+                <button class="btn btn-delete-cancel" id="btn-cancel-delete">
+                    ❌ Hủy
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- OVERLAY: Choose Product -->
+    <div class="overlay-choose-product" id="overlay-choose-product">
+        <!-- ===== LEFT PANEL ===== -->
+        <div class="block_choose-product">
+            <h1 id="header">
+                Chọn sản phẩm cần kiểm tra
+                <span id="close-choose-product">X</span>
+            </h1>
+
+            <div id="container-chose-product"></div>
+        </div>
+    </div>
+
+    <!-- OVERLAY: Software Configurations (Preferences Industrial Dialog) -->
+    <div id="overlay_config_software" style="display: none;">
+        <div class="preferences-window">
+            <!-- Header -->
+            <div class="pref-header">
+                <div class="pref-header-title">
+                    <span class="pref-icon-gear">⚙️</span>
+                    <span>Preferences — Cấu hình phần mềm</span>
+                </div>
+                <span id="close-settings" class="pref-close-btn" title="Đóng cửa sổ (Esc)">✕</span>
+            </div>
+
+            <!-- Body: 2 Columns (Sidebar + Content) -->
+            <div class="pref-body">
+                <!-- Sidebar Tree Menu -->
+                <div class="pref-sidebar">
+                    <div class="pref-search-box">
+                        <span class="pref-search-icon">🔍</span>
+                        <input type="text" id="pref-search-input" placeholder="Search..." autocomplete="off">
+                    </div>
+
+                    <div class="pref-tree-container" id="pref-tree-menu">
+                        <!-- Node 1: System -->
+                        <div class="pref-tree-group" data-group="system">
+                            <div class="pref-tree-node active" data-tab="tab-system-general">
+                                <span class="pref-tree-arrow expanded">▶</span>
+                                <span>🖥️ System</span>
+                            </div>
+                            <div class="pref-tree-sublist open">
+                                <div class="pref-tree-subitem active" data-tab="tab-system-general">General & View</div>
+                                <div class="pref-tree-subitem" data-tab="tab-system-logs">📁 Log & Retention</div>
+                            </div>
+                        </div>
+
+                        <!-- Node 2: Robot & Motion -->
+                        <div class="pref-tree-group" data-group="robot">
+                            <div class="pref-tree-node" data-tab="tab-robot-network">
+                                <span class="pref-tree-arrow expanded">▶</span>
+                                <span>🤖 Robot & Motion</span>
+                            </div>
+                            <div class="pref-tree-sublist open">
+                                <div class="pref-tree-subitem" data-tab="tab-robot-network">Kết nối mạng (Network)</div>
+                                <div class="pref-tree-subitem" data-tab="tab-robot-safety">Giới hạn an toàn (Safety Limits)</div>
+                            </div>
+                        </div>
+
+                        <!-- Node 3: Camera & Imaging -->
+                        <div class="pref-tree-group" data-group="camera">
+                            <div class="pref-tree-node" data-tab="tab-camera-imaging">
+                                <span class="pref-tree-arrow expanded">▶</span>
+                                <span>📷 Imaging</span>
+                            </div>
+                            <div class="pref-tree-sublist open">
+                                <div class="pref-tree-subitem" data-tab="tab-camera-imaging">Anti-Blur (Chống rung nhòe)
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Node 4: AI & Judgment -->
+                        <div class="pref-tree-group" data-group="ai">
+                            <div class="pref-tree-node" data-tab="tab-ai-yolo-object">
+                                <span class="pref-tree-arrow expanded">▶</span>
+                                <span>🧠 AI & Judgment</span>
+                            </div>
+                            <div class="pref-tree-sublist open">
+                                <div class="pref-tree-subitem" data-tab="tab-ai-yolo-object">Mô hình YOLO Object</div>
+                                <div class="pref-tree-subitem" data-tab="tab-ai-patchcore">Mô hình PatchCore</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Content Area (Right Panel) -->
+                <div class="pref-content" id="pref-content-container">
+                    <!-- Top Category Header -->
+                    <div class="pref-content-header">
+                        <div class="pref-content-header-icon" id="pref-header-icon">🖥️</div>
+                        <div class="pref-content-header-text">
+                            <h3 id="pref-header-title">System — General & View</h3>
+                            <p id="pref-header-desc">Cấu hình các tham số vận hành chung, hiển thị và giao diện hệ thống
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- TAB: System - General -->
+                    <div class="pref-tab-panel" id="tab-system-general">
+                        <div class="pref-section-card">
+                            <div class="pref-section-title">ℹ️ Thông tin phần mềm</div>
+                            <div class="pref-form-row">
+                                <label><span>Tên phần mềm</span></label>
+                                <input type="text" class="pref-input" id="pref-info-name"
+                                    value="Weld Ink Line Measurement" readonly style="width: 100%; max-width: 420px;">
+                            </div>
+                            <div class="pref-form-row">
+                                <label><span>Phiên bản</span></label>
+                                <input type="text" class="pref-input" id="pref-info-version" value="1.0.0" readonly
+                                    style="width: 100%; max-width: 420px;">
+                            </div>
+                            <div class="pref-form-row">
+                                <label><span>Tác giả</span></label>
+                                <input type="text" class="pref-input" id="pref-info-author" value="Vũ VinH Ánh" readonly
+                                    style="width: 100%; max-width: 420px;">
+                            </div>
+                            <div class="pref-form-row">
+                                <label><span>Công ty</span></label>
+                                <input type="text" class="pref-input" id="pref-info-company"
+                                    value="Công ty TNHH Công nghiệp Brother Việt Nam" readonly
+                                    style="width: 100%; max-width: 420px;">
+                            </div>
+                            <div class="pref-form-row">
+                                <label><span>Mô tả</span></label>
+                                <input type="text" class="pref-input" id="pref-info-description"
+                                    value="Phần mềm nhận diện kích thước độ đường hàn mực" readonly
+                                    style="width: 100%; max-width: 420px;">
+                            </div>
+                            <div class="pref-form-row">
+                                <label><span>Ngày xây dựng</span></label>
+                                <input type="text" class="pref-input" id="pref-info-build-date" value="21-01-2026"
+                                    readonly style="width: 100%; max-width: 420px;">
+                            </div>
+                            <div class="pref-form-row">
+                                <label><span>Giấy phép</span></label>
+                                <input type="text" class="pref-input" id="pref-info-license" value="Internal Use"
+                                    readonly style="width: 100%; max-width: 420px;">
+                            </div>
+                        </div>
+
+                        <div class="pref-section-card">
+                            <div class="pref-section-title">🖼️ Hiển thị ảnh phán định</div>
+                            <div class="pref-form-row">
+                                <label>
+                                    <span>Số Worker phán định song song tối đa</span>
+                                    <small>Số luồng worker phán định AI chạy song song đồng thời khi IAI di chuyển. Mặc định là 5, tối đa 10 worker.</small>
+                                </label>
+                                <input type="number" class="pref-input pref-input-number" id="pref-max-judger-workers"
+                                    min="1" max="10" step="1" value="5" placeholder="1 - 10" style="max-width: 120px; text-align: center;">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- TAB: Log & Retention (Dedicated Top-level Panel) -->
+                    <div class="pref-tab-panel" id="tab-system-logs" style="display: none;">
+                        <!-- CARD 1: Thư mục & Chu kỳ lưu trữ -->
+                        <div class="pref-section-card">
+                            <div class="pref-section-title">📁 Cấu hình Đường dẫn & Chu kỳ lưu trữ (Retention Period)
+                            </div>
+                            <div class="pref-form-row">
+                                <label>
+                                    <span>Đường dẫn lưu trữ Log</span>
+                                    <small>Thư mục gốc lưu trữ toàn bộ Log (nhập trực tiếp hoặc bấm Browse)</small>
+                                </label>
+                                <div class="pref-path-input-group">
+                                    <input type="text" class="pref-input" id="pref-log-dir"
+                                        placeholder="Chọn hoặc nhập đường dẫn thư mục..." style="flex: 1;">
+                                    <button type="button" class="pref-btn-browse" id="btn-browse-log-dir"
+                                        title="Mở hộp thoại chọn thư mục">📂 Browse...</button>
+                                </div>
+                            </div>
+                            <div class="pref-form-row">
+                                <label>
+                                    <span>Thời gian lưu log (Ngày)</span>
+                                    <small>Tự động xóa trọn vẹn cả thư mục theo ngày (Log/YYYY-MM-DD) khi vượt quá số
+                                        ngày này</small>
+                                </label>
+                                <input type="number" class="pref-input pref-input-number" id="set-time-save-log"
+                                    placeholder="Số ngày" min="1" value="30">
+                            </div>
+                            <div class="pref-form-row"
+                                style="margin-top: 14px; border-top: 1px solid #1f2937; padding-top: 12px;">
+                                <label>
+                                    <span>Đường dẫn lưu Folder Output (app\output)</span>
+                                    <small>Thư mục lưu trữ kết quả phán định (judgment), ảnh retrain và patch_core
+                                        (không giới hạn thời gian lưu)</small>
+                                </label>
+                                <div class="pref-path-input-group">
+                                    <input type="text" class="pref-input" id="pref-output-dir"
+                                        placeholder="Chọn hoặc nhập đường dẫn thư mục output..." style="flex: 1;">
+                                    <button type="button" class="pref-btn-browse" id="btn-browse-output-dir"
+                                        title="Mở hộp thoại chọn thư mục Output">📂 Browse...</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- CARD 2: Kênh ghi dữ liệu phán định & hệ thống -->
+                        <div class="pref-section-card">
+                            <div class="pref-section-title">⚙️ Kênh ghi dữ liệu phán định & Hệ thống (Data Logging
+                                Channels)</div>
+                            <div class="pref-form-row">
+                                <label>
+                                    <span>Lưu ảnh phán định</span>
+                                    <small>Bật/tắt lưu ảnh kết quả phán định (OK/NG) vào thư mục Log_img/</small>
+                                </label>
+                                <label class="pref-switch">
+                                    <input type="checkbox" id="pref-toggle-img" checked>
+                                    <span class="pref-slider"></span>
+                                </label>
+                            </div>
+                            <div class="pref-form-row">
+                                <label>
+                                    <span>Lưu log Excel / CSV</span>
+                                    <small>Bật/tắt lưu bảng tổng kết ngày (summary_daily.csv) và chi tiết phiên
+                                        (session/)</small>
+                                </label>
+                                <label class="pref-switch">
+                                    <input type="checkbox" id="pref-toggle-csv" checked>
+                                    <span class="pref-slider"></span>
+                                </label>
+                            </div>
+                            <div class="pref-form-row">
+                                <label>
+                                    <span>Ghi nhật ký phần mềm (TXT)</span>
+                                    <small>Bật/tắt lưu lịch sử vận hành phần mềm vào thư mục Log_txt/</small>
+                                </label>
+                                <label class="pref-switch">
+                                    <input type="checkbox" id="pref-toggle-txt" checked>
+                                    <span class="pref-slider"></span>
+                                </label>
+                            </div>
+                            <div class="pref-form-row">
+                                <label>
+                                    <span>Show console log trên terminal</span>
+                                    <small>Hiển thị thông tin nhật ký hệ thống trực tiếp trên màn hình
+                                        console/terminal</small>
+                                </label>
+                                <label class="pref-switch">
+                                    <input type="checkbox" id="set-cosole" checked>
+                                    <span class="pref-slider" id="slider-cosole"></span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- CARD 3: Thu thập ảnh huấn luyện (Retrain Images) -->
+                        <div class="pref-section-card">
+                            <div class="pref-section-title">🎯 Thu thập ảnh huấn luyện (Retrain Images)</div>
+                            <div class="pref-form-row">
+                                <label>
+                                    <span>Thu thập ảnh huấn luyện</span>
+                                    <small>Công tắc chính: Bật để kích hoạt lưu ảnh huấn luyện lại. Tắt thì không log
+                                        ảnh retrain nào được lưu.</small>
+                                </label>
+                                <label class="pref-switch">
+                                    <input type="checkbox" id="pref-toggle-retrain">
+                                    <span class="pref-slider" id="slider-retrain"></span>
+                                </label>
+                            </div>
+                            <div class="pref-form-row">
+                                <label>
+                                    <span>Đường dẫn thư mục Retrain</span>
+                                    <small>Đường dẫn thư mục lưu trữ ảnh huấn luyện theo từng hạng mục</small>
+                                </label>
+                                <input type="text" class="pref-input" id="pref-retrain-folder-path" readonly
+                                    style="width: 100%; max-width: 480px;" title="Thư mục output retrain">
+                            </div>
+
+                            <!-- Khu vực 6 hạng mục Inspector -->
+                            <div id="retrain-inspectors-wrapper" class="retrain-section-container"
+                                style="margin-top: 14px; border-top: 1px solid #1f2937; padding-top: 12px;">
+                                <div
+                                    style="font-size: 13px; font-weight: 600; color: #93c5fd; margin-bottom: 4px; display: flex; align-items: center; gap: 6px;">
+                                    <span>🧩</span>
+                                    <span>Cấu hình lưu ảnh Retrain theo từng hạng mục (3 Inspectors)</span>
+                                </div>
+                                <div style="font-size: 11.5px; color: #64748b; margin-bottom: 10px;">
+                                    Bật/tắt lưu ảnh huấn luyện cho từng hạng mục kiểm tra cụ thể khi công tắc chính được
+                                    bật:
+                                </div>
+
+                                <div class="retrain-inspectors-grid">
+                                    <!-- 2. AnomalyPointInspector -->
+                                    <div class="retrain-item-card">
+                                        <span class="retrain-item-label"
+                                            title="AnomalyPointInspector">AnomalyPointInspector</span>
+                                        <label class="pref-switch">
+                                            <input type="checkbox" class="retrain-inspector-toggle"
+                                                data-inspector="AnomalyPointInspector" checked>
+                                            <span class="pref-slider"></span>
+                                        </label>
+                                    </div>
+                                    <!-- 3. ForeignObjectInspector -->
+                                    <div class="retrain-item-card">
+                                        <span class="retrain-item-label"
+                                            title="ForeignObjectInspector">ForeignObjectInspector</span>
+                                        <label class="pref-switch">
+                                            <input type="checkbox" class="retrain-inspector-toggle"
+                                                data-inspector="ForeignObjectInspector" checked>
+                                            <span class="pref-slider"></span>
+                                        </label>
+                                    </div>
+                                    <!-- 6. StampItemInspector -->
+                                    <div class="retrain-item-card">
+                                        <span class="retrain-item-label"
+                                            title="StampItemInspector">StampItemInspector</span>
+                                        <label class="pref-switch">
+                                            <input type="checkbox" class="retrain-inspector-toggle"
+                                                data-inspector="StampItemInspector" checked>
+                                            <span class="pref-slider"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+
+                    <!-- TAB: Robot & Motion - Network Configuration -->
+                    <div class="pref-tab-panel" id="tab-robot-network" style="display: none;">
+                        <div class="pref-section-card">
+                            <div class="pref-section-title">🌐 Cấu hình Địa chỉ Mạng Ethernet (PC &lt;-&gt; PLC)</div>
+                            <div class="pref-form-row">
+                                <label>
+                                    <span>Giao thức kết nối (Protocol)</span>
+                                    <small>Giao thức truyền thông điều khiển giữa PC và PLC</small>
+                                </label>
+                                <input type="text" class="pref-input" id="pref-robot-protocol" value="TCP_SOCKET" readonly style="max-width: 220px; font-weight: 600; color: #38bdf8; text-align: center;">
+                            </div>
+                            <div class="pref-form-row">
+                                <label>
+                                    <span>Địa chỉ IP của PLC (TCP Server)</span>
+                                    <small>Địa chỉ IP tĩnh cổng mạng Ethernet của PLC</small>
+                                </label>
+                                <input type="text" class="pref-input" id="pref-robot-plc-ip" placeholder="192.168.1.10" style="max-width: 220px;">
+                            </div>
+                            <div class="pref-form-row">
+                                <label>
+                                    <span>Cổng kết nối PLC (Port)</span>
+                                    <small>Cổng dịch vụ Socket trên PLC để tiếp nhận lệnh di chuyển</small>
+                                </label>
+                                <input type="number" class="pref-input pref-input-number" id="pref-robot-plc-port" min="1024" max="65535" step="1" value="2000" style="max-width: 140px; text-align: center;">
+                            </div>
+                            <div class="pref-form-row">
+                                <label>
+                                    <span>Địa chỉ IP của Máy tính (PC Client)</span>
+                                    <small>IP tĩnh của card mạng máy tính (cùng dải mạng LAN với PLC)</small>
+                                </label>
+                                <input type="text" class="pref-input" id="pref-robot-pc-ip" placeholder="192.168.1.100" style="max-width: 220px;">
+                            </div>
+                            <div class="pref-form-row">
+                                <label>
+                                    <span>Mặt nạ mạng (Subnet Mask)</span>
+                                    <small>Subnet Mask cho dải mạng LAN cục bộ</small>
+                                </label>
+                                <input type="text" class="pref-input" id="pref-robot-subnet-mask" placeholder="255.255.255.0" style="max-width: 220px;">
+                            </div>
+                            <div class="pref-form-row">
+                                <label>
+                                    <span>Thời gian chờ phản hồi (Timeout - ms)</span>
+                                    <small>Quá thời gian này không có ACK/phản hồi thì báo lỗi kết nối</small>
+                                </label>
+                                <div class="pref-input-wrapper">
+                                    <input type="number" class="pref-input pref-input-number" id="pref-robot-timeout-ms" min="100" max="10000" step="100" value="1500" style="max-width: 140px; text-align: center;">
+                                    <span>ms</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="pref-section-card">
+                            <div class="pref-section-title">📦 Quy chuẩn Định dạng Gói tin (Data Framing)</div>
+                            <div class="pref-form-row">
+                                <label>
+                                    <span>Bảng mã ký tự (Encoding)</span>
+                                    <small>Mã hóa chuỗi ký tự qua socket</small>
+                                </label>
+                                <input type="text" class="pref-input" id="pref-robot-encoding" value="ASCII" readonly style="max-width: 140px; text-align: center;">
+                            </div>
+                            <div class="pref-form-row">
+                                <label>
+                                    <span>Dấu phân cách tham số (Delimiter)</span>
+                                    <small>Phân cách giữa mã lệnh và các tọa độ</small>
+                                </label>
+                                <input type="text" class="pref-input" id="pref-robot-delimiter" value="," readonly style="max-width: 140px; text-align: center; font-weight: bold;">
+                            </div>
+                            <div class="pref-form-row">
+                                <label>
+                                    <span>Ký tự kết thúc lệnh (Terminator)</span>
+                                    <small>Bắt buộc: PLC ngắt và xử lý lệnh khi gặp ký tự này</small>
+                                </label>
+                                <input type="text" class="pref-input" id="pref-robot-terminator" value="\r\n (CRLF)" readonly style="max-width: 140px; text-align: center; font-weight: 600; color: #a78bfa;">
+                            </div>
+                        </div>
+
+                        <div class="pref-section-card">
+                            <div class="pref-section-title">⚡ Thử nghiệm Kết nối PLC (Ping Socket)</div>
+                            <div class="pref-form-row" style="align-items: center; justify-content: space-between;">
+                                <label>
+                                    <span>Kiểm tra thông tuyến mạng</span>
+                                    <small>Chủ động kết nối thử nghiệm tới IP và Port của PLC</small>
+                                </label>
+                                <button type="button" class="pref-btn-secondary" id="btn-test-robot-connection" style="background: rgba(14, 165, 233, 0.2); border: 1px solid #0ea5e9; color: #38bdf8; padding: 8px 18px; border-radius: 6px; cursor: pointer; font-weight: 600; display: flex; align-items: center; gap: 8px;">
+                                    <span>🔌</span>
+                                    <span>Kiểm tra kết nối PLC</span>
+                                </button>
+                            </div>
+                            <div id="robot-test-result-box" style="display: none; margin-top: 12px; padding: 10px 14px; border-radius: 6px; font-size: 13px;"></div>
+                        </div>
+                    </div>
+
+                    <!-- TAB: Robot & Motion - Safety Limits -->
+                    <div class="pref-tab-panel" id="tab-robot-safety" style="display: none;">
+                        <div class="pref-section-card">
+                            <div class="pref-section-title">📐 Hộp không gian làm việc Bounding Box (Cartesian 3D)</div>
+                            <div style="font-size: 12px; color: #94a3b8; margin-bottom: 12px;">
+                                Cài đặt phạm vi di chuyển an toàn. Tọa độ nằm ngoài khoảng này sẽ bị phần mềm chặn ngay lập tức, không gửi xuống PLC.
+                            </div>
+                            <!-- X Limits -->
+                            <div class="pref-form-row">
+                                <label>
+                                    <span>Giới hạn trục X (X_MIN / X_MAX - mm)</span>
+                                    <small>Phạm vi chuyển động tịnh tiến tới / lui</small>
+                                </label>
+                                <div style="display: flex; gap: 10px; align-items: center;">
+                                    <input type="number" step="1" class="pref-input pref-input-number" id="pref-robot-x-min" placeholder="Min" style="width: 110px; text-align: center;">
+                                    <span style="color: #64748b;">đến</span>
+                                    <input type="number" step="1" class="pref-input pref-input-number" id="pref-robot-x-max" placeholder="Max" style="width: 110px; text-align: center;">
+                                    <span style="color: #94a3b8; font-size: 12px;">mm</span>
+                                </div>
+                            </div>
+                            <!-- Y Limits -->
+                            <div class="pref-form-row">
+                                <label>
+                                    <span>Giới hạn trục Y (Y_MIN / Y_MAX - mm)</span>
+                                    <small>Phạm vi chuyển động tịnh tiến trái / phải</small>
+                                </label>
+                                <div style="display: flex; gap: 10px; align-items: center;">
+                                    <input type="number" step="1" class="pref-input pref-input-number" id="pref-robot-y-min" placeholder="Min" style="width: 110px; text-align: center;">
+                                    <span style="color: #64748b;">đến</span>
+                                    <input type="number" step="1" class="pref-input pref-input-number" id="pref-robot-y-max" placeholder="Max" style="width: 110px; text-align: center;">
+                                    <span style="color: #94a3b8; font-size: 12px;">mm</span>
+                                </div>
+                            </div>
+                            <!-- Z Limits -->
+                            <div class="pref-form-row">
+                                <label>
+                                    <span>Cao độ trục Z (Z_MIN / Z_MAX - mm)</span>
+                                    <small style="color: #f87171; font-weight: 500;">⚠️ Z_MIN là cao độ an toàn tuyệt đối chống đâm Camera xuống bàn/thùng carton!</small>
+                                </label>
+                                <div style="display: flex; gap: 10px; align-items: center;">
+                                    <input type="number" step="1" class="pref-input pref-input-number" id="pref-robot-z-min" placeholder="Min" style="width: 110px; text-align: center; border-color: #f87171; color: #fca5a5;">
+                                    <span style="color: #64748b;">đến</span>
+                                    <input type="number" step="1" class="pref-input pref-input-number" id="pref-robot-z-max" placeholder="Max" style="width: 110px; text-align: center;">
+                                    <span style="color: #94a3b8; font-size: 12px;">mm</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="pref-section-card">
+                            <div class="pref-section-title">🦾 Tầm với cánh tay &amp; Quỹ đạo an toàn (Reach &amp; Motion)</div>
+                            <div class="pref-form-row">
+                                <label>
+                                    <span>Bán kính tầm với tối đa (MAX_REACH - mm)</span>
+                                    <small>Bán kính tối đa từ gốc R = √(X² + Y²), chống lỗi quá tầm khớp</small>
+                                </label>
+                                <div class="pref-input-wrapper">
+                                    <input type="number" step="5" class="pref-input pref-input-number" id="pref-robot-max-reach" value="800" style="max-width: 130px; text-align: center;">
+                                    <span>mm</span>
+                                </div>
+                            </div>
+                            <div class="pref-form-row">
+                                <label>
+                                    <span>Vùng chết sát chân đế (MIN_DEADZONE - mm)</span>
+                                    <small>Chặn Robot co tay quá sát cột trụ của chính nó</small>
+                                </label>
+                                <div class="pref-input-wrapper">
+                                    <input type="number" step="5" class="pref-input pref-input-number" id="pref-robot-min-deadzone" value="150" style="max-width: 130px; text-align: center;">
+                                    <span>mm</span>
+                                </div>
+                            </div>
+                            <div class="pref-form-row">
+                                <label>
+                                    <span>Cao độ rút an toàn (Z_SAFE - mm)</span>
+                                    <small>Khi chuyển giữa các điểm chụp: Nhấc Camera lên Z_safe trước khi chạy ngang</small>
+                                </label>
+                                <div class="pref-input-wrapper">
+                                    <input type="number" step="5" class="pref-input pref-input-number" id="pref-robot-z-safe" value="250" style="max-width: 130px; text-align: center; color: #38bdf8; font-weight: 600;">
+                                    <span>mm</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="pref-section-card">
+                            <div class="pref-section-title">🔄 Giới hạn Góc xoay đầu Camera (Bảo vệ cáp tín hiệu)</div>
+                            <div style="font-size: 12px; color: #94a3b8; margin-bottom: 12px;">
+                                Khống chế phạm vi góc quay đầu kẹp để tránh Camera bị vặn xoắn hoặc đứt cáp truyền dẫn.
+                            </div>
+                            <!-- Rx -->
+                            <div class="pref-form-row">
+                                <label>
+                                    <span>Góc nghiêng lắc trục X (Rx_MIN / Rx_MAX - độ)</span>
+                                    <small>Thường giữ 180° để Camera luôn nhìn thẳng đứng xuống mặt sản phẩm</small>
+                                </label>
+                                <div style="display: flex; gap: 10px; align-items: center;">
+                                    <input type="number" step="0.5" class="pref-input pref-input-number" id="pref-robot-rx-min" style="width: 110px; text-align: center;">
+                                    <span style="color: #64748b;">đến</span>
+                                    <input type="number" step="0.5" class="pref-input pref-input-number" id="pref-robot-rx-max" style="width: 110px; text-align: center;">
+                                    <span style="color: #94a3b8; font-size: 12px;">°</span>
+                                </div>
+                            </div>
+                            <!-- Ry -->
+                            <div class="pref-form-row">
+                                <label>
+                                    <span>Góc chúc/ngửa trục Y (Ry_MIN / Ry_MAX - độ)</span>
+                                    <small>Giữ thăng bằng mặt phẳng chụp, tránh góc chụp quá nghiêng</small>
+                                </label>
+                                <div style="display: flex; gap: 10px; align-items: center;">
+                                    <input type="number" step="0.5" class="pref-input pref-input-number" id="pref-robot-ry-min" style="width: 110px; text-align: center;">
+                                    <span style="color: #64748b;">đến</span>
+                                    <input type="number" step="0.5" class="pref-input pref-input-number" id="pref-robot-ry-max" style="width: 110px; text-align: center;">
+                                    <span style="color: #94a3b8; font-size: 12px;">°</span>
+                                </div>
+                            </div>
+                            <!-- Rz -->
+                            <div class="pref-form-row">
+                                <label>
+                                    <span>Góc xoay quanh trục đứng Z (Rz_MIN / Rz_MAX - độ)</span>
+                                    <small style="color: #facc15;">Khống chế không cho xoay quá 1 vòng (±180°) để chống xoắn đứt cáp tín hiệu</small>
+                                </label>
+                                <div style="display: flex; gap: 10px; align-items: center;">
+                                    <input type="number" step="1" class="pref-input pref-input-number" id="pref-robot-rz-min" style="width: 110px; text-align: center;">
+                                    <span style="color: #64748b;">đến</span>
+                                    <input type="number" step="1" class="pref-input pref-input-number" id="pref-robot-rz-max" style="width: 110px; text-align: center;">
+                                    <span style="color: #94a3b8; font-size: 12px;">°</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- TAB: Imaging - Anti-Blur Service -->
+                    <div class="pref-tab-panel" id="tab-camera-imaging" style="display: none;">
+                        <div class="pref-section-card">
+                            <div class="pref-section-title">⏱️ Định thời dừng & chụp cơ khí (Stop-and-Shoot Timing)
+                            </div>
+                            <div class="pref-form-row">
+                                <label>
+                                    <span>Thời gian chờ ổn định cơ khí (T_settle - ms)</span>
+                                    <small>Thời gian chờ triệt tiêu vi dao động sau khi IAI báo PEND</small>
+                                </label>
+                                <div class="pref-input-wrapper">
+                                    <input type="number" step="1" class="pref-input pref-input-number"
+                                        id="pref-antiblur-t-settle" value="40" min="0" max="500">
+                                    <span>ms</span>
+                                </div>
+                            </div>
+                            <div class="pref-form-row">
+                                <label>
+                                    <span>Thời gian khóa trục phơi sáng (T_hold - ms)</span>
+                                    <small>Khóa trục đứng yên bảo vệ cảm biến trong lúc phơi sáng</small>
+                                </label>
+                                <div class="pref-input-wrapper">
+                                    <input type="number" step="1" class="pref-input pref-input-number"
+                                        id="pref-antiblur-t-hold" value="15" min="0" max="500">
+                                    <span>ms</span>
+                                </div>
+                            </div>
+                            <div class="pref-form-row">
+                                <label>
+                                    <span>Thời gian phơi sáng Camera (T_exp - ms)</span>
+                                    <small>Thời gian màn trập mở để bắt sáng hình ảnh <strong id="badge-t-exp-source"
+                                            style="color: #c4b5fd; font-weight: 600; margin-left: 6px;"></strong></small>
+                                </label>
+                                <div class="pref-input-wrapper">
+                                    <input type="number" step="0.1" class="pref-input pref-input-number"
+                                        id="pref-antiblur-t-exp" value="2.0" min="0.1" max="100">
+                                    <span>ms</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="pref-section-card">
+                            <div class="pref-section-title">🎯 Cổng kiểm soát độ nét ảnh (Sharpness Gate)</div>
+                            <div class="pref-form-row">
+                                <label>
+                                    <span>Ngưỡng phương sai Laplacian (Threshold)</span>
+                                    <small>Ngưỡng phương sai tối thiểu (Var ≥ Threshold) để coi là ảnh sắc nét</small>
+                                </label>
+                                <input type="number" step="5" class="pref-input pref-input-number"
+                                    id="pref-antiblur-threshold" value="100" min="10" max="1000">
+                            </div>
+                            <div class="pref-form-row">
+                                <label>
+                                    <span>Tự động chụp lại khi ảnh nhòe (Auto-Retrigger)</span>
+                                    <small>Kích hoạt chụp lại khi phát hiện dao động rung làm mờ ảnh</small>
+                                </label>
+                                <label class="pref-switch">
+                                    <input type="checkbox" id="pref-antiblur-auto-retrigger" checked>
+                                    <span class="pref-slider"></span>
+                                </label>
+                            </div>
+                            <div class="pref-form-row">
+                                <label>
+                                    <span>Số lần chụp lại tối đa (Retry Count)</span>
+                                    <small>Giới hạn số lần chụp bù tránh kéo dài chu kỳ máy</small>
+                                </label>
+                                <input type="number" class="pref-input pref-input-number" id="pref-antiblur-max-retry"
+                                    value="1" min="1" max="5">
+                            </div>
+                            <div class="pref-form-row">
+                                <label>
+                                    <span>Thời gian chờ bù thêm trước khi chụp lại (ms)</span>
+                                    <small>Khoảng nghỉ bổ sung để dao động cơ học tắt hoàn toàn</small>
+                                </label>
+                                <div class="pref-input-wrapper">
+                                    <input type="number" step="5" class="pref-input pref-input-number"
+                                        id="pref-antiblur-extra-settle" value="20" min="5" max="200">
+                                    <span>ms</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="pref-section-card">
+                            <div class="pref-section-title">📐 Tham số mô hình cơ học & Công thức URD</div>
+                            <div class="pref-form-row">
+                                <label>
+                                    <span>Vùng nhìn FOV theo trục X (mm)</span>
+                                    <small>Kích thước chiều ngang quan sát của Camera</small>
+                                </label>
+                                <input type="number" step="1" class="pref-input pref-input-number"
+                                    id="pref-antiblur-fov" value="40" min="5" max="500">
+                            </div>
+                            <div class="pref-form-row">
+                                <label>
+                                    <span>Số pixel cảm biến theo trục X (pixels)</span>
+                                    <small>Độ phân giải ngang của cảm biến CMOS</small>
+                                </label>
+                                <input type="number" step="100" class="pref-input pref-input-number"
+                                    id="pref-antiblur-sensor-px" value="2000" min="640" max="10000">
+                            </div>
+                            <div class="pref-form-row">
+                                <label>
+                                    <span>Độ nhòe tối đa cho phép (B_max - pixels)</span>
+                                    <small>Tiêu chuẩn công nghiệp thường là 0.5 px</small>
+                                </label>
+                                <input type="number" step="0.1" class="pref-input pref-input-number"
+                                    id="pref-antiblur-b-max" value="0.5" min="0.1" max="2.0">
+                            </div>
+                            <div class="pref-form-row">
+                                <label>
+                                    <span>Biên độ Positioning Band (A0 - µm)</span>
+                                    <small>Độ lệch cơ học của trục IAI khi vừa bật cờ PEND</small>
+                                </label>
+                                <input type="number" step="5" class="pref-input pref-input-number" id="pref-antiblur-a0"
+                                    value="50" min="1" max="500">
+                            </div>
+                            <div class="pref-form-row">
+                                <label>
+                                    <span>Tần số dao động riêng gá máy (fn - Hz)</span>
+                                    <small>Tần số tự nhiên của hệ khung gá cơ khí</small>
+                                </label>
+                                <input type="number" step="5" class="pref-input pref-input-number" id="pref-antiblur-fn"
+                                    value="50" min="5" max="200">
+                            </div>
+                            <div class="pref-form-row">
+                                <label>
+                                    <span>Hệ số tắt dần dao động (Damping ratio - ζ)</span>
+                                    <small>Độ tắt dao động cơ học của kết cấu máy (0.05 - 0.15)</small>
+                                </label>
+                                <input type="number" step="0.01" class="pref-input pref-input-number"
+                                    id="pref-antiblur-zeta" value="0.08" min="0.01" max="0.5">
+                            </div>
+
+                            <!-- Thanh công cụ 4 nút chuẩn quy trình và an toàn -->
+                            <div
+                                style="margin-top: 18px; display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+                                <button type="button" class="pref-btn-secondary" id="btn-antiblur-reload-features"
+                                    style="background: rgba(139, 92, 246, 0.2); border: 1px solid #8b5cf6; color: #c4b5fd; padding: 8px 16px; border-radius: 5px; cursor: pointer; font-weight: 600; display: flex; align-items: center; gap: 6px;"
+                                    title="Nạp file features.cfg vào Camera và tự động đồng bộ Exposure Time">
+                                    📷 1. Nạp từ features.cfg
+                                </button>
+                                <button type="button" class="pref-btn-secondary" id="btn-antiblur-auto-calc"
+                                    style="background: rgba(0, 200, 255, 0.15); border: 1px solid #00c8ff; color: #00e5ff; padding: 8px 16px; border-radius: 5px; cursor: pointer; font-weight: 600; display: flex; align-items: center; gap: 6px;"
+                                    title="Tính toán T_settle và T_hold theo công thức cơ học URD">
+                                    ⚡ 2. Tự động tính toán URD
+                                </button>
+
+                                <button type="button" class="pref-btn-secondary" id="btn-antiblur-reset-defaults"
+                                    style="background: rgba(245, 158, 11, 0.12); border: 1px solid #f59e0b; color: #fcd34d; padding: 8px 14px; border-radius: 5px; cursor: pointer; font-weight: 500; display: flex; align-items: center; gap: 5px;"
+                                    title="Khôi phục lại toàn bộ tham số mặc định chuẩn an toàn">
+                                    🔄 Khôi phục mặc định
+                                </button>
+                            </div>
+
+                            <!-- Status Dashboard Banner: Show kết quả cấu hình và trạng thái lưu -->
+                            <div id="antiblur-status-banner"
+                                style="margin-top: 14px; background: rgba(15, 23, 42, 0.7); border: 1px solid rgba(59, 130, 246, 0.3); border-radius: 6px; padding: 10px 14px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
+                                <div style="display: flex; align-items: center; gap: 8px;">
+                                    <span id="antiblur-banner-icon" style="font-size: 16px;">ℹ️</span>
+                                    <span id="antiblur-banner-msg"
+                                        style="font-size: 13px; color: #e2e8f0; font-weight: 500;">Sẵn sàng cấu hình
+                                        Imaging & Anti-Blur.</span>
+                                </div>
+                                <div style="font-size: 12px; color: #94a3b8; display: flex; gap: 12px;">
+                                    <span>Tệp lưu: <strong
+                                            style="color: #60a5fa;">app/storage/anti_blur.json</strong></span>
+                                    <span id="antiblur-banner-timestamp" style="color: #a3e635;"></span>
+                                </div>
+                            </div>
+
+                            <!-- Calculation Result Box -->
+                            <div id="antiblur-calc-box"
+                                style="margin-top: 12px; background: rgba(0, 0, 0, 0.35); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 6px; padding: 12px 16px;">
+                                <div style="font-size: 13px; font-weight: 600; color: #00e5ff; margin-bottom: 8px;">📊
+                                    Kết quả tính toán vật lý URD:</div>
+                                <div
+                                    style="display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 10px; font-size: 12px; color: #ccc;">
+                                    <div>Độ phân giải R: <strong id="calc-res-r" style="color: #fff;">20.00</strong>
+                                        µm/px</div>
+                                    <div>Rung lắc cho phép A_allow: <strong id="calc-res-a-allow"
+                                            style="color: #fff;">10.00</strong> µm</div>
+                                    <div>T_settle đề xuất: <strong id="calc-res-t-settle"
+                                            style="color: #00ff88;">64.05</strong> ms</div>
+                                    <div>T_hold đề xuất: <strong id="calc-res-t-hold"
+                                            style="color: #00ff88;">17.00</strong> ms</div>
+                                    <div>Tổng thời gian dừng: <strong id="calc-res-total-stop"
+                                            style="color: #ffaa00;">81.05</strong> ms</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- TAB 1: AI - Mô hình YOLO Segment -->
+                    
+
+                    <!-- TAB 2: AI - Mô hình YOLO Object -->
+                    <div class="pref-tab-panel" id="tab-ai-yolo-object" style="display: none;">
+                        <div class="pref-section-card">
+                            <div class="pref-section-title">📦 Cấu hình Mô hình YOLO Object (YoloDetectObjectConfig)
+                            </div>
+                            <div class="pref-form-row">
+                                <label>
+                                    <span>Mô hình Nhận diện Tem (Stamp Detect)</span>
+                                    <small>Đường dẫn chi tiết file trọng số mô hình YOLO nhận diện Có/Không tem (object_stamp_detect.pt)</small>
+                                </label>
+                                <input type="text" class="pref-input pref-ai-model-input"
+                                    id="pref-path-yolo-obj-stamp" readonly style="width: 100%; max-width: 520px;"
+                                    title="Đường dẫn mô hình nhận diện tem">
+                            </div>
+                            <div class="pref-form-row">
+                                <label>
+                                    <span>Mô hình Nhận diện Dị vật (Foreign Object)</span>
+                                    <small>Đường dẫn chi tiết file trọng số mô hình nhận diện dị vật ngoại lai</small>
+                                </label>
+                                <input type="text" class="pref-input pref-ai-model-input"
+                                    id="pref-path-yolo-obj-foreign" readonly style="width: 100%; max-width: 520px;"
+                                    title="Đường dẫn mô hình nhận diện dị vật">
+                            </div>
+                            <div class="pref-form-row">
+                                <label>
+                                    <span>Ngưỡng tin cậy nhận diện (confidence)</span>
+                                    <small>Xác suất tối thiểu để chấp nhận box đối tượng (0.05 - 1.0)</small>
+                                </label>
+                                <input type="number" step="0.05" class="pref-input pref-input-number"
+                                    id="pref-ai-yolo-obj-conf" value="0.25" min="0.05" max="1.0">
+                            </div>
+                            <div class="pref-form-row">
+                                <label>
+                                    <span>Ngưỡng triệt tiêu chồng lấn (iou)</span>
+                                    <small>Ngưỡng Intersection over Union lọc box trùng (0.1 - 0.95)</small>
+                                </label>
+                                <input type="number" step="0.05" class="pref-input pref-input-number"
+                                    id="pref-ai-yolo-obj-iou" value="0.45" min="0.1" max="0.95">
+                            </div>
+
+
+                        </div>
+                    </div>
+
+                    <!-- TAB 3: AI - Mô hình PatchCore -->
+                    <div class="pref-tab-panel" id="tab-ai-patchcore" style="display: none;">
+                        <div class="pref-section-card">
+                            <div class="pref-section-title">🧠 Cấu hình Mô hình PatchCore Anomaly
+                                (PatchCoreAnomalyConfig)</div>
+                            <div class="pref-form-row">
+                                <label>
+                                    <span>Thư mục Mô hình PatchCore (Model Folder)</span>
+                                    <small>Đường dẫn chi tiết thư mục lưu trữ trọng số và cấu hình mạng
+                                        PatchCore</small>
+                                </label>
+                                <input type="text" class="pref-input pref-ai-model-input" id="pref-path-patchcore-model"
+                                    readonly style="width: 100%; max-width: 520px;" title="Thư mục mô hình PatchCore">
+                            </div>
+                            <div class="pref-form-row">
+                                <label>
+                                    <span>File Index đặc trưng (FAISS IVF Index)</span>
+                                    <small>Đường dẫn chi tiết file chỉ mục vector đặc trưng ngân hàng bộ nhớ</small>
+                                </label>
+                                <input type="text" class="pref-input pref-ai-model-input" id="pref-path-patchcore-index"
+                                    readonly style="width: 100%; max-width: 520px;" title="File index FAISS PatchCore">
+                            </div>
+                            <div class="pref-form-row">
+                                <label>
+                                    <span>Số cụm lân cận tìm kiếm FAISS (nprobe)</span>
+                                    <small>Độ sâu tìm kiếm vector đặc trưng trong FAISS IVF Index (mặc định 10)</small>
+                                </label>
+                                <input type="number" class="pref-input pref-input-number" id="pref-patchcore-nprobe"
+                                    value="10" min="1" max="64">
+                            </div>
+                            <div class="pref-form-row">
+                                <label>
+                                    <span>Tỷ lệ phủ ảnh nhiệt Heatmap (overlay_alpha)</span>
+                                    <small>Độ trong suốt khi blend bản đồ nhiệt khuyết tật lên ảnh gốc</small>
+                                </label>
+                                <input type="number" step="0.05" class="pref-input pref-input-number"
+                                    id="pref-patchcore-alpha" value="0.6" min="0.1" max="1.0">
+                            </div>
+
+
+                        </div>
+                    </div>
+
+                    <!-- TAB 4: AI - Mô hình U-Net & Master Line -->
+                    
+                </div>
+            </div>
+
+            <!-- Footer Toolbar: Buttons -->
+            <div class="pref-footer">
+                <div class="pref-footer-left">
+                    <button type="button" class="pref-btn-secondary" id="btn-pref-defaults"
+                        title="Đặt toàn bộ ô nhập về giá trị mặc định do backend cung cấp (chưa lưu cho đến khi nhấn Apply)">Set
+                        To Defaults</button>
+                    <span id="pref-apply-status" class="pref-apply-status" role="status" aria-live="polite"></span>
+                </div>
+                <div class="pref-footer-right">
+                    <button type="button" class="pref-btn-action pref-btn-ok" id="btn-pref-apply"
+                        title="Lưu đồng bộ toàn bộ cấu hình">Apply</button>
+                    <button type="button" class="pref-btn-action pref-btn-cancel" id="btn-pref-cancel">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="loading">
+        <div id="loading-card">
+            <div id="loading-loader">
+                <span id="loader-dot-1"></span>
+                <span id="loader-dot-2"></span>
+                <span id="loader-dot-3"></span>
+                <div id="loader-glow"></div>
+            </div>
+
+            <h2 id="loading-title">Đang xử lý</h2>
+
+            <p id="loading-status">
+                Khởi tạo...
+            </p>
+
+            <div id="loading-progress">
+                <div id="loading-bar"></div>
+            </div>
+
+            <div id="loading-percent">
+                0%
+            </div>
+
+            <div id="loading-dots">
+                <span id="loading-dot-1"></span>
+                <span id="loading-dot-2"></span>
+                <span id="loading-dot-3"></span>
+            </div>
+        </div>
+    </div>
+    <div id="confirm-exit-overlay" class="confirm-overlay">
+        <div class="confirm-box">
+            <h3>Xác nhận</h3>
+            <p id="confirm-message">
+                Bạn có chắc chắn muốn xóa dữ liệu?
+            </p>
+            <div class="confirm-actions">
+                <button id="btn-confirm-yes">Có</button>
+                <button id="btn-confirm-no">Không</button>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="../static/js/controler.js"></script>
+
+</body>
+
+</html>

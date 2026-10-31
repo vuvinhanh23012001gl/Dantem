@@ -1,0 +1,189 @@
+/* ===== DARK MODE VARIABLES ===== */
+:root {
+    --bg: #0f1115;
+    --panel: #161a22;
+    --panel-soft: #1e2430;
+    --border: #2a3242;
+
+    --text: #e5e7eb;
+    --muted: #9ca3af;
+
+    --primary: #3b82f6;
+    --success: #22c55e;
+    --neutral: #6b7280;
+    --header: #0b1220;
+}
+
+/* ===== RESET ===== */
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    height: 100vh;
+    font-family: "Segoe UI", Roboto, Arial, sans-serif;
+    background: radial-gradient(circle at top, #141824, #0b0e14);
+    color: var(--text);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* ===== APP CONTAINER (CENTERED) ===== */
+.wrapper {
+    width: 90%;
+    max-width: 1100px;
+    height: 85vh;
+
+    display: flex;
+    background: var(--panel);
+    border-radius: 16px;
+    overflow: hidden;
+
+    box-shadow:
+        0 25px 60px rgba(0, 0, 0, 0.6),
+        inset 0 0 0 1px var(--border);
+}
+
+/* ===== LEFT PANEL ===== */
+.left-panel {
+    width: 38%;
+    padding: 24px;
+    background: var(--panel-soft);
+    border-right: 1px solid var(--border);
+}
+
+.left-panel h2 {
+    margin: 0 0 18px;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+/* ===== FORM ===== */
+label {
+    display: block;
+    margin-top: 14px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--muted);
+}
+
+input,
+textarea {
+    width: 100%;
+    margin-top: 6px;
+    padding: 9px 10px;
+    font-size: 13px;
+    border-radius: 8px;
+
+    background: #0f1420;
+    border: 1px solid var(--border);
+    color: var(--text);
+}
+
+input:focus,
+textarea:focus {
+    outline: none;
+    border-color: var(--primary);
+}
+
+textarea {
+    min-height: 70px;
+    resize: vertical;
+}
+
+.file-input input {
+    padding: 0;
+    border: none;
+    background: transparent;
+}
+
+/* ===== BUTTON ===== */
+.btn {
+    width: 100%;
+    margin-top: 14px;
+    padding: 10px;
+    border-radius: 8px;
+    border: none;
+
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.btn-create {
+    background: linear-gradient(135deg, #22c55e, #16a34a);
+    color: #052e16;
+}
+
+.btn-exit {
+    background: #1f2937;
+    color: #e5e7eb;
+}
+
+.btn:hover {
+    filter: brightness(1.05);
+}
+
+/* ===== RIGHT PANEL ===== */
+.right-panel {
+    width: 62%;
+    padding: 24px;
+    overflow-y: auto;
+}
+
+.right-panel h2 {
+    margin: 0 0 16px;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+/* ===== TABLE ===== */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #0f1420;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+thead {
+    background: var(--header);
+    color: #c7d2fe;
+}
+
+th,
+td {
+    padding: 10px 12px;
+    font-size: 13px;
+    border-bottom: 1px solid var(--border);
+}
+
+tbody tr:hover {
+    background: rgba(59, 130, 246, 0.08);
+}
+
+tbody tr:last-child td {
+    border-bottom: none;
+}
+
+/* ===== TABLE BUTTON ===== */
+table button {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    color: var(--primary);
+}
+
+/* ===== SCROLLBAR ===== */
+.right-panel::-webkit-scrollbar {
+    width: 6px;
+}
+
+.right-panel::-webkit-scrollbar-thumb {
+    background: #334155;
+    border-radius: 10px;
+}

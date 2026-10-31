@@ -1,0 +1,50 @@
+# Python Virtual Environments (Do not commit venv)
+.venv/
+*/.venv/
+venv/
+*/venv/
+env/
+*/env/
+ENV/
+env.bak/
+venv.bak/
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*/__pycache__/
+*/**/__pycache__/
+*.py[cod]
+*$py.class
+
+# Pytest / coverage cache
+.pytest_cache/
+*/.pytest_cache/
+*/**/.pytest_cache/
+.coverage
+.cache
+
+# IDE / Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS files
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+.DS_Store
+
+# Temporary runtime logs and outputs
+app/log/*
+!app/log/.gitkeep
+app/output/judgment/*
+app/output/retrain/*
+
+# Backup folders
+app/input_backup/
+*_backup/
+
+# Node modules (if any)
+node_modules/

@@ -1,0 +1,115 @@
+{
+    "1": {
+        "0": {
+            "1": {
+                "AnomalyPointInspector": {
+                    "0": {
+                        "id": 0,
+                        "name": "Điểm bất thường 1",
+                        "xStart": 618,
+                        "yStart": 296,
+                        "xEnd": 1200,
+                        "yEnd": 726,
+                        "width": 291,
+                        "height": 215,
+                        "threshold": 0.2,
+                        "saveRuntimeImages": false,
+                        "coordinateSpace": "image"
+                    }
+                }
+            },
+            "2": {},
+            "3": {},
+            "4": {},
+            "5": {},
+            "6": {},
+            "7": {},
+            "8": {},
+            "9": {},
+            "11": {},
+            "12": {},
+            "13": {},
+            "14": {},
+            "15": {},
+            "16": {},
+            "17": {},
+            "18": {},
+            "19": {},
+            "20": {},
+            "21": {},
+            "22": {},
+            "23": {},
+            "24": {},
+            "25": {
+                "StampItemInspector": {
+                    "0": {
+                        "id": 0,
+                        "name": "Tem 1",
+                        "xStart": 64,
+                        "yStart": 132,
+                        "xEnd": 884,
+                        "yEnd": 864,
+                        "width": 410,
+                        "height": 366,
+                        "coordinateSpace": "image"
+                    },
+                    "1": {
+                        "id": 1,
+                        "name": "Tem 2",
+                        "xStart": 1252,
+                        "yStart": 368,
+                        "xEnd": 1750,
+                        "yEnd": 790,
+                        "width": 249,
+                        "height": 211,
+                        "coordinateSpace": "image"
+                    }
+                }
+            },
+            "26": {},
+            "27": {},
+            "28": {},
+            "29": {},
+            "30": {},
+            "31": {},
+            "32": {},
+            "33": {
+                "ForeignObjectInspector": {
+                    "0": {
+                        "id": 0,
+                        "name": "Dị vật",
+                        "xStart": 414,
+                        "yStart": 640,
+                        "xEnd": 1576,
+                        "yEnd": 1472,
+                        "width": 581,
+                        "height": 416,
+                        "threshold": 0.4,
+                        "saveRuntimeImages": true,
+                        "coordinateSpace": "image"
+                    }
+                }
+            },
+            "34": {},
+            "35": {
+                "ForeignObjectInspector": {
+                    "0": {
+                        "id": 0,
+                        "name": "Dị vật",
+                        "xStart": 308,
+                        "yStart": 138,
+                        "xEnd": 1628,
+                        "yEnd": 1118,
+                        "width": 660,
+                        "height": 490,
+                        "threshold": 0.9,
+                        "saveRuntimeImages": true,
+                        "coordinateSpace": "image"
+                    }
+                }
+            },
+            "36": {},
+            "37": {}
+        }
+    }
+}

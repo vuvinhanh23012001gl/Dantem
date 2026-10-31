@@ -1,0 +1,6 @@
+from .product_repository import ProductRepository
+from .choose_product_repository import ChooseProductRepository
+from .point_repository import PointRepository
+from .judment_law_product_reponsitory import JudmentLawProductRepository
+from .product_count_repository import ProductCountRepository
+from .barcode_account_repository import BarcodeAccountRepository

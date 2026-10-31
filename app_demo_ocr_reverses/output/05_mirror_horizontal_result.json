@@ -1,0 +1,191 @@
+{
+    "image": "05_mirror_horizontal.png",
+    "success": true,
+    "total_lines": 5,
+    "orientation": {
+        "angle": 0,
+        "status": "MIRROR",
+        "confidence": 0.9999,
+        "is_mirrored": true,
+        "skew_angle": 0.0,
+        "is_tilted": false,
+        "has_mixed_orientations": false,
+        "doc_model_angle": 180,
+        "doc_model_confidence": 0.4871
+    },
+    "texts": [
+        {
+            "line_id": 0,
+            "text": "INSPECTOR CARTON QA-2026",
+            "confidence": 0.9909,
+            "angle": 0,
+            "status": "MIRROR",
+            "orientation_confidence": 1.0,
+            "is_mirrored": true,
+            "skew_angle": -0.25,
+            "bbox": [
+                274,
+                30,
+                728,
+                70
+            ],
+            "polygon": [
+                [
+                    274,
+                    32
+                ],
+                [
+                    728,
+                    30
+                ],
+                [
+                    728,
+                    68
+                ],
+                [
+                    274,
+                    70
+                ]
+            ]
+        },
+        {
+            "line_id": 1,
+            "text": "MODEL: IC-9800 PRO",
+            "confidence": 0.9994,
+            "angle": 0,
+            "status": "MIRROR",
+            "orientation_confidence": 0.9998,
+            "is_mirrored": true,
+            "skew_angle": 0.0,
+            "bbox": [
+                441,
+                110,
+                726,
+                140
+            ],
+            "polygon": [
+                [
+                    441,
+                    110
+                ],
+                [
+                    726,
+                    110
+                ],
+                [
+                    726,
+                    140
+                ],
+                [
+                    441,
+                    140
+                ]
+            ]
+        },
+        {
+            "line_id": 2,
+            "text": "LOT: VN20261030-A1",
+            "confidence": 0.9956,
+            "angle": 0,
+            "status": "MIRROR",
+            "orientation_confidence": 1.0,
+            "is_mirrored": true,
+            "skew_angle": 0.0,
+            "bbox": [
+                446,
+                170,
+                726,
+                201
+            ],
+            "polygon": [
+                [
+                    446,
+                    170
+                ],
+                [
+                    726,
+                    170
+                ],
+                [
+                    726,
+                    201
+                ],
+                [
+                    446,
+                    201
+                ]
+            ]
+        },
+        {
+            "line_id": 3,
+            "text": "MFG: 2026-10-30 EXP: 2028-10-30",
+            "confidence": 0.9965,
+            "angle": 0,
+            "status": "MIRROR",
+            "orientation_confidence": 1.0,
+            "is_mirrored": true,
+            "skew_angle": 0.0,
+            "bbox": [
+                341,
+                230,
+                727,
+                257
+            ],
+            "polygon": [
+                [
+                    341,
+                    230
+                ],
+                [
+                    727,
+                    230
+                ],
+                [
+                    727,
+                    257
+                ],
+                [
+                    341,
+                    257
+                ]
+            ]
+        },
+        {
+            "line_id": 4,
+            "text": "MADE IN VIETNAM",
+            "confidence": 0.9998,
+            "angle": 0,
+            "status": "MIRROR",
+            "orientation_confidence": 0.9998,
+            "is_mirrored": true,
+            "skew_angle": 0.0,
+            "bbox": [
+                474,
+                364,
+                726,
+                393
+            ],
+            "polygon": [
+                [
+                    474,
+                    364
+                ],
+                [
+                    726,
+                    364
+                ],
+                [
+                    726,
+                    393
+                ],
+                [
+                    474,
+                    393
+                ]
+            ]
+        }
+    ],
+    "result": "NG",
+    "reason": "Phát hiện chữ sai chiều chuẩn: Lật gương trái-phải (Mirror) (Góc=0°).",
+    "processing_time_ms": 2496.82
+}

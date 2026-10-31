@@ -1,0 +1,245 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<title>Foreign object multi-region regression</title>
+<link rel="stylesheet" href="../../static/css/home.css">
+<body>
+<pre id="result">RUNNING</pre>
+<canvas id="shapes" width="600" height="300"></canvas>
+<canvas id="preview" width="600" height="300"></canvas>
+<div id="panner-region-foreign-object">
+    <button id="btn-exit-foreign-object">Exit</button>
+    <button id="btn-create-model-foreign-object">Create</button>
+    <button id="btn-runtime-images-foreign-object">Images</button>
+    <button id="btn-judment-foreign-object">PatchCore</button>
+    <button id="btn-detect-object-foreign-object">PatchCore + YOLO</button>
+    <button id="btn-delete-model-foreign-object">Delete model</button>
+    <div id="table-cof-foreign-object"></div>
+    <div id="runtime-train-images-panel-foreign-object"></div>
+    <div id="patchcore-result-panel-foreign-object"></div>
+    <div id="log-foreign-object"></div>
+</div>
+<script type="module">
+const output = document.getElementById("result");
+let checks = 0;
+const assert = (condition, message) => {
+    if (!condition) throw new Error(message);
+    checks++;
+};
+const settle = () => new Promise(resolve => setTimeout(resolve, 40));
+try {
+    const base = `${location.origin}/app/static/js`;
+    const { ForeignObjectInspector, ForeignObjectRegion } = await import(
+        `${base}/services/foreign_object_item_inspector.js`
+    );
+    const { RectangleDrawer } = await import(`${base}/canvas/rectangel_drawer_canvas.js`);
+    const inspector = new ForeignObjectInspector();
+    const drawer = new RectangleDrawer();
+    const shapes = document.getElementById("shapes");
+    const preview = document.getElementById("preview");
+    const manager = {
+        currentTool: drawer,
+        ctxShape: shapes.getContext("2d"),
+        ctxPrev: preview.getContext("2d"),
+        clearShapeCanvas() { this.ctxShape.clearRect(0, 0, 600, 300); },
+        clearPreviewCanvas() { this.ctxPrev.clearRect(0, 0, 600, 300); },
+        setTool(tool) { this.currentTool = tool; },
+    };
+    const selected = {product_id:1, frame_id:0, items_id:3};
+    globalThis.foreignFixture = { inspector, drawer, manager, selected };
+    const modules = {
+        [`${base}/common_value.js`]: `
+            export const canvasManager = globalThis.foreignFixture.manager;
+            export const scroll_container = document.body;
+            export const WIDTH_IMG_SHAPE = 600;
+        `,
+        [`${base}/tool/common_value_tool.js`]: `
+            export const ACTIVATION_DISTANCE_WHEN_CLICKING_THE_SQUARE = 5;
+            export const additional_events = new Map();
+            export const boxContentForeignObject = document.getElementById("table-cof-foreign-object");
+            export const COLOR_RECT_SHAPE_REGION_DETECT = "#00E6FF";
+            export const create_obj_cross_item = () => globalThis.foreignFixture.inspector;
+            export const get_obj_product = () => ({highlightItems(){}, clearHighlight(){}});
+            export const obj_region_foreign_object_canvas = globalThis.foreignFixture.drawer;
+            export const panner_region_foreign_object = document.getElementById("panner-region-foreign-object");
+            export const refesh_btn = () => {};
+            export const selected = globalThis.foreignFixture.selected;
+            export const setNameEventActivate = () => {};
+            export const tool_log = () => document.getElementById("log-foreign-object");
+            export const write_log_append = (element, message) => {element.textContent += message;};
+            export const write_log_clear = (element, message) => {element.textContent = message;};
+        `,
+    };
+    const importMap = document.createElement("script");
+    importMap.type = "importmap";
+    importMap.textContent = JSON.stringify({imports: Object.fromEntries(
+        Object.entries(modules).map(([name, source]) => [
+            name, URL.createObjectURL(new Blob([source], {type: "text/javascript"})),
+        ])
+    )});
+    document.head.appendChild(importMap);
+    const requests = [];
+    let holdRun = false;
+    let releaseRun;
+    const nativeFetch = globalThis.fetch;
+    globalThis.fetch = async (url, options = {}) => {
+        if (!String(url).startsWith("/law_regulation/")) return nativeFetch(url, options);
+        const request = {url: String(url), body: options.body ? JSON.parse(options.body) : null};
+        requests.push(request);
+        if (holdRun && request.url.endsWith("/run_model")) {
+            holdRun = false;
+            await new Promise(resolve => { releaseRun = resolve; });
+        }
+        return new Response(JSON.stringify({ok:true, data:{
+            completed:true, images:[{name:"sample.png",image:"data:image/png;base64,AA=="}],
+            boxes:[], detections:[], score:0.05, status:"OK",
+        }}), {headers: {"Content-Type":"application/json"}});
+    };
+    const tool = await import(`${base}/tool/foreign_object_tool.js`);
+    tool.event_transition_items();
+    const click = (x, y) => drawer.onClick({x, y}, manager);
+    const right = (x, y) => drawer.onMouseRightClick({x, y}, manager);
+    const draw = (x1, y1, x2, y2) => {
+        click(x1, y1);
+        drawer.onMouseMove({x:x2, y:y2}, manager);
+        click(x2, y2);
+    };
+    const cards = () => [...document.querySelectorAll(".foreign-object-region")];
+    const accept = () => document.querySelector(".btn-accept").click();
+    const button = id => document.getElementById(id).click();
+
+    draw(10, 10, 100, 100);
+    assert(inspector.regions.length === 0 && inspector.toDict() === null, "Pending is not serialized");
+    button("btn-create-model-foreign-object");
+    await settle();
+    assert(!requests.some(request => request.url.endsWith("/create_model")), "Pending cannot train");
+    accept();
+    assert(inspector.regions.length === 1 && cards().length === 1, "Accept commits first region");
+    draw(150, 10, 250, 100);
+    assert(inspector.regions.length === 1, "Second region remains pending");
+    accept();
+    assert(inspector.regions.length === 2 && cards().length === 2, "Second accepted region appends");
+    click(10, 50);
+    document.getElementById("foreign-object-input-0").value = "First edited";
+    assert(!document.getElementById("foreign-object-input-1"), "Foreign verdict threshold input removed");
+    accept();
+    assert(inspector.regions.length === 2 && inspector.getRegionById(0).name === "First edited" &&
+        inspector.getRegionById(1).name !== "First edited", "Left border edit preserves independent regions");
+    cards()[1].querySelector("button").click();
+    document.getElementById("save-runtime-images-foreign-object").click();
+    accept();
+    assert(inspector.getRegionById(1).saveRuntimeImages &&
+        !inspector.getRegionById(0).saveRuntimeImages, "Runtime image flags are independent");
+    const restored = ForeignObjectInspector.fromDict(inspector.toDict());
+    assert(restored.regions.length === 2 && !("threshold" in restored.getRegionById(0).toDict()),
+        "Multi-region serialization excludes obsolete threshold");
+    const legacy = ForeignObjectInspector.fromDict({
+        id:99, name:"Legacy", xStart:1, yStart:2, xEnd:20, yEnd:30, threshold:0.4,
+        saveRuntimeImages:true,
+    });
+    assert(legacy.regions[0].id === 0 && legacy.regions[0].saveRuntimeImages &&
+        !("threshold" in legacy.regions[0].toDict()), "Legacy migration ignores obsolete threshold");
+    const savedMaster = JSON.stringify(inspector.toDict());
+    draw(300, 10, 350, 60);
+    right(300, 30);
+    assert(inspector.regions.length === 2 && !drawer.is_available_one_rect, "Right click cancels only pending");
+    draw(300, 10, 250, 100);
+    assert(drawer.is_available_one_rect && inspector.regions.length === 2,
+        "Second click on existing border completes pending instead of selecting");
+    right(300, 50);
+    right(550, 250);
+    assert(inspector.regions.length === 2, "Right click outside borders does nothing");
+    inspector.addOrUpdateRegion(new ForeignObjectRegion(2, "Overlapping", 10, 10, 100, 100));
+    tool.event_transition_items();
+    click(10, 50);
+    assert(document.getElementById("foreign-object-input-0").value === "Overlapping",
+        "Left click on overlapping borders selects most recently drawn");
+    const beforeRemove = requests.length;
+    right(10, 50);
+    await settle();
+    assert(inspector.getRegionById(2) === null && inspector.getRegionById(0) !== null,
+        "Right click removes only topmost region");
+    assert(!requests.slice(beforeRemove).some(request => request.body),
+        "Removing region never calls model deletion");
+    assert(inspector.getNextId() === 3, "Removed IDs are not reused in editing session");
+    assert(ForeignObjectInspector.fromDict(JSON.parse(savedMaster)).regions.length === 2,
+        "Reload of saved master retains regions removed only in RAM");
+
+    click(10, 50);
+    button("btn-judment-foreign-object");
+    await settle();
+    const run = requests.find(request => request.url.endsWith("/run_model"));
+    assert(run.body.roi_id === 0 && !("threshold" in run.body.crop_roi),
+        "PatchCore uses active region without obsolete verdict threshold");
+    cards()[1].querySelector("button").click();
+    button("btn-detect-object-foreign-object");
+    await settle();
+    assert(requests.find(request => request.url.endsWith("/run_object_model")).body.roi_id === 1,
+        "YOLO uses active region");
+    button("btn-runtime-images-foreign-object");
+    await settle();
+    const oldGalleryDelete = document.querySelector(".runtime-train-image-card button");
+    cards()[0].querySelector("button").click();
+    oldGalleryDelete.click();
+    await settle();
+    assert(requests.find(request => request.url.endsWith("/runtime_image")).body.roi_id === 1,
+        "Gallery image deletion retains original context");
+    let confirmation;
+    document.addEventListener("open-confirm-overlay", event => {confirmation = event.detail;});
+    button("btn-delete-model-foreign-object");
+    cards()[1].querySelector("button").click();
+    await confirmation.onConfirm();
+    assert(requests.find(request => request.url.endsWith("/model")).body.roi_id === 0,
+        "Model confirmation retains original context");
+    assert(inspector.regions.length === 2, "Deleting model retains rectangles");
+
+    cards()[0].querySelector("button").click();
+    holdRun = true;
+    button("btn-judment-foreign-object");
+    await settle();
+    cards()[1].querySelector("button").click();
+    releaseRun();
+    await settle();
+    assert(document.getElementById("patchcore-result-panel-foreign-object").innerHTML === "",
+        "Late inference response cannot overwrite new region panel");
+    cards()[0].querySelector("button").click();
+    holdRun = true;
+    button("btn-judment-foreign-object");
+    await settle();
+    selected.items_id = 4;
+    tool.event_transition_items();
+    releaseRun();
+    await settle();
+    assert(document.getElementById("patchcore-result-panel-foreign-object").innerHTML === "",
+        "Late inference response cannot overwrite new item panel");
+    selected.items_id = 3;
+    tool.event_transition_items();
+    click(10, 50);
+    button("btn-create-model-foreign-object");
+    cards()[1].querySelector("button").click();
+    await new Promise(resolve => setTimeout(resolve, 1150));
+    const create = requests.find(request => request.url.endsWith("/create_model"));
+    const lastPoll = requests.filter(request => request.url.includes("/train_status")).at(-1);
+    assert(create.body.roi_id === 0 && lastPoll.url.includes("roi_id=0"),
+        "Training and polling retain original region despite selection change");
+    const beforeListDelete = requests.length;
+    cards()[1].querySelector("button:last-child").click();
+    await settle();
+    assert(inspector.regions.length === 1 &&
+        !requests.slice(beforeListDelete).some(request => request.body),
+        "List deletion matches Canvas deletion and remains RAM-only");
+    draw(300, 10, 400, 100);
+    button("btn-exit-foreign-object");
+    manager.setTool(drawer);
+    tool.event_transition_items();
+    assert(inspector.regions.length === 1 && !drawer.isDrawing && !drawer.is_available_one_rect,
+        "Exiting or switching items clears pending state, not committed regions");
+    output.textContent = `PASS: ${checks} Canvas, API context, serialization and deferred-deletion checks`;
+    document.title = "PASS";
+} catch (error) {
+    output.textContent = `FAIL after ${checks} checks: ${error.stack}`;
+    document.title = "FAIL";
+}
+</script>
+</body>
+</html>

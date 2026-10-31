@@ -1,0 +1,453 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<title>Master tool UI regression</title>
+<link rel="stylesheet" href="../../static/css/home.css">
+<link rel="stylesheet" href="../../static/css/adjust_master.css">
+<body>
+<pre id="result">RUNNING</pre>
+<canvas id="shapes" width="600" height="300"></canvas>
+<canvas id="preview" width="600" height="300"></canvas>
+<div id="frames"></div>
+<div id="host" style="position:fixed;right:0;top:0;width:480px;height:780px"></div>
+<script type="module">
+const output = document.getElementById("result");
+let checks = 0;
+const assert = (condition, message) => {
+    if (!condition) throw new Error(message);
+    checks++;
+};
+const settle = () => new Promise(resolve => setTimeout(resolve, 350));
+try {
+    const source = await (await fetch("/app/templates/home.html")).text();
+    const parsed = new DOMParser().parseFromString(source, "text/html");
+    document.body.appendChild(parsed.getElementById("loading"));
+    const master = parsed.getElementById("panner-adjust-master");
+    master.querySelectorAll("img").forEach(image => {
+        image.src = new URL(image.getAttribute("src"), `${location.origin}/app/templates/home.html`).href;
+    });
+    master.classList.add("active");
+    document.getElementById("host").appendChild(master);
+    const shapes = document.getElementById("shapes");
+    const preview = document.getElementById("preview");
+    const manager = {
+        ctxShape: shapes.getContext("2d"), ctxPrev: preview.getContext("2d"),
+        currentTool: null, ctxImg: shapes.getContext("2d"), cImg: shapes,
+        clearShapeCanvas() { this.ctxShape.clearRect(0, 0, 600, 300); },
+        clearPreviewCanvas() { this.ctxPrev.clearRect(0, 0, 600, 300); },
+        setTool(tool) { this.currentTool = tool; },
+        drawImageContain() {}, show_img_items() {},
+    };
+    globalThis.masterFixture = {manager};
+    const base = `${location.origin}/app/static/js`;
+    const map = document.createElement("script");
+    map.type = "importmap";
+    map.textContent = JSON.stringify({imports: {
+        [`${base}/common_value.js`]: URL.createObjectURL(new Blob([`
+            export const canvasManager = globalThis.masterFixture.manager;
+            export const scroll_container = document.getElementById("frames");
+            export const WIDTH_IMG_SHAPE = 600;
+            export const HEIGH_IMG_SHAPE = 300;
+        `], {type:"text/javascript"})),
+    }});
+    document.head.appendChild(map);
+    const common = await import(`${base}/tool/common_value_tool.js`);
+    const {ItemsInspector} = await import(`${base}/services/items_inspector.js`);
+    const region = {id:0,name:"Region 1",xStart:20,yStart:20,xEnd:120,yEnd:120,threshold:0.2,expected_text:"ABC"};
+    const items = ItemsInspector.fromDict(3, {
+        StampItemInspector: {0:region},
+        AnomalyPointInspector: {0:region},
+        ForeignObjectInspector: {0:region},
+        OCRTextInspector: {0:region},
+    });
+    Object.assign(common.selected, {product_id:1, frame_id:0, items_id:3});
+    common.set_obj_product({
+        find_item_object_corresponding(frame, item, type) { return items.getInspector(type); },
+        get_item_object() { return items; }, highlightItems() {}, clearHighlight() {},
+    });
+    let hold = null;
+    let release;
+    let eraseResponse = {ok:true};
+    let eraseFailure = null;
+    let saveResponse = {ok:true};
+    let anomalyModelReady = true;
+    let holdAnomalyStatus = false;
+    let releaseAnomalyStatus;
+    const requests = [];
+    const nativeFetch = fetch;
+    globalThis.fetch = async (url, options={}) => {
+        if (!String(url).startsWith("/law_regulation")) return nativeFetch(url, options);
+        const request = {url:String(url), body:options.body ? JSON.parse(options.body) : null};
+        requests.push(request);
+        if (hold && request.url.endsWith(hold)) {
+            hold = null;
+            await new Promise(resolve => { release = resolve; });
+        }
+        if (request.url === "/law_regulation") {
+            return Response.json({ok:true,data:{
+                product:{_id:1}, tree:{"1":{"0":items.toDict()}},
+                data_point:{"0":{"3":{path_img_point:"/app/static/img/plus.png",x:0,y:0,z:0}}},
+                wid_img:600,hei_img:300,
+            }});
+        }
+        if (request.url.endsWith("/delete_product")) {
+            if (eraseFailure === "network") throw new Error("Network unavailable");
+            if (eraseFailure === "json") return new Response("not JSON");
+            return Response.json(eraseResponse, {status:eraseFailure === "http" ? 500 : 200});
+        }
+        if (request.url.endsWith("/save")) return Response.json(saveResponse);
+        if (request.url === "/law_regulation/stamp/run_model") {
+            return Response.json({ok:true,data:{
+                width:600,height:300,objects:[],
+                boxes:request.body.boxes.map(box => ({...box,exists:true,count:1})),
+            }});
+        }
+        if (request.url === "/law_regulation/anomaly_point/create_model") anomalyModelReady = true;
+        if (request.url.startsWith("/law_regulation/anomaly_point/train_status?")) {
+            const completed = anomalyModelReady;
+            if (holdAnomalyStatus) {
+                holdAnomalyStatus = false;
+                await new Promise(resolve => { releaseAnomalyStatus = resolve; });
+            }
+            return Response.json({ok:true,data:{completed}});
+        }
+        return new Response(JSON.stringify({ok:true,data:{
+            completed:true,status:"OK",score:0.05,boxes:[],detections:[],images:[],
+        }}), {headers:{"Content-Type":"application/json"}});
+    };
+    const stamp = await import(`${base}/tool/stamp_tool.js`);
+    const anomaly = await import(`${base}/tool/anomaly_point_tool.js`);
+    const foreign = await import(`${base}/tool/foreign_object_tool.js`);
+    const ocr = await import(`${base}/tool/ocr_tool.js`);
+    const tools = [
+        {name:"stamp_tool", module:stamp, drawer:common.obj_region_stamp_canvas, panel:common.panner_region_stamp, type:ItemsInspector.TYPE_STAMP},
+        {name:"anomaly-point-tool", module:anomaly, drawer:common.obj_region_anomaly_point_canvas, panel:common.panner_region_anomaly_point, type:ItemsInspector.TYPE_ANOMALY_POINT},
+        {name:"foreign-object-tool", module:foreign, drawer:common.obj_region_foreign_object_canvas, panel:common.panner_region_foreign_object, type:ItemsInspector.TYPE_FOREIGN_OBJECT},
+        {name:"ocr_tool", module:ocr, drawer:common.obj_region_ocr_canvas, panel:common.panner_region_ocr, type:ItemsInspector.TYPE_OCR},
+    ];
+    const activate = tool => {
+        tools.forEach(item => item.panel.classList.remove("active"));
+        common.setNameEventActivate(tool.name);
+        manager.setTool(tool.drawer);
+        tool.module.event_transition_items();
+    };
+    const log = document.getElementById("log-anomaly-point");
+    const footer = master.querySelector(".fix-element");
+    const footerBottom = () => Math.abs(footer.getBoundingClientRect().bottom - master.getBoundingClientRect().bottom) <= 5;
+    const footerLabelsVisible = () => [...footer.querySelectorAll("#containner-control-master button")].every(button => {
+        const label = [...button.childNodes].find(node => node.nodeType === Node.TEXT_NODE && node.textContent.trim());
+        const range = document.createRange();
+        range.selectNodeContents(label);
+        const bounds = range.getBoundingClientRect();
+        return bounds.bottom <= footer.getBoundingClientRect().bottom && bounds.top >= button.getBoundingClientRect().top;
+    });
+    assert(footerBottom(), "Footer is anchored at the bottom before any tool is selected");
+    assert(footerLabelsVisible(), "Wide footer keeps Luu/Tay/Thoat labels visible");
+    assert(log.parentElement === master, "One shared log is outside all tool panels");
+    assert(document.querySelectorAll("#log-anomaly-point").length === 1, "Shared log ID is unique");
+    assert(!document.getElementById("btn-clear-stamp"), "Stamp clear-all button removed");
+    assert(!parsed.getElementById("btn-check-air-bubbles") && !parsed.getElementById("btn-check-scratched-pipe") &&
+        !parsed.getElementById("btn-check-permeable-membrane"), "Retired tools removed");
+    assert(!parsed.getElementById("tab-ai-unet") && !parsed.getElementById("tab-ai-yolo-segment"), "Retired model tabs removed");
+    const strokes = [];
+    const stroke = manager.ctxShape.strokeRect.bind(manager.ctxShape);
+    manager.ctxShape.strokeRect = function(...args) {
+        strokes.push({color:this.strokeStyle,dash:this.getLineDash(),width:this.lineWidth});
+        stroke(...args);
+    };
+    for (const tool of tools) {
+        strokes.length = 0;
+        activate(tool);
+        await settle();
+        assert(strokes.some(item => item.color === "#0000ff" && !item.dash.length && item.width === 2),
+            `${tool.name}: accepted regions use the same solid blue stroke`);
+        const content = tool.panel.querySelector(".cof-and-inf-tool-content");
+        const action = tool.panel.querySelector(".controler-tool button");
+        assert(content.hidden && action.disabled && getComputedStyle(tool.panel).display === "none",
+            `${tool.name}: selecting tool does not show its panel or toolbar`);
+        assert(getComputedStyle(tool.panel).animationName === "none", `${tool.name}: toolbar not animated`);
+        const initialTop = log.getBoundingClientRect().top;
+        const initialFooter = footer.getBoundingClientRect().top;
+        strokes.length = 0;
+        tool.drawer.onClick({x:20,y:60}, manager);
+        assert(getComputedStyle(tool.panel).animationName === "slideRightToLeft",
+            `${tool.name}: opening animates the whole panel from the right`);
+        await settle();
+        assert(!content.hidden && !action.disabled, `${tool.name}: selecting border opens config and enables actions`);
+        assert(strokes.length === 1 && strokes[0].color === "#ffd600" && strokes[0].dash.join() === "6,4",
+            `${tool.name}: one active yellow dashed stroke without double outline`);
+        assert(Math.abs(log.getBoundingClientRect().top - initialTop) < 1, `${tool.name}: log stays fixed`);
+        assert(Math.abs(footer.getBoundingClientRect().top - initialFooter) < 1 && footerBottom(),
+            `${tool.name}: footer stays fixed when panel opens`);
+        const editorName = tool.panel.querySelector('input[type="text"]');
+        const tableFillsEditor = () => {
+            const editor = tool.panel.querySelector(".region-editor");
+            const table = editor.querySelector(".measure-weld-width-config-table");
+            if (!table) return true;
+            const label = table.querySelector(".config-label").getBoundingClientRect();
+            const input = table.querySelector(".config-input").getBoundingClientRect();
+            return Math.abs(table.getBoundingClientRect().width - editor.getBoundingClientRect().width) <= 1 &&
+                input.width > editor.getBoundingClientRect().width * 0.4 && label.width > 100 &&
+                editor.scrollWidth <= editor.clientWidth + 1;
+        };
+        assert(tableFillsEditor(), `${tool.name}: config table spans the full editor, not one grid column`);
+        if (tool.type === ItemsInspector.TYPE_FOREIGN_OBJECT) {
+            assert(!tool.panel.querySelector('input[type="number"]'),
+                "Foreign editor has no verdict threshold");
+        }
+        const originalName = editorName.value;
+        editorName.value = "";
+        tool.panel.querySelector(".btn-accept").click();
+        assert(!tool.panel.querySelector(".region-editor").hidden && editorName.value === "",
+            `${tool.name}: invalid acceptance leaves editor and entered values available`);
+        editorName.value = originalName;
+        const host = document.getElementById("host");
+        host.style.width = "360px";
+        host.style.height = "600px";
+        assert(tableFillsEditor(), `${tool.name}: compact table retains usable labels and inputs without overflow`);
+        const filler = document.createElement("div");
+        filler.style.minHeight = "1500px";
+        content.appendChild(filler);
+        const compactLog = log.getBoundingClientRect();
+        const compactToolbar = tool.panel.querySelector(".controler-tool").getBoundingClientRect();
+        content.scrollTop = 1000;
+        const configBox = content.getBoundingClientRect();
+        assert(footerLabelsVisible(), `${tool.name}: compact footer keeps all global action labels visible`);
+        const toolbar = tool.panel.querySelector(".controler-tool");
+        assert(toolbar.scrollWidth <= toolbar.clientWidth + 1 &&
+            toolbar.getBoundingClientRect().bottom <= footer.getBoundingClientRect().top,
+            `${tool.name}: compact toolbar stays inside its panel above the footer`);
+        assert(content.scrollTop > 0 && configBox.top >= compactLog.bottom && configBox.bottom <= compactToolbar.top,
+            `${tool.name}: compact configuration scrolls only between log and toolbar`);
+        assert(Math.abs(log.getBoundingClientRect().top - compactLog.top) < 1 &&
+            Math.abs(tool.panel.querySelector(".controler-tool").getBoundingClientRect().top - compactToolbar.top) < 1,
+            `${tool.name}: compact scrolling does not move log or toolbar`);
+        const row = tool.panel.querySelector(".foreign-object-region");
+        if (row) {
+            row.querySelector(".region-select").textContent = "Tên vùng kiểm tra dài ".repeat(20);
+            assert(row.getBoundingClientRect().right <= content.getBoundingClientRect().right &&
+                row.querySelector(".region-remove").getBoundingClientRect().right <= row.getBoundingClientRect().right &&
+                row.querySelector(".region-select").scrollWidth > row.querySelector(".region-select").clientWidth,
+                `${tool.name}: narrow region list truncates long names without hiding actions`);
+        }
+        filler.remove();
+        content.scrollTop = 0;
+        host.style.width = "480px";
+        host.style.height = "780px";
+        tool.drawer.onClick({x:200,y:20}, manager);
+        tool.drawer.onClick({x:300,y:100}, manager);
+        assert(!content.hidden && action.disabled && tool.panel.querySelector(".btn-accept"),
+            `${tool.name}: two clicks open pending editor, model action disabled`);
+        assert(strokes.at(-1).color === "#00b0ff" && strokes.at(-1).dash.join() === "6,4",
+            `${tool.name}: pending cyan dashed style`);
+        const name = tool.panel.querySelector('input[type="text"]');
+        if (name) name.value = "Region 2";
+        const expected = tool.panel.querySelector("#ocr-roi-expected-text");
+        if (expected) expected.value = "ABC";
+        tool.panel.querySelectorAll("textarea").forEach(input => { input.value = "ABC"; });
+        tool.panel.querySelector(".btn-accept").click();
+        assert(!action.disabled && tool.panel.querySelector(".region-editor").hidden && tool.panel.classList.contains("active"),
+            `${tool.name}: accepting keeps model actions/panel and hides only editor`);
+        if (tool.type === ItemsInspector.TYPE_ANOMALY_POINT || tool.type === ItemsInspector.TYPE_FOREIGN_OBJECT) {
+            assert(tool.panel.querySelectorAll(".foreign-object-region").length === 2,
+                `${tool.name}: acceptance keeps the region list`);
+            tool.panel.querySelector(".foreign-object-region.active .region-select").click();
+            assert(!tool.panel.querySelector(".region-editor").hidden,
+                `${tool.name}: selecting active row reopens its editor`);
+        }
+        const inspector = items.getInspector(tool.type);
+        assert((inspector.regions || inspector.rectangles).length === 2, `${tool.name}: accepting adds one region`);
+        if (tool.type === ItemsInspector.TYPE_STAMP) {
+            document.getElementById("btn-judment-stamp").click();
+            await settle();
+            const run = requests.filter(request => request.url === "/law_regulation/stamp/run_model").at(-1);
+            assert(run.body.boxes.length === 1 && run.body.boxes[0].id === 1 &&
+                run.body.boxes[0].xStart === 200 && run.body.boxes[0].xEnd === 300,
+                "Stamp inference sends only selected ROI, never all item rectangles");
+            assert(inspector.rectangles.length === 2 && inspector.boxResults.length === 1 &&
+                inspector.boxResults[0].id === 1 && !log.textContent.includes("toàn bộ"),
+                "Stamp selected-only result preserves all stored ROIs without judging the other ROI");
+        }
+        tool.drawer.onClick({x:400,y:20}, manager);
+        tool.drawer.onClick({x:500,y:100}, manager);
+        const thirdName = tool.panel.querySelector('input[type="text"]');
+        if (thirdName) thirdName.value = "Region 3";
+        tool.panel.querySelectorAll("textarea").forEach(input => { input.value = "ABC"; });
+        tool.panel.querySelector(".btn-accept").click();
+        tool.drawer.onClick({x:200,y:60}, manager);
+        tool.drawer.onMouseRightClick({x:400,y:60}, manager);
+        assert((inspector.regions || inspector.rectangles).length === 2 && !content.hidden && !action.disabled &&
+            tool.panel.querySelector('input[type="text"]').value === "Region 2",
+            `${tool.name}: deleting another region preserves the active region editor (${JSON.stringify({
+                regions:inspector.regions || inspector.rectangles,hidden:content.hidden,disabled:action.disabled,
+                name:tool.panel.querySelector('input[type="text"]')?.value,
+            })})`);
+        tool.drawer.onMouseRightClick({x:200,y:60}, manager);
+        assert((inspector.regions || inspector.rectangles).length === 1 && content.hidden && action.disabled,
+            `${tool.name}: removing active region hides editor and disables actions`);
+        tool.drawer.onClick({x:200,y:20}, manager);
+        tool.drawer.onClick({x:20,y:120}, manager);
+        tool.drawer.onClick({x:20,y:60}, manager);
+        assert(action.disabled && !content.hidden, `${tool.name}: pending border wins over an overlapping stored border`);
+        tool.drawer.onMouseRightClick({x:20,y:60}, manager);
+        assert((inspector.regions || inspector.rectangles).length === 1 && content.hidden,
+            `${tool.name}: cancelling overlapping pending region preserves the stored region`);
+        tool.drawer.onClick({x:20,y:60}, manager);
+        const exit = tool.panel.querySelector('button[id^="btn-exit-"]');
+        exit.click();
+        assert(tool.panel.classList.contains("region-leave") && !content.hidden &&
+            getComputedStyle(tool.panel).animationName === "slideLeftToRight",
+            `${tool.name}: closing animates the whole panel with its content intact`);
+        await settle();
+        assert(!tool.panel.classList.contains("active") && footerBottom(),
+            `${tool.name}: closing hides panel but preserves bottom footer`);
+        activate(tool);
+        tool.drawer.onClick({x:20,y:60}, manager);
+        exit.click();
+        activate(tool);
+        tool.drawer.onClick({x:20,y:60}, manager);
+        await settle();
+        assert(tool.panel.classList.contains("active") && !tool.panel.querySelector(".region-editor").hidden,
+            `${tool.name}: interrupted close cannot hide a reopened panel`);
+    }
+    anomalyModelReady = false;
+    holdAnomalyStatus = true;
+    activate(tools[1]);
+    tools[1].drawer.onClick({x:20,y:60}, manager);
+    const trainingEditor = tools[1].panel.querySelector(".region-editor");
+    const trainingName = trainingEditor.querySelector('input[type="text"]');
+    trainingName.value = "Unsaved editor text";
+    document.getElementById("btn-create-model-anomaly-point").click();
+    await new Promise(resolve => setTimeout(resolve, 1200));
+    const modelBadge = tools[1].panel.querySelector(".foreign-object-region.active .foreign-object-model-badge");
+    assert(modelBadge.textContent === "Đã có model" && modelBadge.classList.contains("ready") &&
+        document.getElementById("loading").style.display === "none",
+        "Anomaly model badge is ready immediately when training loading finishes");
+    assert(trainingName.value === "Unsaved editor text" && !trainingEditor.hidden,
+        "Training status update preserves editor visibility and unsaved form inputs");
+    releaseAnomalyStatus();
+    await settle();
+    assert(modelBadge.textContent === "Đã có model", "Old status response cannot undo successful training badge");
+    let modelConfirmation;
+    const captureModelConfirmation = event => { modelConfirmation = event.detail; };
+    document.addEventListener("open-confirm-overlay", captureModelConfirmation);
+    document.getElementById("btn-delete-model-anomaly-point").click();
+    await modelConfirmation.onConfirm();
+    assert(modelBadge.textContent === "Chưa tạo" && !modelBadge.classList.contains("ready"),
+        "Deleting anomaly model immediately clears ready badge without reopening editor");
+    document.removeEventListener("open-confirm-overlay", captureModelConfirmation);
+    anomalyModelReady = false;
+    activate(tools[1]);
+    tools[1].drawer.onClick({x:20,y:60}, manager);
+    await settle();
+    document.getElementById("btn-create-model-anomaly-point").click();
+    await new Promise(resolve => setTimeout(resolve, 30));
+    activate(tools[0]);
+    const beforeTrainingReturn = log.textContent;
+    await new Promise(resolve => setTimeout(resolve, 1200));
+    assert(log.textContent === beforeTrainingReturn && !tools[1].panel.classList.contains("active"),
+        "Training completion after tool change cannot reopen old editor or overwrite new log");
+    activate(tools[1]);
+    tools[1].drawer.onClick({x:20,y:60}, manager);
+    hold = "/run_model";
+    document.getElementById("btn-judment-anomaly-point").click();
+    await new Promise(resolve => setTimeout(resolve, 30));
+    activate(tools[0]);
+    const stampLog = log.textContent;
+    release();
+    await settle();
+    assert(log.textContent === stampLog, "Late anomaly result cannot overwrite another tool's shared log");
+    assert(!document.getElementById("patchcore-result-panel-anomaly-point").textContent,
+        "Late anomaly result cannot render stale panel");
+    const token = common.capture_log(common.tool_log("stamp_tool"));
+    common.setNameEventActivate("foreign-object-tool");
+    log.textContent = "new tool";
+    common.write_log_append(token, "STALE");
+    assert(log.textContent === "new tool", "Log token guards old requests");
+    common.setNameEventActivate("stamp_tool");
+    assert(log.textContent === "", "Switching tools clears shared log");
+    const masterToken = common.capture_log(log);
+    common.write_log_append(masterToken, "current save");
+    assert(log.textContent.includes("current save"), "Master save token targets the shared DOM log");
+    common.setNameEventActivate("foreign-object-tool");
+    log.textContent = "another tool";
+    common.write_log_append(masterToken, "STALE SAVE");
+    assert(log.textContent === "another tool", "Late master save cannot overwrite a new tool log");
+    common.setNameEventActivate(null);
+    for (const id of ["header-ul-li-adjustment-master", "confirm-exit-overlay"]) {
+        document.body.appendChild(parsed.getElementById(id));
+    }
+    await import(`${base}/tool/summary_tool.js`);
+    await settle();
+    assert(log.textContent.includes("Hoàn tất lấy master"), "Actual master entry module loads into shared log");
+    document.getElementById("btn-check-stamp").click();
+    assert(!tools[0].panel.classList.contains("active") &&
+        tools[0].panel.querySelector(".cof-and-inf-tool-content").hidden, "Actual tool button opens tool without auto-selecting a region");
+    tools[0].drawer.onClick({x:20,y:60}, manager);
+    const acceptedSnapshot = JSON.stringify(common.get_obj_product().toDict());
+    tools[0].drawer.onClick({x:200,y:20}, manager);
+    tools[0].drawer.onClick({x:300,y:100}, manager);
+    hold = "/save";
+    document.getElementById("btn-save-law-regulation").click();
+    await new Promise(resolve => setTimeout(resolve, 30));
+    assert(requests.at(-1).url.endsWith("/save") &&
+        requests.at(-1).body.data["1"]["0"]["3"].StampItemInspector, "Actual master save serializes retained inspectors");
+    assert(JSON.stringify(requests.at(-1).body.data) === acceptedSnapshot &&
+        document.getElementById("btn-erase-all-draw").disabled,
+        "Save excludes pending regions and prevents concurrent backend erase");
+    document.getElementById("btn-check-foreign-object").click();
+    const beforeSaveReply = log.textContent;
+    release();
+    await settle();
+    assert(log.textContent === beforeSaveReply, "Actual late save reply leaves the newly selected tool log unchanged");
+    const product = common.get_obj_product();
+    const beforeErase = JSON.stringify(product.toDict());
+    const categories = product.toDict()["1"]["0"]["3"];
+    assert(["StampItemInspector","OCRTextInspector","AnomalyPointInspector","ForeignObjectInspector"].every(key => categories[key]),
+        "RAM serialization covers all four tools");
+    saveResponse = {ok:false,message:"Save rejected"};
+    document.getElementById("btn-save-law-regulation").click();
+    await settle();
+    assert(JSON.stringify(product.toDict()) === beforeErase && log.textContent.includes("Save rejected") &&
+        !document.getElementById("btn-erase-all-draw").disabled, "Failed save preserves RAM, reports failure and unlocks global controls");
+    saveResponse = {ok:true};
+    document.getElementById("btn-erase-all-draw").click();
+    document.getElementById("btn-confirm-no").click();
+    assert(JSON.stringify(product.toDict()) === beforeErase, "Cancelled erase keeps all RAM data");
+    eraseResponse = {ok:false,message:"Partial backend failure"};
+    hold = "/delete_product";
+    document.getElementById("btn-erase-all-draw").click();
+    document.getElementById("btn-confirm-yes").click();
+    await new Promise(resolve => setTimeout(resolve, 30));
+    assert(JSON.stringify(product.toDict()) === beforeErase && master.inert,
+        "Pending erase keeps RAM and locks conflicting master input");
+    release();
+    await settle();
+    assert(JSON.stringify(product.toDict()) === beforeErase && !master.inert && log.textContent.includes("Partial backend failure"),
+        "Failed backend erase preserves RAM and reports the error");
+    for (const failure of ["network", "http", "json"]) {
+        eraseFailure = failure;
+        document.getElementById("btn-erase-all-draw").click();
+        document.getElementById("btn-confirm-yes").click();
+        await settle();
+        assert(JSON.stringify(product.toDict()) === beforeErase && !master.inert && log.textContent.includes("RAM được giữ nguyên"),
+            `${failure}: erase failure preserves RAM, unlocks controls and reports error`);
+    }
+    eraseFailure = null;
+    eraseResponse = {ok:true};
+    document.getElementById("btn-erase-all-draw").click();
+    document.getElementById("btn-confirm-yes").click();
+    await settle();
+    assert(Object.keys(product.toDict()["1"]["0"]["3"]).length === 0 &&
+        requests.at(-1).body.product_id === product.product_id, "Successful erase clears all four RAM inspectors for the same backend product");
+    assert(!master.querySelector(".tool-content.active") && footerBottom() && !master.inert,
+        "Successful erase closes panels and leaves footer available");
+    document.title = "PASS";
+    output.textContent = `PASS: ${checks} master layout, Canvas style, selection and log checks`;
+} catch (error) {
+    document.title = "FAIL";
+    output.textContent = `FAIL after ${checks} checks: ${error.stack || error}`;
+}
+</script>
+</body>
+</html>

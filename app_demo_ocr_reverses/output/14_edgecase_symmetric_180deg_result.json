@@ -1,0 +1,89 @@
+{
+    "image": "14_edgecase_symmetric_180deg.png",
+    "success": true,
+    "total_lines": 2,
+    "orientation": {
+        "angle": 180,
+        "status": "MIXED_ORIENTATION",
+        "confidence": 1.0,
+        "is_mirrored": false,
+        "skew_angle": 0.0,
+        "is_tilted": false,
+        "has_mixed_orientations": true,
+        "doc_model_angle": 0,
+        "doc_model_confidence": 0.9069
+    },
+    "texts": [
+        {
+            "line_id": 0,
+            "text": "HOXOH",
+            "confidence": 0.9999,
+            "angle": 0,
+            "status": "NORMAL",
+            "orientation_confidence": 0.9999,
+            "is_mirrored": false,
+            "skew_angle": 0.0,
+            "bbox": [
+                349,
+                75,
+                485,
+                115
+            ],
+            "polygon": [
+                [
+                    349,
+                    75
+                ],
+                [
+                    485,
+                    75
+                ],
+                [
+                    485,
+                    115
+                ],
+                [
+                    349,
+                    115
+                ]
+            ]
+        },
+        {
+            "line_id": 1,
+            "text": "80808",
+            "confidence": 1.0,
+            "angle": 180,
+            "status": "INVERTED",
+            "orientation_confidence": 1.0,
+            "is_mirrored": false,
+            "skew_angle": 0.0,
+            "bbox": [
+                378,
+                164,
+                487,
+                207
+            ],
+            "polygon": [
+                [
+                    378,
+                    164
+                ],
+                [
+                    487,
+                    164
+                ],
+                [
+                    487,
+                    207
+                ],
+                [
+                    378,
+                    207
+                ]
+            ]
+        }
+    ],
+    "result": "NG",
+    "reason": "Phát hiện tem có nhiều dòng chữ ngược/khác hướng nhau: Dòng #1: NORMAL (0°), Dòng #2: INVERTED (180°).",
+    "processing_time_ms": 1072.16
+}

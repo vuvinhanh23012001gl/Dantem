@@ -1,0 +1,16 @@
+import "./add_new_product.js";
+import "./choose_product.js";
+import "./config_software.js";
+import "./camera_config_panel.js";
+import "./barcode_config.js";
+import "./capture_face.js";
+import "./home.js";
+import "./tool/summary_tool.js";
+import "./tool/stamp_tool.js";
+import "./tool/stamp_alignment_tool.js";
+import "./tool/stamp_reversed_tool.js";
+import "./tool/color_tool.js";
+import "./tool/ocr_tool.js";
+import "./tool/anomaly_point_tool.js";
+import "./tool/foreign_object_tool.js";
+import "./shutdown.js";

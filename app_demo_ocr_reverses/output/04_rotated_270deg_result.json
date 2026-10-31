@@ -1,0 +1,191 @@
+{
+    "image": "04_rotated_270deg.png",
+    "success": true,
+    "total_lines": 5,
+    "orientation": {
+        "angle": 270,
+        "status": "ROTATED_270",
+        "confidence": 0.9975,
+        "is_mirrored": false,
+        "skew_angle": 0.0,
+        "is_tilted": false,
+        "has_mixed_orientations": false,
+        "doc_model_angle": 270,
+        "doc_model_confidence": 0.9252
+    },
+    "texts": [
+        {
+            "line_id": 0,
+            "text": "INSPECTOR CARTON QA-2026",
+            "confidence": 0.9967,
+            "angle": 270,
+            "status": "ROTATED_270",
+            "orientation_confidence": 1.0,
+            "is_mirrored": false,
+            "skew_angle": 0.0,
+            "bbox": [
+                31,
+                277,
+                65,
+                724
+            ],
+            "polygon": [
+                [
+                    31,
+                    277
+                ],
+                [
+                    65,
+                    277
+                ],
+                [
+                    65,
+                    724
+                ],
+                [
+                    31,
+                    724
+                ]
+            ]
+        },
+        {
+            "line_id": 1,
+            "text": "MFG: 2026-10-30 EXP: 2028-10-30",
+            "confidence": 0.981,
+            "angle": 270,
+            "status": "ROTATED_270",
+            "orientation_confidence": 1.0,
+            "is_mirrored": false,
+            "skew_angle": 0.0,
+            "bbox": [
+                228,
+                338,
+                258,
+                725
+            ],
+            "polygon": [
+                [
+                    228,
+                    338
+                ],
+                [
+                    258,
+                    338
+                ],
+                [
+                    258,
+                    725
+                ],
+                [
+                    228,
+                    725
+                ]
+            ]
+        },
+        {
+            "line_id": 2,
+            "text": "MODEL: IC-9800 PRO",
+            "confidence": 0.9994,
+            "angle": 270,
+            "status": "ROTATED_270",
+            "orientation_confidence": 0.9999,
+            "is_mirrored": false,
+            "skew_angle": 0.0,
+            "bbox": [
+                109,
+                441,
+                140,
+                725
+            ],
+            "polygon": [
+                [
+                    109,
+                    441
+                ],
+                [
+                    140,
+                    441
+                ],
+                [
+                    140,
+                    725
+                ],
+                [
+                    109,
+                    725
+                ]
+            ]
+        },
+        {
+            "line_id": 3,
+            "text": "LOT: VN20261030-A1",
+            "confidence": 0.998,
+            "angle": 270,
+            "status": "ROTATED_270",
+            "orientation_confidence": 1.0,
+            "is_mirrored": false,
+            "skew_angle": 0.0,
+            "bbox": [
+                169,
+                448,
+                200,
+                724
+            ],
+            "polygon": [
+                [
+                    169,
+                    448
+                ],
+                [
+                    200,
+                    448
+                ],
+                [
+                    200,
+                    724
+                ],
+                [
+                    169,
+                    724
+                ]
+            ]
+        },
+        {
+            "line_id": 4,
+            "text": "MADE IN VIETNAM",
+            "confidence": 0.9847,
+            "angle": 270,
+            "status": "ROTATED_270",
+            "orientation_confidence": 0.9874,
+            "is_mirrored": false,
+            "skew_angle": 0.0,
+            "bbox": [
+                365,
+                474,
+                394,
+                724
+            ],
+            "polygon": [
+                [
+                    365,
+                    474
+                ],
+                [
+                    394,
+                    474
+                ],
+                [
+                    394,
+                    724
+                ],
+                [
+                    365,
+                    724
+                ]
+            ]
+        }
+    ],
+    "result": "NG",
+    "reason": "Phát hiện chữ sai chiều chuẩn: Xoay 270° (270° CW) (Góc=270°).",
+    "processing_time_ms": 2411.53
+}

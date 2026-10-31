@@ -1,0 +1,60 @@
+[
+  {
+    "run_id": "model_foreign_crop_20261031_043506_461824",
+    "created_at": "2026-10-31T04:35:14.227910+00:00",
+    "purpose": "train patchcore foreign object",
+    "status": "completed",
+    "model_root": "app/input/model/patch_core/1/0/35/roi_1/model_foreign_crop_20261031_043506_461824",
+    "model_file": "app/input/model/patch_core/1/0/35/roi_1/model_foreign_crop_20261031_043506_461824/the_first/patchcore.index",
+    "inference_result": "app/input/model/patch_core/1/0/35/roi_1/model_foreign_crop_20261031_043506_461824/the_first/inference_result.png",
+    "runtime_images_root": "app/input/model/patch_core/1/0/35/roi_1/model_foreign_crop_20261031_043506_461824/runtime",
+    "roi_list": [
+      "foreign"
+    ],
+    "crop_roi": {
+      "xStart": 1316,
+      "yStart": 538,
+      "xEnd": 1870,
+      "yEnd": 1156
+    },
+    "train_config": {
+      "img_size": 256,
+      "batch_size": 32,
+      "coreset_ratio": 1.0,
+      "n_list": 32,
+      "n_probe": 8,
+      "num_workers": 0,
+      "seed": 42,
+      "device": "cpu"
+    }
+  },
+  {
+    "run_id": "model_foreign_crop_20261031_043237_539737",
+    "created_at": "2026-10-31T04:32:52.368392+00:00",
+    "purpose": "train patchcore foreign object",
+    "status": "completed",
+    "model_root": "app/input/model/patch_core/1/0/35/roi_0/model_foreign_crop_20261031_043237_539737",
+    "model_file": "app/input/model/patch_core/1/0/35/roi_0/model_foreign_crop_20261031_043237_539737/the_first/patchcore.index",
+    "inference_result": "app/input/model/patch_core/1/0/35/roi_0/model_foreign_crop_20261031_043237_539737/the_first/inference_result.png",
+    "runtime_images_root": "app/input/model/patch_core/1/0/35/roi_0/model_foreign_crop_20261031_043237_539737/runtime",
+    "roi_list": [
+      "foreign"
+    ],
+    "crop_roi": {
+      "xStart": 308,
+      "yStart": 138,
+      "xEnd": 1628,
+      "yEnd": 1118
+    },
+    "train_config": {
+      "img_size": 256,
+      "batch_size": 32,
+      "coreset_ratio": 1.0,
+      "n_list": 32,
+      "n_probe": 8,
+      "num_workers": 0,
+      "seed": 42,
+      "device": "cpu"
+    }
+  }
+]

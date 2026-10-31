@@ -1,0 +1,1213 @@
+{
+    "1": {
+        "0": {
+            "1": {
+                "MeasurementWeldInspector": {
+                    "0": {
+                        "name_line": "Line1",
+                        "level1": 0.09,
+                        "level2": 0.39,
+                        "level3": 0.52,
+                        "level4": 0.82,
+                        "level5": 1,
+                        "xStart": 1512,
+                        "yStart": 228,
+                        "xEnd": 1796,
+                        "yEnd": 232,
+                        "coordinateSpace": "image"
+                    }
+                },
+                "SlitWeldInspector": {
+                    "0": {
+                        "nameLine": "Line2",
+                        "widthMin": 0.2,
+                        "widthMax": 2,
+                        "xStart": 1372,
+                        "yStart": 192,
+                        "xEnd": 1752,
+                        "yEnd": 168,
+                        "coordinateSpace": "image"
+                    }
+                }
+            },
+            "2": {
+                "MeasurementWeldInspector": {
+                    "0": {
+                        "name_line": "Line1",
+                        "level1": 0.09,
+                        "level2": 0.39,
+                        "level3": 0.52,
+                        "level4": 0.82,
+                        "level5": 1,
+                        "xStart": 530,
+                        "yStart": 206,
+                        "xEnd": 878,
+                        "yEnd": 204,
+                        "coordinateSpace": "image"
+                    }
+                },
+                "SlitWeldInspector": {
+                    "0": {
+                        "nameLine": "Line2",
+                        "widthMin": 0.2,
+                        "widthMax": 2,
+                        "xStart": 466,
+                        "yStart": 194,
+                        "xEnd": 786,
+                        "yEnd": 174,
+                        "coordinateSpace": "image"
+                    }
+                }
+            },
+            "3": {
+                "MeasurementWeldInspector": {
+                    "0": {
+                        "name_line": "Line1",
+                        "level1": 0.09,
+                        "level2": 0.39,
+                        "level3": 0.52,
+                        "level4": 0.82,
+                        "level5": 1,
+                        "xStart": 678,
+                        "yStart": 232,
+                        "xEnd": 976,
+                        "yEnd": 226,
+                        "coordinateSpace": "image"
+                    }
+                },
+                "SlitWeldInspector": {
+                    "0": {
+                        "nameLine": "Line2",
+                        "widthMin": 0.1,
+                        "widthMax": 2,
+                        "xStart": 224,
+                        "yStart": 1068,
+                        "xEnd": 476,
+                        "yEnd": 1044,
+                        "coordinateSpace": "image"
+                    }
+                }
+            },
+            "4": {
+                "MeasurementWeldInspector": {
+                    "0": {
+                        "name_line": "Line1",
+                        "level1": 0.09,
+                        "level2": 0.39,
+                        "level3": 0.52,
+                        "level4": 0.82,
+                        "level5": 1,
+                        "xStart": 894,
+                        "yStart": 394,
+                        "xEnd": 900,
+                        "yEnd": 714,
+                        "coordinateSpace": "image"
+                    }
+                },
+                "SlitWeldInspector": {
+                    "0": {
+                        "nameLine": "Line2",
+                        "widthMin": 0.1,
+                        "widthMax": 2,
+                        "xStart": 940,
+                        "yStart": 1074,
+                        "xEnd": 974,
+                        "yEnd": 1310,
+                        "coordinateSpace": "image"
+                    }
+                }
+            },
+            "5": {
+                "MeasurementWeldInspector": {
+                    "0": {
+                        "name_line": "Line1",
+                        "level1": 0.09,
+                        "level2": 0.39,
+                        "level3": 0.52,
+                        "level4": 0.82,
+                        "level5": 1,
+                        "xStart": 762,
+                        "yStart": 822,
+                        "xEnd": 766,
+                        "yEnd": 1110,
+                        "coordinateSpace": "image"
+                    }
+                }
+            },
+            "6": {
+                "MeasurementWeldInspector": {
+                    "0": {
+                        "name_line": "Line1",
+                        "level1": 0.09,
+                        "level2": 0.39,
+                        "level3": 0.52,
+                        "level4": 0.82,
+                        "level5": 1,
+                        "xStart": 794,
+                        "yStart": 804,
+                        "xEnd": 816,
+                        "yEnd": 1104,
+                        "coordinateSpace": "image"
+                    }
+                }
+            },
+            "7": {
+                "MeasurementWeldInspector": {
+                    "0": {
+                        "name_line": "Line1",
+                        "level1": 0.09,
+                        "level2": 0.39,
+                        "level3": 0.52,
+                        "level4": 0.82,
+                        "level5": 1,
+                        "xStart": 472,
+                        "yStart": 676,
+                        "xEnd": 836,
+                        "yEnd": 644,
+                        "coordinateSpace": "image"
+                    }
+                },
+                "SlitWeldInspector": {
+                    "0": {
+                        "nameLine": "Line2",
+                        "widthMin": 0.1,
+                        "widthMax": 2,
+                        "xStart": 1160,
+                        "yStart": 946,
+                        "xEnd": 1196,
+                        "yEnd": 1290,
+                        "coordinateSpace": "image"
+                    }
+                }
+            },
+            "8": {
+                "MeasurementWeldInspector": {
+                    "0": {
+                        "name_line": "Line1",
+                        "level1": 0.09,
+                        "level2": 0.32,
+                        "level3": 0.52,
+                        "level4": 0.82,
+                        "level5": 1,
+                        "xStart": 1152,
+                        "yStart": 1304,
+                        "xEnd": 1132,
+                        "yEnd": 1032,
+                        "coordinateSpace": "image"
+                    }
+                },
+                "SlitWeldInspector": {
+                    "0": {
+                        "nameLine": "Line2",
+                        "widthMin": 0.1,
+                        "widthMax": 2,
+                        "xStart": 1904,
+                        "yStart": 1516,
+                        "xEnd": 1884,
+                        "yEnd": 1334,
+                        "coordinateSpace": "image"
+                    }
+                }
+            },
+            "9": {
+                "MeasurementWeldInspector": {
+                    "0": {
+                        "name_line": "Line1",
+                        "level1": 0.09,
+                        "level2": 0.39,
+                        "level3": 0.52,
+                        "level4": 0.82,
+                        "level5": 1,
+                        "xStart": 900,
+                        "yStart": 1046,
+                        "xEnd": 926,
+                        "yEnd": 1290,
+                        "coordinateSpace": "image"
+                    }
+                },
+                "SlitWeldInspector": {
+                    "0": {
+                        "nameLine": "Line2",
+                        "widthMin": 0.1,
+                        "widthMax": 2,
+                        "xStart": 1614,
+                        "yStart": 1312,
+                        "xEnd": 1624,
+                        "yEnd": 1520,
+                        "coordinateSpace": "image"
+                    }
+                }
+            },
+            "11": {
+                "MeasurementWeldInspector": {
+                    "0": {
+                        "name_line": "Line1",
+                        "level1": 0.09,
+                        "level2": 0.39,
+                        "level3": 0.52,
+                        "level4": 0.82,
+                        "level5": 1,
+                        "xStart": 1106,
+                        "yStart": 616,
+                        "xEnd": 1416,
+                        "yEnd": 720,
+                        "coordinateSpace": "image"
+                    }
+                },
+                "SlitWeldInspector": {
+                    "0": {
+                        "nameLine": "Line2",
+                        "widthMin": 0.1,
+                        "widthMax": 2,
+                        "xStart": 1524,
+                        "yStart": 762,
+                        "xEnd": 1850,
+                        "yEnd": 892,
+                        "coordinateSpace": "image"
+                    }
+                }
+            },
+            "12": {
+                "MeasurementWeldInspector": {
+                    "0": {
+                        "name_line": "Line1",
+                        "level1": 0.09,
+                        "level2": 0.39,
+                        "level3": 0.52,
+                        "level4": 0.82,
+                        "level5": 1,
+                        "xStart": 964,
+                        "yStart": 558,
+                        "xEnd": 1388,
+                        "yEnd": 538,
+                        "coordinateSpace": "image"
+                    }
+                }
+            },
+            "13": {
+                "MeasurementWeldInspector": {
+                    "0": {
+                        "name_line": "Line1",
+                        "level1": 0.09,
+                        "level2": 0.39,
+                        "level3": 0.52,
+                        "level4": 0.82,
+                        "level5": 1,
+                        "xStart": 1006,
+                        "yStart": 164,
+                        "xEnd": 1038,
+                        "yEnd": 592,
+                        "coordinateSpace": "image"
+                    }
+                }
+            },
+            "14": {
+                "MeasurementWeldInspector": {
+                    "0": {
+                        "name_line": "Line1",
+                        "level1": 0.09,
+                        "level2": 0.39,
+                        "level3": 0.52,
+                        "level4": 0.82,
+                        "level5": 1,
+                        "xStart": 1032,
+                        "yStart": 630,
+                        "xEnd": 1062,
+                        "yEnd": 1000,
+                        "coordinateSpace": "image"
+                    }
+                },
+                "ScratchedPipeItemInspector": {
+                    "id": 0,
+                    "name": "Vết trầy xước",
+                    "xStart": 44,
+                    "yStart": 18,
+                    "xEnd": 428,
+                    "yEnd": 520,
+                    "width": 192,
+                    "height": 251,
+                    "coordinateSpace": "image"
+                }
+            },
+            "15": {
+                "MeasurementWeldInspector": {
+                    "0": {
+                        "name_line": "Line1",
+                        "level1": 0.09,
+                        "level2": 0.39,
+                        "level3": 0.52,
+                        "level4": 0.82,
+                        "level5": 1,
+                        "xStart": 950,
+                        "yStart": 1040,
+                        "xEnd": 974,
+                        "yEnd": 1438,
+                        "coordinateSpace": "image"
+                    }
+                },
+                "SlitWeldInspector": {
+                    "0": {
+                        "nameLine": "Line2",
+                        "widthMin": 0.1,
+                        "widthMax": 2,
+                        "xStart": 1636,
+                        "yStart": 476,
+                        "xEnd": 1900,
+                        "yEnd": 486,
+                        "coordinateSpace": "image"
+                    }
+                },
+                "ScratchedPipeItemInspector": {
+                    "id": 0,
+                    "name": "Vết trầy xước",
+                    "xStart": 8,
+                    "yStart": 316,
+                    "xEnd": 506,
+                    "yEnd": 1024,
+                    "width": 249,
+                    "height": 354,
+                    "coordinateSpace": "image"
+                }
+            },
+            "16": {
+                "MeasurementWeldInspector": {
+                    "0": {
+                        "name_line": "Line1",
+                        "level1": 0.09,
+                        "level2": 0.39,
+                        "level3": 0.52,
+                        "level4": 0.82,
+                        "level5": 1,
+                        "xStart": 1108,
+                        "yStart": 912,
+                        "xEnd": 1506,
+                        "yEnd": 878,
+                        "coordinateSpace": "image"
+                    }
+                },
+                "SlitWeldInspector": {
+                    "0": {
+                        "nameLine": "Line2",
+                        "widthMin": 0.1,
+                        "widthMax": 2,
+                        "xStart": 1598,
+                        "yStart": 528,
+                        "xEnd": 1910,
+                        "yEnd": 518,
+                        "coordinateSpace": "image"
+                    }
+                },
+                "ScratchedPipeItemInspector": {
+                    "id": 0,
+                    "name": "Vết trầy xước",
+                    "xStart": 24,
+                    "yStart": 744,
+                    "xEnd": 516,
+                    "yEnd": 1476,
+                    "width": 246,
+                    "height": 366,
+                    "coordinateSpace": "image"
+                }
+            },
+            "17": {
+                "MeasurementWeldInspector": {
+                    "0": {
+                        "name_line": "Line1",
+                        "level1": 0.09,
+                        "level2": 0.39,
+                        "level3": 0.52,
+                        "level4": 0.82,
+                        "level5": 1,
+                        "xStart": 718,
+                        "yStart": 874,
+                        "xEnd": 740,
+                        "yEnd": 1200,
+                        "coordinateSpace": "image"
+                    }
+                },
+                "SlitWeldInspector": {
+                    "0": {
+                        "nameLine": "Line2",
+                        "widthMin": 0.1,
+                        "widthMax": 2,
+                        "xStart": 1204,
+                        "yStart": 768,
+                        "xEnd": 1180,
+                        "yEnd": 424,
+                        "coordinateSpace": "image"
+                    }
+                },
+                "HoleItemInspector": {
+                    "id": 0,
+                    "name": "Lỗ thủng",
+                    "xStart": 820,
+                    "yStart": 986,
+                    "xEnd": 1446,
+                    "yEnd": 1468,
+                    "width": 313,
+                    "height": 241,
+                    "coordinateSpace": "image"
+                }
+            },
+            "18": {
+                "MeasurementWeldInspector": {
+                    "0": {
+                        "name_line": "Line1",
+                        "level1": 0.09,
+                        "level2": 0.39,
+                        "level3": 0.52,
+                        "level4": 0.82,
+                        "level5": 1,
+                        "xStart": 988,
+                        "yStart": 852,
+                        "xEnd": 1014,
+                        "yEnd": 1188,
+                        "coordinateSpace": "image"
+                    }
+                },
+                "SlitWeldInspector": {
+                    "0": {
+                        "nameLine": "Line2",
+                        "widthMin": 0.1,
+                        "widthMax": 2,
+                        "xStart": 718,
+                        "yStart": 304,
+                        "xEnd": 684,
+                        "yEnd": 54,
+                        "coordinateSpace": "image"
+                    }
+                },
+                "HoleItemInspector": {
+                    "id": 0,
+                    "name": "Lỗ thủng",
+                    "xStart": 1220,
+                    "yStart": 994,
+                    "xEnd": 1790,
+                    "yEnd": 1472,
+                    "width": 285,
+                    "height": 239,
+                    "coordinateSpace": "image"
+                }
+            },
+            "19": {
+                "MeasurementWeldInspector": {
+                    "0": {
+                        "name_line": "Line1",
+                        "level1": 0.09,
+                        "level2": 0.39,
+                        "level3": 0.52,
+                        "level4": 0.82,
+                        "level5": 1,
+                        "xStart": 1050,
+                        "yStart": 1330,
+                        "xEnd": 1406,
+                        "yEnd": 1310,
+                        "coordinateSpace": "image"
+                    }
+                },
+                "SlitWeldInspector": {
+                    "0": {
+                        "nameLine": "Line2",
+                        "widthMin": 0.1,
+                        "widthMax": 2,
+                        "xStart": 934,
+                        "yStart": 48,
+                        "xEnd": 966,
+                        "yEnd": 300,
+                        "coordinateSpace": "image"
+                    }
+                },
+                "HoleItemInspector": {
+                    "id": 0,
+                    "name": "Lỗ thủng",
+                    "xStart": 1614,
+                    "yStart": 982,
+                    "xEnd": 2038,
+                    "yEnd": 1414,
+                    "width": 212,
+                    "height": 216,
+                    "coordinateSpace": "image"
+                }
+            },
+            "20": {
+                "MeasurementWeldInspector": {
+                    "0": {
+                        "name_line": "Line1",
+                        "level1": 0.09,
+                        "level2": 0.39,
+                        "level3": 0.52,
+                        "level4": 0.82,
+                        "level5": 1,
+                        "xStart": 1222,
+                        "yStart": 1310,
+                        "xEnd": 1614,
+                        "yEnd": 1290,
+                        "coordinateSpace": "image"
+                    }
+                },
+                "SlitWeldInspector": {
+                    "0": {
+                        "nameLine": "Line2",
+                        "widthMin": 0.1,
+                        "widthMax": 2,
+                        "xStart": 928,
+                        "yStart": 60,
+                        "xEnd": 954,
+                        "yEnd": 318,
+                        "coordinateSpace": "image"
+                    }
+                }
+            },
+            "21": {
+                "MeasurementWeldInspector": {
+                    "0": {
+                        "name_line": "Line1",
+                        "level1": 0.09,
+                        "level2": 0.39,
+                        "level3": 0.52,
+                        "level4": 0.82,
+                        "level5": 1,
+                        "xStart": 1292,
+                        "yStart": 1358,
+                        "xEnd": 1280,
+                        "yEnd": 1122,
+                        "coordinateSpace": "image"
+                    }
+                },
+                "SlitWeldInspector": {
+                    "0": {
+                        "nameLine": "Line2",
+                        "widthMin": 0.1,
+                        "widthMax": 2,
+                        "xStart": 744,
+                        "yStart": 80,
+                        "xEnd": 768,
+                        "yEnd": 316,
+                        "coordinateSpace": "image"
+                    }
+                }
+            },
+            "22": {
+                "MeasurementWeldInspector": {
+                    "0": {
+                        "name_line": "Line1",
+                        "level1": 0.09,
+                        "level2": 0.39,
+                        "level3": 0.52,
+                        "level4": 0.82,
+                        "level5": 1,
+                        "xStart": 1510,
+                        "yStart": 1112,
+                        "xEnd": 1524,
+                        "yEnd": 1350,
+                        "coordinateSpace": "image"
+                    }
+                },
+                "SlitWeldInspector": {
+                    "0": {
+                        "nameLine": "Line2",
+                        "widthMin": 0.1,
+                        "widthMax": 2,
+                        "xStart": 158,
+                        "yStart": 528,
+                        "xEnd": 176,
+                        "yEnd": 822,
+                        "coordinateSpace": "image"
+                    }
+                },
+                "AirBubblesItemInspector": {
+                    "0": {
+                        "id": 0,
+                        "name": "Bọt khí 1",
+                        "xStart": 558,
+                        "yStart": 982,
+                        "xEnd": 1580,
+                        "yEnd": 1320,
+                        "width": 511,
+                        "height": 169,
+                        "coordinateSpace": "image"
+                    }
+                }
+            },
+            "23": {
+                "MeasurementWeldInspector": {
+                    "0": {
+                        "name_line": "Line1",
+                        "level1": 0.09,
+                        "level2": 0.39,
+                        "level3": 0.52,
+                        "level4": 0.82,
+                        "level5": 1,
+                        "xStart": 1406,
+                        "yStart": 1118,
+                        "xEnd": 1432,
+                        "yEnd": 1374,
+                        "coordinateSpace": "image"
+                    }
+                },
+                "SlitWeldInspector": {
+                    "0": {
+                        "nameLine": "Line2",
+                        "widthMin": 0.1,
+                        "widthMax": 2,
+                        "xStart": 244,
+                        "yStart": 546,
+                        "xEnd": 256,
+                        "yEnd": 832,
+                        "coordinateSpace": "image"
+                    }
+                },
+                "AirBubblesItemInspector": {
+                    "0": {
+                        "id": 0,
+                        "name": "Bọt khí 1",
+                        "xStart": 318,
+                        "yStart": 796,
+                        "xEnd": 1764,
+                        "yEnd": 1368,
+                        "width": 723,
+                        "height": 286,
+                        "coordinateSpace": "image"
+                    }
+                }
+            },
+            "24": {
+                "MeasurementWeldInspector": {
+                    "0": {
+                        "name_line": "Line1",
+                        "level1": 0.09,
+                        "level2": 0.39,
+                        "level3": 0.52,
+                        "level4": 0.82,
+                        "level5": 1,
+                        "xStart": 1696,
+                        "yStart": 1132,
+                        "xEnd": 1708,
+                        "yEnd": 1360,
+                        "coordinateSpace": "image"
+                    }
+                },
+                "SlitWeldInspector": {
+                    "0": {
+                        "nameLine": "Line2",
+                        "widthMin": 0.1,
+                        "widthMax": 2,
+                        "xStart": 476,
+                        "yStart": 552,
+                        "xEnd": 486,
+                        "yEnd": 828,
+                        "coordinateSpace": "image"
+                    }
+                },
+                "AirBubblesItemInspector": {
+                    "0": {
+                        "id": 0,
+                        "name": "Bọt khí 1",
+                        "xStart": 1224,
+                        "yStart": 974,
+                        "xEnd": 2020,
+                        "yEnd": 1352,
+                        "width": 398,
+                        "height": 189,
+                        "coordinateSpace": "image"
+                    }
+                }
+            },
+            "25": {
+                "MeasurementWeldInspector": {
+                    "0": {
+                        "name_line": "Line1",
+                        "level1": 0.09,
+                        "level2": 0.39,
+                        "level3": 0.52,
+                        "level4": 0.82,
+                        "level5": 1,
+                        "xStart": 1584,
+                        "yStart": 844,
+                        "xEnd": 1564,
+                        "yEnd": 652,
+                        "coordinateSpace": "image"
+                    }
+                },
+                "SlitWeldInspector": {
+                    "0": {
+                        "nameLine": "Line2",
+                        "widthMin": 0.1,
+                        "widthMax": 2,
+                        "xStart": 734,
+                        "yStart": 562,
+                        "xEnd": 756,
+                        "yEnd": 830,
+                        "coordinateSpace": "image"
+                    }
+                },
+                "ArmSensorInspector": {
+                    "id": 0,
+                    "name": "ARM Sensor",
+                    "xStart": 30,
+                    "yStart": 130,
+                    "xEnd": 800,
+                    "yEnd": 744,
+                    "width": 385,
+                    "height": 307,
+                    "coordinateSpace": "image"
+                }
+            },
+            "26": {
+                "MeasurementWeldInspector": {
+                    "0": {
+                        "name_line": "Line1",
+                        "level1": 0.09,
+                        "level2": 0.39,
+                        "level3": 0.52,
+                        "level4": 0.82,
+                        "level5": 1,
+                        "xStart": 1548,
+                        "yStart": 864,
+                        "xEnd": 1536,
+                        "yEnd": 656,
+                        "coordinateSpace": "image"
+                    }
+                },
+                "SlitWeldInspector": {
+                    "0": {
+                        "nameLine": "Line2",
+                        "widthMin": 0.1,
+                        "widthMax": 2,
+                        "xStart": 1096,
+                        "yStart": 532,
+                        "xEnd": 1114,
+                        "yEnd": 830,
+                        "coordinateSpace": "image"
+                    }
+                },
+                "ArmSensorInspector": {
+                    "id": 0,
+                    "name": "ARM Sensor",
+                    "xStart": 294,
+                    "yStart": 106,
+                    "xEnd": 1224,
+                    "yEnd": 764,
+                    "width": 465,
+                    "height": 329,
+                    "coordinateSpace": "image"
+                }
+            },
+            "27": {
+                "MeasurementWeldInspector": {
+                    "0": {
+                        "name_line": "Line1",
+                        "level1": 0.09,
+                        "level2": 0.39,
+                        "level3": 0.52,
+                        "level4": 0.82,
+                        "level5": 1,
+                        "xStart": 680,
+                        "yStart": 916,
+                        "xEnd": 680,
+                        "yEnd": 684,
+                        "coordinateSpace": "image"
+                    }
+                },
+                "SlitWeldInspector": {
+                    "0": {
+                        "nameLine": "Line2",
+                        "widthMin": 0.1,
+                        "widthMax": 2,
+                        "xStart": 1292,
+                        "yStart": 554,
+                        "xEnd": 1318,
+                        "yEnd": 834,
+                        "coordinateSpace": "image"
+                    }
+                },
+                "ArmSensorInspector": {
+                    "id": 0,
+                    "name": "ARM Sensor",
+                    "xStart": 912,
+                    "yStart": 84,
+                    "xEnd": 1752,
+                    "yEnd": 728,
+                    "width": 420,
+                    "height": 322,
+                    "coordinateSpace": "image"
+                }
+            },
+            "28": {
+                "MeasurementWeldInspector": {
+                    "0": {
+                        "name_line": "Line1",
+                        "level1": 0.09,
+                        "level2": 0.39,
+                        "level3": 0.52,
+                        "level4": 0.82,
+                        "level5": 1,
+                        "xStart": 1046,
+                        "yStart": 1034,
+                        "xEnd": 1054,
+                        "yEnd": 1270,
+                        "coordinateSpace": "image"
+                    }
+                },
+                "SlitWeldInspector": {
+                    "0": {
+                        "nameLine": "Line2",
+                        "widthMin": 0.1,
+                        "widthMax": 2,
+                        "xStart": 946,
+                        "yStart": 142,
+                        "xEnd": 968,
+                        "yEnd": 426,
+                        "coordinateSpace": "image"
+                    }
+                },
+                "AirBubblesItemInspector": {
+                    "0": {
+                        "id": 0,
+                        "name": "Bọt khí 1",
+                        "xStart": 1096,
+                        "yStart": 560,
+                        "xEnd": 1712,
+                        "yEnd": 946,
+                        "width": 308,
+                        "height": 193,
+                        "coordinateSpace": "image"
+                    }
+                }
+            },
+            "29": {
+                "MeasurementWeldInspector": {
+                    "0": {
+                        "name_line": "Line1",
+                        "level1": 0.09,
+                        "level2": 0.39,
+                        "level3": 0.52,
+                        "level4": 0.82,
+                        "level5": 1,
+                        "xStart": 1326,
+                        "yStart": 1020,
+                        "xEnd": 1336,
+                        "yEnd": 1278,
+                        "coordinateSpace": "image"
+                    }
+                },
+                "SlitWeldInspector": {
+                    "0": {
+                        "nameLine": "Line2",
+                        "widthMin": 0.1,
+                        "widthMax": 2,
+                        "xStart": 870,
+                        "yStart": 202,
+                        "xEnd": 896,
+                        "yEnd": 434,
+                        "coordinateSpace": "image"
+                    }
+                },
+                "AirBubblesItemInspector": {
+                    "0": {
+                        "id": 0,
+                        "name": "Bọt khí 1",
+                        "xStart": 1478,
+                        "yStart": 582,
+                        "xEnd": 1970,
+                        "yEnd": 930,
+                        "width": 246,
+                        "height": 174,
+                        "coordinateSpace": "image"
+                    }
+                }
+            },
+            "30": {
+                "MeasurementWeldInspector": {
+                    "0": {
+                        "name_line": "Line1",
+                        "level1": 0.09,
+                        "level2": 0.39,
+                        "level3": 0.52,
+                        "level4": 0.82,
+                        "level5": 1,
+                        "xStart": 1306,
+                        "yStart": 1014,
+                        "xEnd": 1322,
+                        "yEnd": 1296,
+                        "coordinateSpace": "image"
+                    }
+                },
+                "SlitWeldInspector": {
+                    "0": {
+                        "nameLine": "Line2",
+                        "widthMin": 0.1,
+                        "widthMax": 2,
+                        "xStart": 1006,
+                        "yStart": 222,
+                        "xEnd": 1036,
+                        "yEnd": 452,
+                        "coordinateSpace": "image"
+                    }
+                }
+            },
+            "31": {
+                "MeasurementWeldInspector": {
+                    "0": {
+                        "name_line": "Line1",
+                        "level1": 0.09,
+                        "level2": 0.39,
+                        "level3": 0.52,
+                        "level4": 0.82,
+                        "level5": 1,
+                        "xStart": 1604,
+                        "yStart": 574,
+                        "xEnd": 1638,
+                        "yEnd": 864,
+                        "coordinateSpace": "image"
+                    }
+                },
+                "SlitWeldInspector": {
+                    "0": {
+                        "nameLine": "Line2",
+                        "widthMin": 0.1,
+                        "widthMax": 2,
+                        "xStart": 216,
+                        "yStart": 386,
+                        "xEnd": 376,
+                        "yEnd": 628,
+                        "coordinateSpace": "image"
+                    }
+                }
+            },
+            "32": {
+                "MeasurementWeldInspector": {
+                    "0": {
+                        "name_line": "Line",
+                        "level1": 0.09,
+                        "level2": 0.39,
+                        "level3": 0.52,
+                        "level4": 0.82,
+                        "level5": 1,
+                        "xStart": 1390,
+                        "yStart": 1260,
+                        "xEnd": 1624,
+                        "yEnd": 1242,
+                        "coordinateSpace": "image"
+                    }
+                },
+                "SlitWeldInspector": {
+                    "0": {
+                        "nameLine": "Line2",
+                        "widthMin": 0.1,
+                        "widthMax": 2,
+                        "xStart": 706,
+                        "yStart": 448,
+                        "xEnd": 862,
+                        "yEnd": 660,
+                        "coordinateSpace": "image"
+                    }
+                }
+            },
+            "33": {
+                "MeasurementWeldInspector": {
+                    "0": {
+                        "name_line": "Line1",
+                        "level1": 0.09,
+                        "level2": 0.39,
+                        "level3": 0.52,
+                        "level4": 0.82,
+                        "level5": 1,
+                        "xStart": 1416,
+                        "yStart": 804,
+                        "xEnd": 1744,
+                        "yEnd": 768,
+                        "coordinateSpace": "image"
+                    }
+                },
+                "SlitWeldInspector": {
+                    "0": {
+                        "nameLine": "Line2",
+                        "widthMin": 0.1,
+                        "widthMax": 2,
+                        "xStart": 676,
+                        "yStart": 282,
+                        "xEnd": 704,
+                        "yEnd": 524,
+                        "coordinateSpace": "image"
+                    }
+                },
+                "MembraneInspector": {
+                    "id": 0,
+                    "name": "Màng bám thấm",
+                    "xStart": 402,
+                    "yStart": 740,
+                    "xEnd": 1452,
+                    "yEnd": 1512,
+                    "width": 525,
+                    "height": 386,
+                    "coordinateSpace": "image"
+                },
+                "ForeignObjectInspector": {
+                    "id": 0,
+                    "name": "Dị vật",
+                    "xStart": 414,
+                    "yStart": 640,
+                    "xEnd": 1576,
+                    "yEnd": 1472,
+                    "width": 581,
+                    "height": 416,
+                    "threshold": 0.4,
+                    "saveRuntimeImages": true,
+                    "coordinateSpace": "image"
+                }
+            },
+            "34": {
+                "MeasurementWeldInspector": {
+                    "0": {
+                        "name_line": "Line1",
+                        "level1": 0.09,
+                        "level2": 0.39,
+                        "level3": 0.52,
+                        "level4": 0.82,
+                        "level5": 1,
+                        "xStart": 1362,
+                        "yStart": 908,
+                        "xEnd": 1392,
+                        "yEnd": 1224,
+                        "coordinateSpace": "image"
+                    }
+                },
+                "SlitWeldInspector": {
+                    "0": {
+                        "nameLine": "Line2",
+                        "widthMin": 0.1,
+                        "widthMax": 2,
+                        "xStart": 156,
+                        "yStart": 896,
+                        "xEnd": 354,
+                        "yEnd": 888,
+                        "coordinateSpace": "image"
+                    }
+                },
+                "MembraneInspector": {
+                    "id": 0,
+                    "name": "Màng bám thấm",
+                    "xStart": 708,
+                    "yStart": 206,
+                    "xEnd": 1854,
+                    "yEnd": 1170,
+                    "width": 573,
+                    "height": 482,
+                    "coordinateSpace": "image"
+                }
+            },
+            "35": {
+                "MeasurementWeldInspector": {
+                    "0": {
+                        "name_line": "Line1",
+                        "level1": 0.09,
+                        "level2": 0.39,
+                        "level3": 0.52,
+                        "level4": 0.82,
+                        "level5": 1,
+                        "xStart": 1034,
+                        "yStart": 566,
+                        "xEnd": 904,
+                        "yEnd": 868,
+                        "coordinateSpace": "image"
+                    }
+                },
+                "SlitWeldInspector": {
+                    "0": {
+                        "nameLine": "Line2",
+                        "widthMin": 0.1,
+                        "widthMax": 2,
+                        "xStart": 806,
+                        "yStart": 602,
+                        "xEnd": 702,
+                        "yEnd": 882,
+                        "coordinateSpace": "image"
+                    }
+                },
+                "ForeignObjectInspector": {
+                    "id": 0,
+                    "name": "Dị vật",
+                    "xStart": 308,
+                    "yStart": 138,
+                    "xEnd": 1628,
+                    "yEnd": 1118,
+                    "width": 660,
+                    "height": 490,
+                    "threshold": 0.9,
+                    "saveRuntimeImages": true,
+                    "coordinateSpace": "image"
+                }
+            },
+            "36": {
+                "MeasurementWeldInspector": {
+                    "0": {
+                        "name_line": "Line1",
+                        "level1": 0.09,
+                        "level2": 0.39,
+                        "level3": 0.52,
+                        "level4": 0.82,
+                        "level5": 1,
+                        "xStart": 1042,
+                        "yStart": 788,
+                        "xEnd": 1308,
+                        "yEnd": 768,
+                        "coordinateSpace": "image"
+                    }
+                },
+                "SlitWeldInspector": {
+                    "0": {
+                        "nameLine": "Line2",
+                        "widthMin": 0.1,
+                        "widthMax": 2,
+                        "xStart": 452,
+                        "yStart": 646,
+                        "xEnd": 600,
+                        "yEnd": 388,
+                        "coordinateSpace": "image"
+                    }
+                }
+            },
+            "37": {
+                "MeasurementWeldInspector": {
+                    "0": {
+                        "name_line": "Line1",
+                        "level1": 0.09,
+                        "level2": 0.39,
+                        "level3": 0.52,
+                        "level4": 0.82,
+                        "level5": 1,
+                        "xStart": 1226,
+                        "yStart": 932,
+                        "xEnd": 1538,
+                        "yEnd": 908,
+                        "coordinateSpace": "image"
+                    }
+                },
+                "SlitWeldInspector": {
+                    "0": {
+                        "nameLine": "Line3",
+                        "widthMin": 0.1,
+                        "widthMax": 2,
+                        "xStart": 300,
+                        "yStart": 564,
+                        "xEnd": 558,
+                        "yEnd": 548,
+                        "coordinateSpace": "image"
+                    }
+                },
+                "ArmCoverInspector": {
+                    "id": 0,
+                    "name": "ARM Cover",
+                    "xStart": 1382,
+                    "yStart": 56,
+                    "xEnd": 1962,
+                    "yEnd": 632,
+                    "width": 290,
+                    "height": 288,
+                    "coordinateSpace": "image"
+                }
+            }
+        }
+    }
+}
