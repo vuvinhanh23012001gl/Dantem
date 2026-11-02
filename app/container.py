@@ -279,6 +279,16 @@ class ServiceContainer:
         self.obj_anomaly_point_detector = AnomalyPointDetector(
             anomaly_point_service=self.obj_anomaly_point_patch_core_service
         )
+
+        # Cấu hình kiểm tra màu sắc (CIE2000 Delta E)
+        self.obj_color_service = ColorService()
+        self.obj_color_detector = ColorDetector(self.obj_color_service)
+
+        # Cấu hình kiểm tra mã vạch Barcode 1D và mã QR 2D
+        self.obj_barcode_qr_service = BarcodeQRService()
+        self.obj_barcode_detector = BarcodeDetector(self.obj_barcode_qr_service)
+        self.obj_qr_detector = QRDetector(self.obj_barcode_qr_service)
+
         self.obj_judment = Judment(
             {
                 "StampItemInspector": self.obj_stamp_detector,

@@ -520,6 +520,9 @@ class Camera():
         
     def disable_software_trigger(self):
         try:
+            if not self.nodemap:
+                self.trigger_mode = False
+                return
             self.set_enumeration(
                 "TriggerMode",
                 "Off"
@@ -541,9 +544,12 @@ class Camera():
             return False
         
     def set_enumeration(self, enum_name, entry_name):
-        enum_node = st.PyIEnumeration(
-            self.nodemap.get_node(enum_name)
-        )
+        if not self.nodemap:
+            return
+        node = self.nodemap.get_node(enum_name)
+        if not node:
+            return
+        enum_node = st.PyIEnumeration(node)
         entry_node = st.PyIEnumEntry(
             enum_node[entry_name]
         )

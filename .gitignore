@@ -48,3 +48,7 @@ app/input_backup/
 
 # Node modules (if any)
 node_modules/
+
+# Graphify cache
+graphify-out/cache/
+graphify-out/.rebuild.lock
